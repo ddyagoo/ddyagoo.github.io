@@ -1,45 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>高中毕业了</title>
-      <link href="/2023/06/12/gao-zhong-bi-ye-liao/"/>
-      <url>/2023/06/12/gao-zhong-bi-ye-liao/</url>
-      
-        <content type="html"><![CDATA[<p>不快也不慢,高中三年结束了<br><del>放个班主任吧</del><br><img src="https://cdn.jsdelivr.net/gh/ddyagoo/ddyagoo.pic/DSC_0067.JPG"></p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 日常 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>你好</title>
-      <link href="/2023/06/10/ni-hao/"/>
-      <url>/2023/06/10/ni-hao/</url>
-      
-        <content type="html"><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/ddyagoo/ddyagoo.pic/unnamed.png" alt="favicon.png"></p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 杂项 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-  
-  
+<search>
+  <entry>
+    <title>你好</title>
+    <url>/2023/06/10/ni-hao/</url>
+    <content><![CDATA[<p><img src="https://cdn.jsdelivr.net/gh/ddyagoo/ddyagoo.pic/unnamed.png" alt="favicon.png"></p>
+]]></content>
+      <tags>
+        <tag>杂项</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>高中毕业了</title>
+    <url>/2023/06/12/gao-zhong-bi-ye-liao/</url>
+    <content><![CDATA[<p>不快也不慢,高中三年结束了<br><del>放个班主任吧</del><br><img src="https://cdn.jsdelivr.net/gh/ddyagoo/ddyagoo.pic/DSC_0067.JPG"></p>
+]]></content>
+      <tags>
+        <tag>日常</tag>
+      </tags>
+  </entry>
 </search>
