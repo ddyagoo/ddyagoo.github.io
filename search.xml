@@ -212,30 +212,54 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateAnswerList() {
     var answerListContainer = document.getElementById('answerList');
     answerListContainer.innerHTML = ""; // 清空旧记录
-    // 对答案列表按照是否正确进行排序，错误的在前，正确的在后
+    // 对答案列表按照时间逆序和是否正确进行排序
     answerList.sort(function(a, b) {
-        return a.isCorrect - b.isCorrect;
+        if (a.index < b.index) return 1; // 逆序排序
+        if (a.index > b.index) return -1;
+        return b.isCorrect - a.isCorrect; // 错误的在前，正确的在后
     });
-    // 显示新的答案记录
-    answerList.forEach(function (answer) {
-        var listItem = document.createElement('li');
-        listItem.innerHTML =
-            "第" + answer.index + "题 问题: " + answer.question + " | " +
-            "回答: " + answer.userAnswer +
-            (answer.isCorrect ? " | <span style='color: green;'>正确</span>" : " | <span style='color: red;'>错误</span>") +
-            " | 正确答案: " + answer.correctAnswer;
-        // 高亮显示上一题的答案
-        if (answer.index === answerList.length) {
-            listItem.style.backgroundColor = "#ffffcc"; // 可以根据需要修改高亮的背景色
+    // 分别存储正确和错误的历史记录
+    var correctAnswers = [];
+    var incorrectAnswers = [];
+    // 将记录分类存储
+    answerList.forEach(function(answer) {
+        if (answer.isCorrect) {
+            correctAnswers.push(answer);
+        } else {
+            incorrectAnswers.push(answer);
         }
+    });
+    // 显示错误的历史记录在上面
+    incorrectAnswers.forEach(function(answer) {
+        var listItem = createListItem(answer);
         answerListContainer.appendChild(listItem);
     });
+    // 显示正确的历史记录在下面
+    correctAnswers.forEach(function(answer) {
+        var listItem = createListItem(answer);
+        answerListContainer.appendChild(listItem);
+    });
+}
+// 创建答案记录列表项
+function createListItem(answer) {
+    var listItem = document.createElement('li');
+    listItem.innerHTML =
+        "第" + answer.index + "题 问题: " + answer.question + " | " +
+        "回答: " + answer.userAnswer +
+        (answer.isCorrect ? " | <span style='color: green;'>正确</span>" : " | <span style='color: red;'>错误</span>") +
+        " | 正确答案: " + answer.correctAnswer;
+    // 高亮显示上一题的答案
+    if (answer.index === answerList.length) {
+        listItem.style.backgroundColor = "#ffffcc"; // 可以根据需要修改高亮的背景色
+    }
+    return listItem;
 }
     // 初始化问答
     quiz();
 </script>
 </body>
 </html>
+
 
 <h1 id="涉及到的植物"><a href="#涉及到的植物" class="headerlink" title="涉及到的植物"></a>涉及到的植物</h1><table>
 <thead>
