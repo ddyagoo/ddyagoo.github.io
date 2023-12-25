@@ -77,7 +77,7 @@
   <entry>
     <title>药用植物学小问答</title>
     <url>/2023/12/24/yao-yong-zhi-wu-xue-xiao-wen-da/</url>
-    <content><![CDATA[<h1 id="涉及药用植物学中基础的药用植物科的分类"><a href="#涉及药用植物学中基础的药用植物科的分类" class="headerlink" title="涉及药用植物学中基础的药用植物科的分类"></a>涉及药用植物学中基础的药用植物科的分类</h1><p>&lt;!DOCTYPE html&gt;</p>
+    <content><![CDATA[<h1 id="涉及药用植物学中基础的药用植物科的分类"><a href="#涉及药用植物学中基础的药用植物科的分类" class="headerlink" title="涉及药用植物学中基础的药用植物科的分类"></a>涉及药用植物学中基础的药用植物科的分类</h1><!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -330,17 +330,14 @@ quiz();
 </body>
 </html>
 
-
-<h1 id="涉及到的植物"><a href="#涉及到的植物" class="headerlink" title="涉及到的植物"></a>涉及到的植物</h1><div class="table-container">
-<table>
+<h1 id="涉及到的植物"><a href="#涉及到的植物" class="headerlink" title="涉及到的植物"></a>涉及到的植物</h1><table>
 <thead>
 <tr>
 <th>科名</th>
 <th>植物名称</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>蓼科</td>
 <td>唐古特大黄 (R.tanguticum Maxim.et BalF), 何首乌 (Polygonum multiflorum Thunb)</td>
 </tr>
@@ -396,9 +393,7 @@ quiz();
 <td>百合科</td>
 <td>百合 (Lilium brownii F.E.Brown var. viridulum Baker), 川贝母 (Fritillaria cirrhosa D.Don)</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 ]]></content>
       <categories>
         <category>编程</category>
