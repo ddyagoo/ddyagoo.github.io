@@ -92,9 +92,9 @@
       </tags>
   </entry>
   <entry>
-    <title>药用植物学小问答</title>
+    <title></title>
     <url>/2023/12/24/yao-yong-zhi-wu-xue-xiao-wen-da/</url>
-    <content><![CDATA[<h1 id="涉及药用植物学中基础的药用植物科的分类"><a href="#涉及药用植物学中基础的药用植物科的分类" class="headerlink" title="涉及药用植物学中基础的药用植物科的分类"></a>涉及药用植物学中基础的药用植物科的分类</h1><!DOCTYPE html>
+    <content><![CDATA[<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -181,8 +181,19 @@ document.addEventListener('DOMContentLoaded', function() {
     var categoryList = Object.keys(categories);
     var currentItem, currentCategory;
     var answerList = [];
+    var questionProbabilities = {}; // 问题概率
+    var weightForCorrect = 0.2; // 回答正确时概率减小权重
+    var weightForIncorrect = 0.5; // 回答错误时概率增加权重
+    // 初始化问题概率
+    categoryList.forEach(function(category) {
+        questionProbabilities[category] = 1.0;
+    });
     function quiz() {
-        var randomCategory = categoryList[Math.floor(Math.random() * categoryList.length)];
+        var totalProbability = Object.values(questionProbabilities).reduce((acc, val) => acc + val, 0);
+        var normalizedProbabilities = Object.fromEntries(
+            Object.entries(questionProbabilities).map(([key, value]) => [key, value / totalProbability])
+        );
+        var randomCategory = weightedRandom(normalizedProbabilities);
         var randomItem = categories[randomCategory][Math.floor(Math.random() * categories[randomCategory].length)];
         // 显示问题
         document.getElementById('quizQuestion').innerText = "【" + randomItem + "】是什么科的？";
@@ -195,6 +206,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function checkAnswer() {
         var userAnswer = document.getElementById('userAnswer').value.toLowerCase();
         var isCorrect = userAnswer === currentCategory.toLowerCase();
+        // 更新问题概率
+        questionProbabilities[currentCategory] *= isCorrect ? (1 - weightForCorrect) : (1 + weightForIncorrect);
         // 保存答案记录
         answerList.push({
             index: answerList.length + 1,
@@ -253,85 +266,20 @@ function createListItem(answer) {
     }
     return listItem;
 }
+// 根据权重随机选择
+function weightedRandom(probabilities) {
+    var r = Math.random();
+    var sum = 0;
+    for (var key in probabilities) {
+        sum += probabilities[key];
+        if (r <= sum) return key;
+    }
+}
     // 初始化问答
     quiz();
 </script>
 </body>
 </html>
-
-
-<h1 id="涉及到的植物"><a href="#涉及到的植物" class="headerlink" title="涉及到的植物"></a>涉及到的植物</h1><table>
-<thead>
-<tr>
-<th>科名</th>
-<th>植物名称</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>蓼科</td>
-<td>唐古特大黄 (R.tanguticum Maxim.et BalF), 何首乌 (Polygonum multiflorum Thunb)</td>
-</tr>
-<tr>
-<td>毛茛科</td>
-<td>乌头 (Aconitum carmichaeli Debx.), 黄连 (Coptis chinensis Franch), 威灵仙 (Clematis chinensis Osbeck)</td>
-</tr>
-<tr>
-<td>木兰科</td>
-<td>厚朴 (Magnolia officinalis Rehb.et Wils.), 八角 (Illicium verum Hook.f.), 五味子 (Schisandra chinensis(Turca.)Baill.)</td>
-</tr>
-<tr>
-<td>十字花科</td>
-<td>菘蓝 (Isatis indigotica Fort.), 荠菜 (Capsella bursa-pastoris(L.)Medic.), 萝卜 (Raphanus sativus L.)</td>
-</tr>
-<tr>
-<td>蔷薇科</td>
-<td>龙牙草 (Agrimonia pilosa Ledeb), 地榆 (Sanguisorba officinalis L.), 玫瑰 (Rosa rugosa Thunb)</td>
-</tr>
-<tr>
-<td>豆科</td>
-<td>合欢 (Albizia julibrissin Durazz.), 决明 (Cassia obtusifolia L.), 槐树 (Sophora japonica L.)</td>
-</tr>
-<tr>
-<td>五加科</td>
-<td>人参 (Panax ginseng C.A.Mey.), 三七 (P. notoginseng (Burk.) F.H. chen), 刺五加 (Acanthopanax senticosus (Rupr.et Maxim.) Harms.)</td>
-</tr>
-<tr>
-<td>伞形科</td>
-<td>当归 (Angelica sinensis (Oliv.) Diels), 川芎 (Ligusticum chuanxiong Hort.), 防风 (Saposhnikovia divaricata (Turez.) Schischk.)</td>
-</tr>
-<tr>
-<td>唇形科</td>
-<td>薄荷 (Mentha haplocalyx Briq.), 丹参 (Salvia miltiorrhiza Bge.), 益母草 (Leonurus japonicus Houtt)</td>
-</tr>
-<tr>
-<td>葫芦科</td>
-<td>栝楼 (Trichosanthes kirilowii Maxim), 木鳖 (Momordica cochinchinensis (Lour.) Spreng.)</td>
-</tr>
-<tr>
-<td>桔梗科</td>
-<td>桔梗 (Platycodon grandiflorum (Jacq.) A.DC.), 党参 (Codonopsis pilosula (Franch.) Nannf.)</td>
-</tr>
-<tr>
-<td>菊科</td>
-<td>菊花 (Chrysanthemum morifolium Ramat.), 红花 (Carthamus tinctorius L.), 白术 (Atractylodes macrocephala Koidz.)</td>
-</tr>
-<tr>
-<td>天南星科</td>
-<td>天南星 (Arisaema erubescens (Wall.) Schott), 半夏 (Pinellia ternata (Thunb.) Breit.)</td>
-</tr>
-<tr>
-<td>百合科</td>
-<td>百合 (Lilium brownii F.E.Brown var. viridulum Baker), 川贝母 (Fritillaria cirrhosa D.Don)</td>
-</tr>
-</tbody></table>
 ]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>药用植物学</tag>
-        <tag>html</tag>
-        <tag>编程</tag>
-      </tags>
   </entry>
 </search>
