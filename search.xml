@@ -146,65 +146,131 @@ document.addEventListener('DOMContentLoaded', function() {
 });
     // 植物学问答 JavaScript 代码
     var categories = {
-        '蓼科': ['唐古特大黄 (R.tanguticum Maxim.et BalF)', '何首乌Polygonum multiflorum  Thunb'],
-        '毛茛科': ['乌头 (Aconitum carmichaeli Debx.)', '黄连 (Coptis chinensis Franch)', '威灵仙 (Clematis chinensis Osbeck)'],
-        '木兰科': ['厚朴 (Magnolia officinalis Rehb.et Wils.)', '八角 (Illicium verum Hook.f.)', '五味子 (Schisandra chinensis(Turca.)Baill.)'],
-        '十字花科': ['菘蓝 (Isatis indigotica Fort.)', '荠菜 (Capsella bursa-pastoris(L.)Medic.)', '萝卜 (Raphanus sativus L.)'],
-        '蔷薇科': ['龙牙草 (Agrimonia pilosa Ledeb)', '地榆 (Sanguisorba officinalis L.)', '玫瑰 (Rosa rugosa Thunb)'],
-        '豆科': ['合欢 (Albizia julibrissin Durazz.)', '决明 (Cassia obtusifolia L.)', '槐树 (Sophora japonica L.)'],
-        '五加科': ['人参 (Panax ginseng C.A.Mey.)', '三七 (P. notoginseng (Burk.) F.H. chen)', '刺五加 (Acanthopanax senticosus (Rupr.et Maxim.) Harms.)'],
-        '伞形科': ['当归 (Angelica sinensis (Oliv.) Diels)', '川芎 (Ligusticum chuanxiong Hort.)', '防风 (Saposhnikovia divaricata (Turez.) Schischk.)'],
-        '唇形科': ['薄荷 (Mentha haplocalyx Briq.)', '丹参 (Salvia miltiorrhiza Bge.)', '益母草 (Leonurus japonicus Houtt)'],
-        '葫芦科': ['栝楼 (Trichosanthes kirilowii Maxim)', '木鳖 (Momordica cochinchinensis (Lour.) Spreng.)'],
-        '桔梗科': ['桔梗 (Platycodon grandiflorum (Jacq.) A.DC.)', '党参 (Codonopsis pilosula (Franch.) Nannf.)'],
-        '菊科': ['菊花 (Chrysanthemum morifolium Ramat.)', '红花 (Carthamus tinctorius L.)', '白术 (Atractylodes macrocephala Koidz.)'],
-        '天南星科': ['天南星 (Arisaema erubescens (Wall.) Schott)', '半夏 (Pinellia ternata (Thunb.) Breit.)'],
-        '百合科': ['百合 (Lilium brownii F.E.Brown var. viridulum Baker)', '川贝母 (Fritillaria cirrhosa D.Don)']
-    };
-    var categoryList = Object.keys(categories);
-    var currentItem, currentCategory;
-    var answerList = [];
-    var questionProbabilities = {}; // 问题概率
-    var weightForCorrect = 0.5; // 回答正确时概率减小权重
-    var weightForIncorrect = 1.0; // 回答错误时概率增加权重
-    // 初始化问题概率
-    categoryList.forEach(function(category) {
-        questionProbabilities[category] = 1.0;
+    '蓼科': [
+        { name: '唐古特大黄 (R.tanguticum Maxim.et BalF)', weight: 1.0 },
+        { name: '何首乌 (Polygonum multiflorum Thunb)', weight: 1.0 }
+    ],
+    '毛茛科': [
+        { name: '乌头 (Aconitum carmichaeli Debx.)', weight: 1.0 },
+        { name: '黄连 (Coptis chinensis Franch)', weight: 1.0 },
+        { name: '威灵仙 (Clematis chinensis Osbeck)', weight: 1.0 }
+    ],
+    '木兰科': [
+        { name: '厚朴 (Magnolia officinalis Rehb.et Wils.)', weight: 1.0 },
+        { name: '八角 (Illicium verum Hook.f.)', weight: 1.0 },
+        { name: '五味子 (Schisandra chinensis(Turcz.)Baill.)', weight: 1.0 }
+    ],
+    '十字花科': [
+        { name: '菘蓝 (Isatis indigotica Fort.)', weight: 1.0 },
+        { name: '荠菜 (Capsella bursa-pastoris(L.)Medic.)', weight: 1.0 },
+        { name: '萝卜 (Raphanus sativus L.)', weight: 1.0 }
+    ],
+    '蔷薇科': [
+        { name: '龙牙草 (Agrimonia pilosa Ledeb)', weight: 1.0 },
+        { name: '地榆 (Sanguisorba officinalis L.)', weight: 1.0 },
+        { name: '玫瑰 (Rosa rugosa Thunb)', weight: 1.0 }
+    ],
+    '豆科': [
+        { name: '合欢 (Albizia julibrissin Durazz.)', weight: 1.0 },
+        { name: '决明 (Cassia obtusifolia L.)', weight: 1.0 },
+        { name: '槐树 (Sophora japonica L.)', weight: 1.0 }
+    ],
+    '五加科': [
+        { name: '人参 (Panax ginseng C.A.Mey.)', weight: 1.0 },
+        { name: '三七 (Panax notoginseng (Burk.) F.H. Chen)', weight: 1.0 },
+        { name: '刺五加 (Acanthopanax senticosus (Rupr.et Maxim.) Harms.)', weight: 1.0 }
+    ],
+    '伞形科': [
+        { name: '当归 (Angelica sinensis (Oliv.) Diels)', weight: 1.0 },
+        { name: '川芎 (Ligusticum chuanxiong Hort.)', weight: 1.0 },
+        { name: '防风 (Saposhnikovia divaricata (Turez.) Schischk.)', weight: 1.0 }
+    ],
+    '唇形科': [
+        { name: '薄荷 (Mentha haplocalyx Briq.)', weight: 1.0 },
+        { name: '丹参 (Salvia miltiorrhiza Bge.)', weight: 1.0 },
+        { name: '益母草 (Leonurus japonicus Houtt)', weight: 1.0 }
+    ],
+    '葫芦科': [
+        { name: '栝楼 (Trichosanthes kirilowii Maxim)', weight: 1.0 },
+        { name: '木鳖 (Momordica cochinchinensis (Lour.) Spreng.)', weight: 1.0 }
+    ],
+    '桔梗科': [
+        { name: '桔梗 (Platycodon grandiflorum (Jacq.) A.DC.)', weight: 1.0 },
+        { name: '党参 (Codonopsis pilosula (Franch.) Nannf.)', weight: 1.0 }
+    ],
+    '菊科': [
+        { name: '菊花 (Chrysanthemum morifolium Ramat.)', weight: 1.0 },
+        { name: '红花 (Carthamus tinctorius L.)', weight: 1.0 },
+        { name: '白术 (Atractylodes macrocephala Koidz.)', weight: 1.0 }
+    ],
+    '天南星科': [
+        { name: '天南星 (Arisaema erubescens (Wall.) Schott)', weight: 1.0 },
+        { name: '半夏 (Pinellia ternata (Thunb.) Breit.)', weight: 1.0 }
+    ],
+    '百合科': [
+        { name: '百合 (Lilium brownii F.E.Brown var. viridulum Baker)', weight: 1.0 },
+        { name: '川贝母 (Fritillaria cirrhosa D.Don)', weight: 1.0 }
+    ]
+};
+var categoryList = Object.keys(categories);
+var currentItem, currentCategory;
+var answerList = [];
+var questionProbabilities = {}; // 问题概率
+var weightForCorrect = 0.5; // 回答正确时概率减小权重
+var weightForIncorrect = 1.0; // 回答错误时概率增加权重
+// 初始化问题概率
+categoryList.forEach(function(category) {
+    questionProbabilities[category] = 1.0;
+});
+function quiz() {
+    var totalProbability = Object.values(questionProbabilities).reduce((acc, val) => acc + val, 0);
+    var normalizedProbabilities = Object.fromEntries(
+        Object.entries(questionProbabilities).map(([key, value]) => [key, value / totalProbability])
+    );
+    var randomCategory = weightedRandom(normalizedProbabilities);
+    var categoryItems = categories[randomCategory];
+    var itemProbabilities = categoryItems.map(item => item.weight);
+    var normalizedItemProbabilities = itemProbabilities.map(prob => prob / itemProbabilities.reduce((a, b) => a + b, 0));
+    var randomItemIndex = weightedRandom(normalizedItemProbabilities);
+    var randomItem = categoryItems[randomItemIndex].name;
+    document.getElementById('quizQuestion').innerText = `【${randomItem}】是什么科的？`;
+    currentItem = randomItem;
+    currentCategory = randomCategory;
+    document.getElementById('userAnswer').value = "";
+}
+function weightedRandom(probabilities) {
+    var r = Math.random();
+    var sum = 0;
+    for (var key in probabilities) {
+        sum += probabilities[key];
+        if (r <= sum) return key;
+    }
+}
+function checkAnswer() {
+    var userAnswer = document.getElementById('userAnswer').value.toLowerCase();
+    var isCorrect = userAnswer === currentCategory.toLowerCase();
+    // 获取当前植物的权重百分比
+    var currentPlant = categories[currentCategory].find(item => item.name === currentItem);
+    var currentPlantProbability = (currentPlant.weight * 100).toFixed(2);
+    // 更新问题概率
+    questionProbabilities[currentCategory] *= isCorrect ? (1 - weightForCorrect) : (1 + weightForIncorrect);
+    // 更新植物权重
+    currentPlant.weight *= isCorrect ? (1 - weightForCorrect) : (1 + weightForIncorrect);
+    // 保存答案记录
+    answerList.push({
+        index: answerList.length + 1,
+        question: currentItem,
+        userAnswer: userAnswer,
+        isCorrect: isCorrect,
+        correctAnswer: currentCategory,
+        plantProbability: currentPlantProbability,  // 添加当前植物的权重百分比
     });
-    function quiz() {
-        var totalProbability = Object.values(questionProbabilities).reduce((acc, val) => acc + val, 0);
-        var normalizedProbabilities = Object.fromEntries(
-            Object.entries(questionProbabilities).map(([key, value]) => [key, value / totalProbability])
-        );
-        var randomCategory = weightedRandom(normalizedProbabilities);
-        var randomItem = categories[randomCategory][Math.floor(Math.random() * categories[randomCategory].length)];
-        // 显示问题
-        document.getElementById('quizQuestion').innerText = "【" + randomItem + "】是什么科的？";
-        // 保存当前问题和答案
-        currentItem = randomItem;
-        currentCategory = randomCategory;
-        // 清空答案输入框
-        document.getElementById('userAnswer').value = "";
-    }
-    function checkAnswer() {
-        var userAnswer = document.getElementById('userAnswer').value.toLowerCase();
-        var isCorrect = userAnswer === currentCategory.toLowerCase();
-        // 更新问题概率
-        questionProbabilities[currentCategory] *= isCorrect ? (1 - weightForCorrect) : (1 + weightForIncorrect);
-        // 保存答案记录
-        answerList.push({
-            index: answerList.length + 1,
-            question: currentItem,
-            userAnswer: userAnswer,
-            isCorrect: isCorrect,
-            correctAnswer: currentCategory
-        });
-        // 更新答案记录显示
-        updateAnswerList();
-        // 重新出题
-        quiz();
-    }
-    function updateAnswerList() {
+    // 更新答案记录显示
+    updateAnswerList();
+    // 重新出题
+    quiz();
+}
+function updateAnswerList() {
     var answerListContainer = document.getElementById('answerList');
     answerListContainer.innerHTML = ""; // 清空旧记录
     // 对答案列表按照时间逆序和是否正确进行排序
@@ -242,7 +308,7 @@ function createListItem(answer) {
         "<strong>第" + answer.index + "题: </strong>" + answer.question + " | " +
         "回答: " + answer.userAnswer +
         (answer.isCorrect ? " | <span style='color: green;'>正确</span>" : " | <span style='color: red;'>错误</span>") +
-        " | 正确答案: " + answer.correctAnswer;
+        " | 正确答案: " + answer.correctAnswer
     // 高亮显示上一题的答案
     if (answer.index === answerList.length) {
         listItem.style.backgroundColor = "#ffffcc"; // 可以根据需要修改高亮的背景色
@@ -258,11 +324,12 @@ function weightedRandom(probabilities) {
         if (r <= sum) return key;
     }
 }
-    // 初始化问答
-    quiz();
+// 初始化问答
+quiz();
 </script>
 </body>
 </html>
+
 
 <h1 id="涉及到的植物"><a href="#涉及到的植物" class="headerlink" title="涉及到的植物"></a>涉及到的植物</h1><table>
 <thead>
