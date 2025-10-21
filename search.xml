@@ -445,21 +445,21 @@ quiz();
     <title>中成药学问答</title>
     <url>/2023/12/24/zhong-cheng-yao-xue-wen-da/</url>
     <content><![CDATA[<h1 id="中成药分类答题游戏"><a href="#中成药分类答题游戏" class="headerlink" title="中成药分类答题游戏"></a>中成药分类答题游戏</h1><p>下面是一个中成药分类答题小游戏，点击”下一题”开始，思考后点击”显示答案”查看结果。</p>
-
 <div class="herb-quiz">
     <div class="quiz-header">
         <h3>中成药分类答题</h3>
         <p class="chapter-indicator">章节：--</p>
     </div>
     
-    <div class="drug-display">点击"下一题"开始答题</div>
-    
-    <div class="answer-display"></div>
-    
-    <div class="quiz-buttons">
-        <button class="show-answer">显示小类</button>
-        <button class="next-drug">下一题</button>
-    </div>
+<pre><code>&lt;div class=&quot;drug-display&quot;&gt;点击&quot;下一题&quot;开始答题&lt;/div&gt;
+
+&lt;div class=&quot;answer-display&quot;&gt;&lt;/div&gt;
+
+&lt;div class=&quot;quiz-buttons&quot;&gt;
+    &lt;button class=&quot;show-answer&quot;&gt;显示小类&lt;/button&gt;
+    &lt;button class=&quot;next-drug&quot;&gt;下一题&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
 </div>
 
 <style>
@@ -801,9 +801,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const chapterIndicator = document.querySelector('.chapter-indicator');
     const showAnswerBtn = document.querySelector('.show-answer');
     const nextDrugBtn = document.querySelector('.next-drug');
-
+    
     let currentIndex = -1;
-
+    
     // 显示下一题
     function showNextDrug() {
         currentIndex++;
@@ -818,7 +818,7 @@ document.addEventListener('DOMContentLoaded', function() {
             answerDisplay.textContent = '';
         }
     }
-
+    
     // 显示答案
     function showAnswer() {
         if (currentIndex >= 0 && currentIndex < drugsData.length) {
@@ -830,7 +830,7 @@ document.addEventListener('DOMContentLoaded', function() {
             answerDisplay.style.display = 'block';
         }
     }
-
+    
     // 绑定按钮事件
     nextDrugBtn.addEventListener('click', showNextDrug);
     showAnswerBtn.addEventListener('click', showAnswer);
