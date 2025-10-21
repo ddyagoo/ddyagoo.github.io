@@ -1,274 +1,873 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>中成药学问答</title>
-      <link href="/2025/10/22/zhong-cheng-yao-xue-wen-da/"/>
-      <url>/2025/10/22/zhong-cheng-yao-xue-wen-da/</url>
-      
-        <content type="html"><![CDATA[<html lang="zh-CN"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>中成药分类随机答题游戏</title>    <style>        /* 移除固定宽度限制，完全继承主题布局 */        body {            font-family: inherit; /* 继承主题字体 */            margin: 0;            padding: 0;            background-color: transparent; /* 透明背景，融入主题 */        }        .quiz-container {            background-color: #fff;            padding: 30px;            border-radius: 10px;            box-shadow: 0 3px 15px rgba(0,0,0,0.1);            width: 100%; /* 适应父容器宽度 */            max-width: 100%; /* 取消最大宽度限制 */            box-sizing: border-box; /* 确保padding不影响宽度 */            margin: 20px auto; /* 水平居中，上下留间距 */        }        h2 {            color: inherit; /* 继承主题标题颜色 */            text-align: center;            margin-bottom: 30px;            font-size: 1.8rem;        }        .drug-name {            font-size: 1.5rem;            font-weight: bold;            text-align: center;            padding: 20px;            margin: 30px 0;            background-color: #f8f9fa;            border-radius: 6px;            border-left: 5px solid #4285f4;        }        .answer {            margin: 20px 0;            padding: 15px;            background-color: #e8f5e9;            border-radius: 6px;            display: none;            line-height: 1.6;        }        .button-group {            text-align: center;            margin-top: 30px;        }        button {            padding: 12px 24px;            margin: 0 10px;            border: none;            border-radius: 6px;            font-size: 1rem;            cursor: pointer;            transition: all 0.3s ease;        }        #show-answer {            background-color: #4caf50;            color: white;        }        #next-question {            background-color: #2196f4;            color: white;        }        button:hover {            opacity: 0.9;            transform: translateY(-2px);            box-shadow: 0 4px 8px rgba(0,0,0,0.1);        }        .info {            color: #666;            text-align: center;            font-size: 0.9rem;            margin-top: 10px;        }    </style></head><body>    <div class="quiz-container">        <h2>中成药分类随机答题游戏</h2>        <p class="info">请判断下列中成药属于哪个小类，点击"显示答案"查看结果</p>        <pre><code>    &lt;div class=&quot;drug-name&quot;&gt;点击&quot;下一题&quot;开始答题&lt;/div&gt;        &lt;div class=&quot;answer&quot;&gt;&lt;/div&gt;        &lt;div class=&quot;button-group&quot;&gt;        &lt;button id=&quot;show-answer&quot;&gt;显示答案&lt;/button&gt;        &lt;button id=&quot;next-question&quot;&gt;下一题&lt;/button&gt;    &lt;/div&gt;&lt;/div&gt;&lt;script&gt;    // 中成药完整数据（第五章至第三十章）    const drugsData = [        // 第五章 解表中成药        &#123; name: &quot;九味羌活颗粒&quot;, category: &quot;辛温解表类&quot;, chapter: &quot;第五章 解表中成药&quot; &#125;,        &#123; name: &quot;表实感冒颗粒&quot;, category: &quot;辛温解表类&quot;, chapter: &quot;第五章 解表中成药&quot; &#125;,        &#123; name: &quot;桂枝合剂&quot;, category: &quot;辛温解表类&quot;, chapter: &quot;第五章 解表中成药&quot; &#125;,        &#123; name: &quot;正柴胡饮颗粒&quot;, category: &quot;辛温解表类&quot;, chapter: &quot;第五章 解表中成药&quot; &#125;,        &#123; name: &quot;银翘解毒片&quot;, category: &quot;辛凉解表类&quot;, chapter: &quot;第五章 解表中成药&quot; &#125;,        &#123; name: &quot;桑菊感冒片&quot;, category: &quot;辛凉解表类&quot;, chapter: &quot;第五章 解表中成药&quot; &#125;,        &#123; name: &quot;双黄连口服液&quot;, category: &quot;辛凉解表类&quot;, chapter: &quot;第五章 解表中成药&quot; &#125;,        &#123; name: &quot;羚羊感冒片&quot;, category: &quot;辛凉解表类&quot;, chapter: &quot;第五章 解表中成药&quot; &#125;,        &#123; name: &quot;参苏丸&quot;, category: &quot;扶正解表类&quot;, chapter: &quot;第五章 解表中成药&quot; &#125;,        // 第六章 清热中成药        &#123; name: &quot;牛黄上清胶囊&quot;, category: &quot;清热泻火类&quot;, chapter: &quot;第六章 清热中成药&quot; &#125;,        &#123; name: &quot;黄连上清丸&quot;, category: &quot;清热泻火类&quot;, chapter: &quot;第六章 清热中成药&quot; &#125;,        &#123; name: &quot;一清颗粒&quot;, category: &quot;清热泻火类&quot;, chapter: &quot;第六章 清热中成药&quot; &#125;,        &#123; name: &quot;牛黄解毒片&quot;, category: &quot;清热解毒类&quot;, chapter: &quot;第六章 清热中成药&quot; &#125;,        &#123; name: &quot;清热解毒口服液&quot;, category: &quot;清热解毒类&quot;, chapter: &quot;第六章 清热中成药&quot; &#125;,        &#123; name: &quot;清开灵口服液&quot;, category: &quot;清热解毒类&quot;, chapter: &quot;第六章 清热中成药&quot; &#125;,        &#123; name: &quot;龙胆泻肝丸（水丸）&quot;, category: &quot;清肝利胆类&quot;, chapter: &quot;第六章 清热中成药&quot; &#125;,        &#123; name: &quot;导赤丸&quot;, category: &quot;清肝利胆类&quot;, chapter: &quot;第六章 清热中成药&quot; &#125;,        &#123; name: &quot;芩连片&quot;, category: &quot;清肝利胆类&quot;, chapter: &quot;第六章 清热中成药&quot; &#125;,        &#123; name: &quot;清胃黄连丸（水丸）&quot;, category: &quot;清肝利胆类&quot;, chapter: &quot;第六章 清热中成药&quot; &#125;,        &#123; name: &quot;黛蛤散&quot;, category: &quot;清肝利胆类&quot;, chapter: &quot;第六章 清热中成药&quot; &#125;,        &#123; name: &quot;西黄丸&quot;, category: &quot;解毒消癥类&quot;, chapter: &quot;第六章 清热中成药&quot; &#125;,        // 第七章 表里双解中成药        &#123; name: &quot;防风通圣丸&quot;, category: &quot;表里双解类&quot;, chapter: &quot;第七章 表里双解中成药&quot; &#125;,        &#123; name: &quot;双清口服液&quot;, category: &quot;表里双解类&quot;, chapter: &quot;第七章 表里双解中成药&quot; &#125;,        &#123; name: &quot;葛根芩连片&quot;, category: &quot;表里双解类&quot;, chapter: &quot;第七章 表里双解中成药&quot; &#125;,        // 第八章 祛暑中成药        &#123; name: &quot;六一散&quot;, category: &quot;祛暑类&quot;, chapter: &quot;第八章 祛暑中成药&quot; &#125;,        &#123; name: &quot;藿香正气水&quot;, category: &quot;祛暑类&quot;, chapter: &quot;第八章 祛暑中成药&quot; &#125;,        &#123; name: &quot;甘露消毒丸&quot;, category: &quot;祛暑类&quot;, chapter: &quot;第八章 祛暑中成药&quot; &#125;,        &#123; name: &quot;六合定中丸&quot;, category: &quot;祛暑类&quot;, chapter: &quot;第八章 祛暑中成药&quot; &#125;,        &#123; name: &quot;清暑益气丸&quot;, category: &quot;祛暑类&quot;, chapter: &quot;第八章 祛暑中成药&quot; &#125;,        // 第九章 泻下中成药        &#123; name: &quot;九制大黄丸&quot;, category: &quot;寒下类&quot;, chapter: &quot;第九章 泻下中成药&quot; &#125;,        &#123; name: &quot;当归龙荟丸&quot;, category: &quot;寒下类&quot;, chapter: &quot;第九章 泻下中成药&quot; &#125;,        &#123; name: &quot;麻仁丸&quot;, category: &quot;润下类&quot;, chapter: &quot;第九章 泻下中成药&quot; &#125;,        &#123; name: &quot;苁蓉通便口服液&quot;, category: &quot;润下类&quot;, chapter: &quot;第九章 泻下中成药&quot; &#125;,        &#123; name: &quot;增液颗粒&quot;, category: &quot;润下类&quot;, chapter: &quot;第九章 泻下中成药&quot; &#125;,        &#123; name: &quot;舟车丸&quot;, category: &quot;峻下类&quot;, chapter: &quot;第九章 泻下中成药&quot; &#125;,        &#123; name: &quot;十枣丸&quot;, category: &quot;峻下类&quot;, chapter: &quot;第九章 泻下中成药&quot; &#125;,        &#123; name: &quot;尿毒清颗粒（无糖型）&quot;, category: &quot;通腑降浊类&quot;, chapter: &quot;第九章 泻下中成药&quot; &#125;,        // 第十章 温里中成药        &#123; name: &quot;小建中合剂&quot;, category: &quot;温中祛寒类&quot;, chapter: &quot;第十章 温里中成药&quot; &#125;,        &#123; name: &quot;理中丸&quot;, category: &quot;温中祛寒类&quot;, chapter: &quot;第十章 温里中成药&quot; &#125;,        &#123; name: &quot;香砂养胃颗粒&quot;, category: &quot;温中祛寒类&quot;, chapter: &quot;第十章 温里中成药&quot; &#125;,        &#123; name: &quot;四逆汤&quot;, category: &quot;回阳救逆类&quot;, chapter: &quot;第十章 温里中成药&quot; &#125;,        // 第十一章 祛痰中成药        &#123; name: &quot;二陈丸&quot;, category: &quot;燥湿化痰类&quot;, chapter: &quot;第十一章 祛痰中成药&quot; &#125;,        &#123; name: &quot;礞石滚痰丸&quot;, category: &quot;清热化痰类&quot;, chapter: &quot;第十一章 祛痰中成药&quot; &#125;,        &#123; name: &quot;清气化痰丸&quot;, category: &quot;清热化痰类&quot;, chapter: &quot;第十一章 祛痰中成药&quot; &#125;,        &#123; name: &quot;橘红丸&quot;, category: &quot;清热化痰类&quot;, chapter: &quot;第十一章 祛痰中成药&quot; &#125;,        &#123; name: &quot;半夏天麻丸&quot;, category: &quot;化痰息风类&quot;, chapter: &quot;第十一章 祛痰中成药&quot; &#125;,        &#123; name: &quot;消瘿丸&quot;, category: &quot;化痰散结类&quot;, chapter: &quot;第十一章 祛痰中成药&quot; &#125;,        // 第十二章 止咳平喘中成药        &#123; name: &quot;通宣理肺丸&quot;, category: &quot;止咳类&quot;, chapter: &quot;第十二章 止咳平喘中成药&quot; &#125;,        &#123; name: &quot;杏苏止咳颗粒&quot;, category: &quot;止咳类&quot;, chapter: &quot;第十二章 止咳平喘中成药&quot; &#125;,        &#123; name: &quot;清肺抑火丸&quot;, category: &quot;止咳类&quot;, chapter: &quot;第十二章 止咳平喘中成药&quot; &#125;,        &#123; name: &quot;蛇胆川贝液&quot;, category: &quot;止咳类&quot;, chapter: &quot;第十二章 止咳平喘中成药&quot; &#125;,        &#123; name: &quot;急支糖浆&quot;, category: &quot;止咳类&quot;, chapter: &quot;第十二章 止咳平喘中成药&quot; &#125;,        &#123; name: &quot;养阴清肺膏&quot;, category: &quot;止咳类&quot;, chapter: &quot;第十二章 止咳平喘中成药&quot; &#125;,        &#123; name: &quot;二母宁嗽丸&quot;, category: &quot;止咳类&quot;, chapter: &quot;第十二章 止咳平喘中成药&quot; &#125;,        &#123; name: &quot;小青龙颗粒&quot;, category: &quot;平喘类&quot;, chapter: &quot;第十二章 止咳平喘中成药&quot; &#125;,        &#123; name: &quot;止嗽定喘口服液&quot;, category: &quot;平喘类&quot;, chapter: &quot;第十二章 止咳平喘中成药&quot; &#125;,        &#123; name: &quot;降气定喘丸&quot;, category: &quot;平喘类&quot;, chapter: &quot;第十二章 止咳平喘中成药&quot; &#125;,        &#123; name: &quot;人参保肺丸&quot;, category: &quot;平喘类&quot;, chapter: &quot;第十二章 止咳平喘中成药&quot; &#125;,        &#123; name: &quot;苏子降气丸&quot;, category: &quot;平喘类&quot;, chapter: &quot;第十二章 止咳平喘中成药&quot; &#125;,        &#123; name: &quot;七味都气丸&quot;, category: &quot;平喘类&quot;, chapter: &quot;第十二章 止咳平喘中成药&quot; &#125;,        &#123; name: &quot;固本咳喘片&quot;, category: &quot;平喘类&quot;, chapter: &quot;第十二章 止咳平喘中成药&quot; &#125;,        // 第十三章 开窍中成药        &#123; name: &quot;安宫牛黄丸&quot;, category: &quot;凉开类&quot;, chapter: &quot;第十三章 开窍中成药&quot; &#125;,        &#123; name: &quot;紫雪散&quot;, category: &quot;凉开类&quot;, chapter: &quot;第十三章 开窍中成药&quot; &#125;,        &#123; name: &quot;局方至宝散&quot;, category: &quot;凉开类&quot;, chapter: &quot;第十三章 开窍中成药&quot; &#125;,        &#123; name: &quot;清开灵注射液&quot;, category: &quot;凉开类&quot;, chapter: &quot;第十三章 开窍中成药&quot; &#125;,        &#123; name: &quot;苏合香丸&quot;, category: &quot;温开类&quot;, chapter: &quot;第十三章 开窍中成药&quot; &#125;,        // 第十四章 补益中成药        &#123; name: &quot;四君子丸&quot;, category: &quot;补气类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;补中益气丸&quot;, category: &quot;补气类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;参苓白术丸&quot;, category: &quot;补气类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;启脾丸&quot;, category: &quot;补气类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;桂附地黄丸&quot;, category: &quot;补阳类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;右归丸&quot;, category: &quot;补阳类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;济生肾气丸&quot;, category: &quot;补阳类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;五子衍宗丸&quot;, category: &quot;补阳类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;当归补血口服液&quot;, category: &quot;补血类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;四物合剂&quot;, category: &quot;补血类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;六味地黄丸&quot;, category: &quot;补阴类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;左归丸&quot;, category: &quot;补阴类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;河车大造胶囊&quot;, category: &quot;补阴类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;知柏地黄丸&quot;, category: &quot;补阴类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;八珍颗粒&quot;, category: &quot;气血双补类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;归脾丸&quot;, category: &quot;气血双补类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;十全大补丸&quot;, category: &quot;气血双补类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;人参养荣丸&quot;, category: &quot;气血双补类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;生脉饮&quot;, category: &quot;气阴双补类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;人参固本丸&quot;, category: &quot;气阴双补类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;消渴丸&quot;, category: &quot;气阴双补类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;龟鹿二仙膏&quot;, category: &quot;阴阳并补类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        &#123; name: &quot;七宝美髯颗粒&quot;, category: &quot;精血双补类&quot;, chapter: &quot;第十四章 补益中成药&quot; &#125;,        // 第十五章 固涩中成药        &#123; name: &quot;玉屏风颗粒&quot;, category: &quot;固表止汗类&quot;, chapter: &quot;第十五章 固涩中成药&quot; &#125;,        &#123; name: &quot;金锁固精丸&quot;, category: &quot;固精缩尿类&quot;, chapter: &quot;第十五章 固涩中成药&quot; &#125;,        &#123; name: &quot;缩泉丸&quot;, category: &quot;固精缩尿类&quot;, chapter: &quot;第十五章 固涩中成药&quot; &#125;,        &#123; name: &quot;四神丸&quot;, category: &quot;涩肠止泻类&quot;, chapter: &quot;第十五章 固涩中成药&quot; &#125;,        &#123; name: &quot;固本益肠片&quot;, category: &quot;涩肠止泻类&quot;, chapter: &quot;第十五章 固涩中成药&quot; &#125;,        // 第十六章 安神中成药        &#123; name: &quot;朱砂安神丸&quot;, category: &quot;清火安神类&quot;, chapter: &quot;第十六章 安神中成药&quot; &#125;,        &#123; name: &quot;天王补心丸&quot;, category: &quot;补虚安神类&quot;, chapter: &quot;第十六章 安神中成药&quot; &#125;,        &#123; name: &quot;柏子养心丸&quot;, category: &quot;补虚安神类&quot;, chapter: &quot;第十六章 安神中成药&quot; &#125;,        &#123; name: &quot;解郁安神颗粒&quot;, category: &quot;解郁安神类&quot;, chapter: &quot;第十六章 安神中成药&quot; &#125;,        // 第十七章 和解中成药        &#123; name: &quot;小柴胡颗粒&quot;, category: &quot;和解类&quot;, chapter: &quot;第十七章 和解中成药&quot; &#125;,        &#123; name: &quot;逍遥丸&quot;, category: &quot;和解类&quot;, chapter: &quot;第十七章 和解中成药&quot; &#125;,        &#123; name: &quot;加味逍遥丸&quot;, category: &quot;和解类&quot;, chapter: &quot;第十七章 和解中成药&quot; &#125;,        // 第十八章 理气中成药        &#123; name: &quot;四逆散&quot;, category: &quot;理气疏肝类&quot;, chapter: &quot;第十八章 理气中成药&quot; &#125;,        &#123; name: &quot;左金丸&quot;, category: &quot;理气疏肝类&quot;, chapter: &quot;第十八章 理气中成药&quot; &#125;,        &#123; name: &quot;气滞胃痛颗粒&quot;, category: &quot;理气疏肝类&quot;, chapter: &quot;第十八章 理气中成药&quot; &#125;,        &#123; name: &quot;柴胡疏肝丸&quot;, category: &quot;理气疏肝类&quot;, chapter: &quot;第十八章 理气中成药&quot; &#125;,        &#123; name: &quot;木香顺气丸&quot;, category: &quot;理气和中类&quot;, chapter: &quot;第十八章 理气中成药&quot; &#125;,        &#123; name: &quot;越鞠丸&quot;, category: &quot;理气和中类&quot;, chapter: &quot;第十八章 理气中成药&quot; &#125;,        // 第十九章 活血中成药        &#123; name: &quot;复方丹参片&quot;, category: &quot;活血化瘀类&quot;, chapter: &quot;第十九章 活血中成药&quot; &#125;,        &#123; name: &quot;丹七片&quot;, category: &quot;活血化瘀类&quot;, chapter: &quot;第十九章 活血中成药&quot; &#125;,        &#123; name: &quot;血塞通颗粒&quot;, category: &quot;活血化瘀类&quot;, chapter: &quot;第十九章 活血中成药&quot; &#125;,        &#123; name: &quot;消栓通络胶囊&quot;, category: &quot;活血化瘀类&quot;, chapter: &quot;第十九章 活血中成药&quot; &#125;,        &#123; name: &quot;血府逐瘀口服液&quot;, category: &quot;活血行气类&quot;, chapter: &quot;第十九章 活血中成药&quot; &#125;,        &#123; name: &quot;元胡止痛片&quot;, category: &quot;活血行气类&quot;, chapter: &quot;第十九章 活血中成药&quot; &#125;,        &#123; name: &quot;九气拈痛丸&quot;, category: &quot;活血行气类&quot;, chapter: &quot;第十九章 活血中成药&quot; &#125;,        &#123; name: &quot;麝香保心丸&quot;, category: &quot;益气活血类&quot;, chapter: &quot;第十九章 活血中成药&quot; &#125;,        &#123; name: &quot;消栓口服液&quot;, category: &quot;益气活血类&quot;, chapter: &quot;第十九章 活血中成药&quot; &#125;,        &#123; name: &quot;稳心颗粒&quot;, category: &quot;益气补阴活血类&quot;, chapter: &quot;第十九章 活血中成药&quot; &#125;,        &#123; name: &quot;参松养心胶囊&quot;, category: &quot;益气补阴活血类&quot;, chapter: &quot;第十九章 活血中成药&quot; &#125;,        &#123; name: &quot;人参再造丸&quot;, category: &quot;化瘀息风类&quot;, chapter: &quot;第十九章 活血中成药&quot; &#125;,        // 第二十章 止血中成药        &#123; name: &quot;槐角丸&quot;, category: &quot;止血类&quot;, chapter: &quot;第二十章 止血中成药&quot; &#125;,        &#123; name: &quot;止血定痛片&quot;, category: &quot;止血类&quot;, chapter: &quot;第二十章 止血中成药&quot; &#125;,        // 第二十一章 消导中成药        &#123; name: &quot;保和丸&quot;, category: &quot;消导类&quot;, chapter: &quot;第二十一章 消导中成药&quot; &#125;,        &#123; name: &quot;枳实导滞丸&quot;, category: &quot;消导类&quot;, chapter: &quot;第二十一章 消导中成药&quot; &#125;,        &#123; name: &quot;健脾丸&quot;, category: &quot;消导类&quot;, chapter: &quot;第二十一章 消导中成药&quot; &#125;,        &#123; name: &quot;开胃健脾丸&quot;, category: &quot;消导类&quot;, chapter: &quot;第二十一章 消导中成药&quot; &#125;,        // 第二十二章 治风中成药        &#123; name: &quot;川芎茶调丸&quot;, category: &quot;疏散外风类&quot;, chapter: &quot;第二十二章 治风中成药&quot; &#125;,        &#123; name: &quot;芎菊上清丸&quot;, category: &quot;疏散外风类&quot;, chapter: &quot;第二十二章 治风中成药&quot; &#125;,        &#123; name: &quot;正天丸&quot;, category: &quot;疏散外风类&quot;, chapter: &quot;第二十二章 治风中成药&quot; &#125;,        &#123; name: &quot;天麻钩藤颗粒&quot;, category: &quot;平息内风类&quot;, chapter: &quot;第二十二章 治风中成药&quot; &#125;,        &#123; name: &quot;松龄血脉康胶囊&quot;, category: &quot;平息内风类&quot;, chapter: &quot;第二十二章 治风中成药&quot; &#125;,        &#123; name: &quot;脑立清丸&quot;, category: &quot;平息内风类&quot;, chapter: &quot;第二十二章 治风中成药&quot; &#125;,        // 第二十三章 祛湿中成药        &#123; name: &quot;肾炎四味片&quot;, category: &quot;清热利湿消肿类&quot;, chapter: &quot;第二十三章 祛湿中成药&quot; &#125;,        &#123; name: &quot;肾炎康复片&quot;, category: &quot;清热利湿消肿类&quot;, chapter: &quot;第二十三章 祛湿中成药&quot; &#125;,        &#123; name: &quot;茵栀黄口服液&quot;, category: &quot;清热利胆类&quot;, chapter: &quot;第二十三章 祛湿中成药&quot; &#125;,        &#123; name: &quot;茵陈五苓丸&quot;, category: &quot;清热利胆类&quot;, chapter: &quot;第二十三章 祛湿中成药&quot; &#125;,        &#123; name: &quot;八正合剂&quot;, category: &quot;利湿通淋类&quot;, chapter: &quot;第二十三章 祛湿中成药&quot; &#125;,        &#123; name: &quot;三金片&quot;, category: &quot;利湿通淋类&quot;, chapter: &quot;第二十三章 祛湿中成药&quot; &#125;,        &#123; name: &quot;癃闭舒胶囊&quot;, category: &quot;利湿通淋类&quot;, chapter: &quot;第二十三章 祛湿中成药&quot; &#125;,        &#123; name: &quot;香连丸&quot;, category: &quot;祛湿止泻类&quot;, chapter: &quot;第二十三章 祛湿中成药&quot; &#125;,        &#123; name: &quot;香连化滞丸&quot;, category: &quot;祛湿止泻类&quot;, chapter: &quot;第二十三章 祛湿中成药&quot; &#125;,        &#123; name: &quot;五苓散&quot;, category: &quot;温化水湿类&quot;, chapter: &quot;第二十三章 祛湿中成药&quot; &#125;,        &#123; name: &quot;萆薢分清丸&quot;, category: &quot;温化水湿类&quot;, chapter: &quot;第二十三章 祛湿中成药&quot; &#125;,        // 第二十四章 蠲痹中成药        &#123; name: &quot;小活络丸&quot;, category: &quot;祛寒通痹类&quot;, chapter: &quot;第二十四章 蠲痹中成药&quot; &#125;,        &#123; name: &quot;木瓜丸&quot;, category: &quot;祛寒通痹类&quot;, chapter: &quot;第二十四章 蠲痹中成药&quot; &#125;,        &#123; name: &quot;四妙丸&quot;, category: &quot;清热通痹类&quot;, chapter: &quot;第二十四章 蠲痹中成药&quot; &#125;,        &#123; name: &quot;颈复康颗粒&quot;, category: &quot;活血通痹类&quot;, chapter: &quot;第二十四章 蠲痹中成药&quot; &#125;,        &#123; name: &quot;独活寄生合剂&quot;, category: &quot;补虚通痹类&quot;, chapter: &quot;第二十四章 蠲痹中成药&quot; &#125;,        &#123; name: &quot;天麻丸&quot;, category: &quot;补虚通痹类&quot;, chapter: &quot;第二十四章 蠲痹中成药&quot; &#125;,        // 第二十五章 外科、皮肤科常用中成药        &#123; name: &quot;连翘败毒丸&quot;, category: &quot;治疮疡类&quot;, chapter: &quot;第二十五章 外科、皮肤科常用中成药&quot; &#125;,        &#123; name: &quot;牛黄醒消丸&quot;, category: &quot;治疮疡类&quot;, chapter: &quot;第二十五章 外科、皮肤科常用中成药&quot; &#125;,        &#123; name: &quot;当归苦参丸&quot;, category: &quot;治疮疡类&quot;, chapter: &quot;第二十五章 外科、皮肤科常用中成药&quot; &#125;,        &#123; name: &quot;生肌玉红膏&quot;, category: &quot;治疮疡类&quot;, chapter: &quot;第二十五章 外科、皮肤科常用中成药&quot; &#125;,        &#123; name: &quot;京万红软膏&quot;, category: &quot;治烧伤类&quot;, chapter: &quot;第二十五章 外科、皮肤科常用中成药&quot; &#125;,        &#123; name: &quot;小金丸&quot;, category: &quot;治瘰核乳癖类&quot;, chapter: &quot;第二十五章 外科、皮肤科常用中成药&quot; &#125;,        &#123; name: &quot;乳癖消颗粒&quot;, category: &quot;治瘰核乳癖类&quot;, chapter: &quot;第二十五章 外科、皮肤科常用中成药&quot; &#125;,        &#123; name: &quot;地榆槐角丸&quot;, category: &quot;治痔肿类&quot;, chapter: &quot;第二十五章 外科、皮肤科常用中成药&quot; &#125;,        &#123; name: &quot;消银胶囊&quot;, category: &quot;治痒疹类&quot;, chapter: &quot;第二十五章 外科、皮肤科常用中成药&quot; &#125;,        // 第二十六章 妇科常用中成药        &#123; name: &quot;大黄䗪虫丸&quot;, category: &quot;调经类&quot;, chapter: &quot;第二十六章 妇科常用中成药&quot; &#125;,        &#123; name: &quot;七制香附丸&quot;, category: &quot;调经类&quot;, chapter: &quot;第二十六章 妇科常用中成药&quot; &#125;,        &#123; name: &quot;八珍益母胶囊&quot;, category: &quot;调经类&quot;, chapter: &quot;第二十六章 妇科常用中成药&quot; &#125;,        &#123; name: &quot;乌鸡白凤丸&quot;, category: &quot;调经类&quot;, chapter: &quot;第二十六章 妇科常用中成药&quot; &#125;,        &#123; name: &quot;少腹逐瘀丸&quot;, category: &quot;调经类&quot;, chapter: &quot;第二十六章 妇科常用中成药&quot; &#125;,        &#123; name: &quot;艾附暖宫丸&quot;, category: &quot;调经类&quot;, chapter: &quot;第二十六章 妇科常用中成药&quot; &#125;,        &#123; name: &quot;固经丸&quot;, category: &quot;调经类&quot;, chapter: &quot;第二十六章 妇科常用中成药&quot; &#125;,        &#123; name: &quot;更年安片&quot;, category: &quot;调经类&quot;, chapter: &quot;第二十六章 妇科常用中成药&quot; &#125;,        &#123; name: &quot;千金止带丸&quot;, category: &quot;止带类&quot;, chapter: &quot;第二十六章 妇科常用中成药&quot; &#125;,        &#123; name: &quot;白带丸&quot;, category: &quot;止带类&quot;, chapter: &quot;第二十六章 妇科常用中成药&quot; &#125;,        &#123; name: &quot;妇科千金片&quot;, category: &quot;止带类&quot;, chapter: &quot;第二十六章 妇科常用中成药&quot; &#125;,        &#123; name: &quot;生化丸&quot;, category: &quot;产后康复类&quot;, chapter: &quot;第二十六章 妇科常用中成药&quot; &#125;,        &#123; name: &quot;通乳颗粒&quot;, category: &quot;产后康复类&quot;, chapter: &quot;第二十六章 妇科常用中成药&quot; &#125;,        &#123; name: &quot;桂枝茯苓丸&quot;, category: &quot;活血消癥类&quot;, chapter: &quot;第二十六章 妇科常用中成药&quot; &#125;,        // 第二十七章 儿科常用中成药        &#123; name: &quot;小儿热速清口服液&quot;, category: &quot;解表类&quot;, chapter: &quot;第二十七章 儿科常用中成药&quot; &#125;,        &#123; name: &quot;解肌宁嗽丸&quot;, category: &quot;解表类&quot;, chapter: &quot;第二十七章 儿科常用中成药&quot; &#125;,        &#123; name: &quot;小儿咽扁颗粒&quot;, category: &quot;清热类&quot;, chapter: &quot;第二十七章 儿科常用中成药&quot; &#125;,        &#123; name: &quot;小儿泻速停颗粒&quot;, category: &quot;止泻类&quot;, chapter: &quot;第二十七章 儿科常用中成药&quot; &#125;,        &#123; name: &quot;止泻灵颗粒&quot;, category: &quot;止泻类&quot;, chapter: &quot;第二十七章 儿科常用中成药&quot; &#125;,        &#123; name: &quot;小儿消食片&quot;, category: &quot;消导类&quot;, chapter: &quot;第二十七章 儿科常用中成药&quot; &#125;,        &#123; name: &quot;肥儿丸&quot;, category: &quot;消导类&quot;, chapter: &quot;第二十七章 儿科常用中成药&quot; &#125;,        &#123; name: &quot;小儿咳喘灵颗粒&quot;, category: &quot;止咳喘类&quot;, chapter: &quot;第二十七章 儿科常用中成药&quot; &#125;,        &#123; name: &quot;清宣止咳颗粒&quot;, category: &quot;止咳喘类&quot;, chapter: &quot;第二十七章 儿科常用中成药&quot; &#125;,        &#123; name: &quot;鹭鸶咯丸&quot;, category: &quot;止咳喘类&quot;, chapter: &quot;第二十七章 儿科常用中成药&quot; &#125;,        &#123; name: &quot;龙牡壮骨颗粒&quot;, category: &quot;补虚类&quot;, chapter: &quot;第二十七章 儿科常用中成药&quot; &#125;,        &#123; name: &quot;琥珀抱龙丸&quot;, category: &quot;镇惊息风类&quot;, chapter: &quot;第二十七章 儿科常用中成药&quot; &#125;,        // 第二十八章 眼科常用中成药        &#123; name: &quot;明目蒺藜丸&quot;, category: &quot;清热类&quot;, chapter: &quot;第二十八章 眼科常用中成药&quot; &#125;,        &#123; name: &quot;八宝眼药&quot;, category: &quot;清热类&quot;, chapter: &quot;第二十八章 眼科常用中成药&quot; &#125;,        &#123; name: &quot;明目地黄丸&quot;, category: &quot;扶正类&quot;, chapter: &quot;第二十八章 眼科常用中成药&quot; &#125;,        &#123; name: &quot;石斛夜光丸&quot;, category: &quot;扶正类&quot;, chapter: &quot;第二十八章 眼科常用中成药&quot; &#125;,        // 第二十九章 耳鼻喉、口腔科常用中成药        &#123; name: &quot;耳聋丸&quot;, category: &quot;治耳病类&quot;, chapter: &quot;第二十九章 耳鼻喉、口腔科常用中成药&quot; &#125;,        &#123; name: &quot;耳聋左慈丸&quot;, category: &quot;治耳病类&quot;, chapter: &quot;第二十九章 耳鼻喉、口腔科常用中成药&quot; &#125;,        &#123; name: &quot;千柏鼻炎胶囊&quot;, category: &quot;治鼻病类&quot;, chapter: &quot;第二十九章 耳鼻喉、口腔科常用中成药&quot; &#125;,        &#123; name: &quot;藿胆丸&quot;, category: &quot;治鼻病类&quot;, chapter: &quot;第二十九章 耳鼻喉、口腔科常用中成药&quot; &#125;,        &#123; name: &quot;辛芩颗粒&quot;, category: &quot;治鼻病类&quot;, chapter: &quot;第二十九章 耳鼻喉、口腔科常用中成药&quot; &#125;,        &#123; name: &quot;冰硼散&quot;, category: &quot;治咽喉病类&quot;, chapter: &quot;第二十九章 耳鼻喉、口腔科常用中成药&quot; &#125;,        &#123; name: &quot;玄麦甘桔含片&quot;, category: &quot;治咽喉病类&quot;, chapter: &quot;第二十九章 耳鼻喉、口腔科常用中成药&quot; &#125;,        &#123; name: &quot;六神丸&quot;, category: &quot;治咽喉病类&quot;, chapter: &quot;第二十九章 耳鼻喉、口腔科常用中成药&quot; &#125;,        &#123; name: &quot;黄氏响声丸&quot;, category: &quot;治咽喉病类&quot;, chapter: &quot;第二十九章 耳鼻喉、口腔科常用中成药&quot; &#125;,        &#123; name: &quot;口炎清颗粒&quot;, category: &quot;治口腔病类&quot;, chapter: &quot;第二十九章 耳鼻喉、口腔科常用中成药&quot; &#125;,        &#123; name: &quot;口腔溃疡散&quot;, category: &quot;治口腔病类&quot;, chapter: &quot;第二十九章 耳鼻喉、口腔科常用中成药&quot; &#125;,        // 第三十章 骨伤科常用中成药        &#123; name: &quot;接骨丸&quot;, category: &quot;骨伤科类&quot;, chapter: &quot;第三十章 骨伤科常用中成药&quot; &#125;,        &#123; name: &quot;七厘散&quot;, category: &quot;骨伤科类&quot;, chapter: &quot;第三十章 骨伤科常用中成药&quot; &#125;,        &#123; name: &quot;跌打丸&quot;, category: &quot;骨伤科类&quot;, chapter: &quot;第三十章 骨伤科常用中成药&quot; &#125;,        &#123; name: &quot;活血止痛散&quot;, category: &quot;骨伤科类&quot;, chapter: &quot;第三十章 骨伤科常用中成药&quot; &#125;    ];    // 随机打乱数组顺序    function shuffleArray(array) &#123;        const newArray = [...array];        for (let i = newArray.length - 1; i &gt; 0; i--) &#123;            const j = Math.floor(Math.random() * (i + 1));            [newArray[i], newArray[j]] = [newArray[j], newArray[i]];        &#125;        return newArray;    &#125;    // 游戏变量初始化    let shuffledDrugs = [];    let currentIndex = 0;    // 获取DOM元素    const drugNameEl = document.querySelector(&#39;.drug-name&#39;);    const answerEl = document.querySelector(&#39;.answer&#39;);    const showAnswerBtn = document.getElementById(&#39;show-answer&#39;);    const nextQuestionBtn = document.getElementById(&#39;next-question&#39;);    // 初始化游戏    function initGame() &#123;        shuffledDrugs = shuffleArray(drugsData);        currentIndex = 0;    &#125;    // 显示下一题（随机）    function showNextQuestion() &#123;        if (currentIndex &lt; shuffledDrugs.length) &#123;            const currentDrug = shuffledDrugs[currentIndex];            drugNameEl.textContent = currentDrug.name;            answerEl.style.display = &#39;none&#39;;            currentIndex++;        &#125; else &#123;            // 完成所有题目后重新开始            drugNameEl.textContent = &#39;已完成所有题目，将重新开始！&#39;;            answerEl.style.display = &#39;none&#39;;            setTimeout(initGame, 1000);            setTimeout(showNextQuestion, 1000);        &#125;    &#125;    // 显示答案（包含章节信息）    function showAnswer() &#123;        if (currentIndex &gt; 0 &amp;&amp; currentIndex &lt;= shuffledDrugs.length) &#123;            const currentDrug = shuffledDrugs[currentIndex - 1];            answerEl.innerHTML = `                &lt;strong&gt;所属小类：&lt;/strong&gt;$&#123;currentDrug.category&#125;&lt;br&gt;                &lt;strong&gt;所属章节：&lt;/strong&gt;$&#123;currentDrug.chapter&#125;            `;            answerEl.style.display = &#39;block&#39;;        &#125;    &#125;    // 绑定按钮事件    nextQuestionBtn.addEventListener(&#39;click&#39;, showNextQuestion);    showAnswerBtn.addEventListener(&#39;click&#39;, showAnswer);    // 初始化游戏    initGame();&lt;/script&gt;</code></pre></body></html>]]></content>
-      
-      
+<search>
+  <entry>
+    <title>2023河南高考录取时间</title>
+    <url>/2023/07/20/2023-he-nan-gao-kao-lu-qu-shi-jian/</url>
+    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/658268bbc458853aefd7e0fd.png"></p>
+]]></content>
       <categories>
-          
-          <category> 编程 </category>
-          
+        <category>2023高考</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 药用植物学 </tag>
-            
-            <tag> html </tag>
-            
-            <tag> 编程 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>10.27_神农园</title>
-      <link href="/2024/10/27/10-27-shen-nong-yuan/"/>
-      <url>/2024/10/27/10-27-shen-nong-yuan/</url>
-      
-        <content type="html"><![CDATA[]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>摄影记录杭州</title>
-      <link href="/2024/07/11/she-ying-ji-lu-hang-zhou/"/>
-      <url>/2024/07/11/she-ying-ji-lu-hang-zhou/</url>
-      
-        <content type="html"><![CDATA[<p><img src="https://pic.imgdb.cn/item/668f5388d9c307b7e9a2d935.jpg"></p>]]></content>
-      
-      
+      <tags>
+        <tag>2023高考</tag>
+        <tag>河南</tag>
+        <tag>高考录取</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>新电脑</title>
+    <url>/2023/06/18/xin-dian-nao/</url>
+    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/658269ffc458853aefdca16f.jpg" alt="AMD yes!"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>你好</title>
+    <url>/2023/06/10/ni-hao/</url>
+    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582442bc458853aef619333.jpg"></p>
+]]></content>
+      <tags>
+        <tag>杂项</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>李跳跳最后版本下载</title>
+    <url>/2023/08/27/li-tiao-tiao-zui-hou-ban-ben-xia-zai/</url>
+    <content><![CDATA[<blockquote>
+<p>鉴于李跳跳不再更新,在此分享一下之前下的最后一个版本的李跳跳,留作备份</p>
+</blockquote>
+<p><img src="https://pic.imgdb.cn/item/658269b3c458853aefdb7ab1.png"></p>
+<h2 id="点我跳转蓝奏云下载"><a href="#点我跳转蓝奏云下载" class="headerlink" title="点我跳转蓝奏云下载"></a><a href="https://wwi.lanzoup.com/ikZAy16m864d">点我跳转蓝奏云下载</a></h2><p><em>想的话可以打赏一下哦</em></p>
+]]></content>
       <categories>
-          
-          <category> 摄影 </category>
-          
+        <category>分享</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 摄影 </tag>
-            
-            <tag> 杭州 </tag>
-            
-            <tag> D5300 </tag>
-            
-            <tag> 35mm f1.8g </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>药用植物学小问答</title>
-      <link href="/2023/12/24/yao-yong-zhi-wu-xue-xiao-wen-da/"/>
-      <url>/2023/12/24/yao-yong-zhi-wu-xue-xiao-wen-da/</url>
-      
-        <content type="html"><![CDATA[<h1 id="涉及药用植物学中基础的药用植物科的分类"><a href="#涉及药用植物学中基础的药用植物科的分类" class="headerlink" title="涉及药用植物学中基础的药用植物科的分类"></a>涉及药用植物学中基础的药用植物科的分类</h1><!DOCTYPE html><html lang="zh-CN"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>植物学问答</title>    <style>        /* 植物学问答容器样式 */        .quiz-container {            width: 100%;            margin: auto;            padding: 20px;            background-color: #fff;            border-radius: 5px;            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);        }        /* 问题样式 */        .question {            font-size: 18px;            margin-bottom: 10px;        }        /* 回答输入框样式 */        #userAnswer {            width: 80%;            padding: 8px;            font-size: 16px;            margin-bottom: 10px;        }        /* 提交按钮样式 */        #submitBtn {            padding: 10px;            font-size: 16px;            background-color: #4caf50;            color: #fff;            border: none;            border-radius: 5px;            cursor: pointer;        }        /* 答案记录样式 */        #answerList {            margin-top: 20px;            font-size: 16px;            list-style-type: none; /* 移除列表默认样式 */            padding: 0; /* 移除列表默认内边距 */        }    </style></head><body><!-- 植物学问答容器 --><div class="quiz-container">    <div class="question" id="quizQuestion"></div>    <input type="text" id="userAnswer" placeholder="请输入答案">    <button id="submitBtn" onclick="checkAnswer()">提交答案</button>    <ul id="answerList"></ul></div><script>    // 在文档加载完毕后执行document.addEventListener('DOMContentLoaded', function() {    // 为输入框添加键盘事件监听器    document.getElementById('userAnswer').addEventListener('keyup', function(event) {        // 判断是否按下 Enter 键（键码13为 Enter 键的键码）        if (event.keyCode === 13) {            // 调用 checkAnswer() 函数            checkAnswer();        }    });});    // 植物学问答 JavaScript 代码    var categories = {    '蓼科': [        { name: '唐古特大黄 (R.tanguticum Maxim.et BalF)', weight: 1.0 },        { name: '何首乌 (Polygonum multiflorum Thunb)', weight: 1.0 }    ],    '毛茛科': [        { name: '乌头 (Aconitum carmichaeli Debx.)', weight: 1.0 },        { name: '黄连 (Coptis chinensis Franch)', weight: 1.0 },        { name: '威灵仙 (Clematis chinensis Osbeck)', weight: 1.0 }    ],    '木兰科': [        { name: '厚朴 (Magnolia officinalis Rehb.et Wils.)', weight: 1.0 },        { name: '八角 (Illicium verum Hook.f.)', weight: 1.0 },        { name: '五味子 (Schisandra chinensis(Turcz.)Baill.)', weight: 1.0 }    ],    '十字花科': [        { name: '菘蓝 (Isatis indigotica Fort.)', weight: 1.0 },        { name: '荠菜 (Capsella bursa-pastoris(L.)Medic.)', weight: 1.0 },        { name: '萝卜 (Raphanus sativus L.)', weight: 1.0 }    ],    '蔷薇科': [        { name: '龙牙草 (Agrimonia pilosa Ledeb)', weight: 1.0 },        { name: '地榆 (Sanguisorba officinalis L.)', weight: 1.0 },        { name: '玫瑰 (Rosa rugosa Thunb)', weight: 1.0 }    ],    '豆科': [        { name: '合欢 (Albizia julibrissin Durazz.)', weight: 1.0 },        { name: '决明 (Cassia obtusifolia L.)', weight: 1.0 },        { name: '槐树 (Sophora japonica L.)', weight: 1.0 }    ],    '五加科': [        { name: '人参 (Panax ginseng C.A.Mey.)', weight: 1.0 },        { name: '三七 (Panax notoginseng (Burk.) F.H. Chen)', weight: 1.0 },        { name: '刺五加 (Acanthopanax senticosus (Rupr.et Maxim.) Harms.)', weight: 1.0 }    ],    '伞形科': [        { name: '当归 (Angelica sinensis (Oliv.) Diels)', weight: 1.0 },        { name: '川芎 (Ligusticum chuanxiong Hort.)', weight: 1.0 },        { name: '防风 (Saposhnikovia divaricata (Turez.) Schischk.)', weight: 1.0 }    ],    '唇形科': [        { name: '薄荷 (Mentha haplocalyx Briq.)', weight: 1.0 },        { name: '丹参 (Salvia miltiorrhiza Bge.)', weight: 1.0 },        { name: '益母草 (Leonurus japonicus Houtt)', weight: 1.0 }    ],    '葫芦科': [        { name: '栝楼 (Trichosanthes kirilowii Maxim)', weight: 1.0 },        { name: '木鳖 (Momordica cochinchinensis (Lour.) Spreng.)', weight: 1.0 }    ],    '桔梗科': [        { name: '桔梗 (Platycodon grandiflorum (Jacq.) A.DC.)', weight: 1.0 },        { name: '党参 (Codonopsis pilosula (Franch.) Nannf.)', weight: 1.0 }    ],    '菊科': [        { name: '菊花 (Chrysanthemum morifolium Ramat.)', weight: 1.0 },        { name: '红花 (Carthamus tinctorius L.)', weight: 1.0 },        { name: '白术 (Atractylodes macrocephala Koidz.)', weight: 1.0 }    ],    '天南星科': [        { name: '天南星 (Arisaema erubescens (Wall.) Schott)', weight: 1.0 },        { name: '半夏 (Pinellia ternata (Thunb.) Breit.)', weight: 1.0 }    ],    '百合科': [        { name: '百合 (Lilium brownii F.E.Brown var. viridulum Baker)', weight: 1.0 },        { name: '川贝母 (Fritillaria cirrhosa D.Don)', weight: 1.0 }    ]};var categoryList = Object.keys(categories);var currentItem, currentCategory;var answerList = [];var questionProbabilities = {}; // 问题概率var weightForCorrect = 0.5; // 回答正确时概率减小权重var weightForIncorrect = 1.0; // 回答错误时概率增加权重// 初始化问题概率categoryList.forEach(function(category) {    questionProbabilities[category] = 1.0;});function quiz() {    var totalProbability = Object.values(questionProbabilities).reduce((acc, val) => acc + val, 0);    var normalizedProbabilities = Object.fromEntries(        Object.entries(questionProbabilities).map(([key, value]) => [key, value / totalProbability])    );    var randomCategory = weightedRandom(normalizedProbabilities);    var categoryItems = categories[randomCategory];    var itemProbabilities = categoryItems.map(item => item.weight);    var normalizedItemProbabilities = itemProbabilities.map(prob => prob / itemProbabilities.reduce((a, b) => a + b, 0));    var randomItemIndex = weightedRandom(normalizedItemProbabilities);    var randomItem = categoryItems[randomItemIndex].name;    document.getElementById('quizQuestion').innerText = `【${randomItem}】是什么科的？`;    currentItem = randomItem;    currentCategory = randomCategory;    document.getElementById('userAnswer').value = "";}function weightedRandom(probabilities) {    var r = Math.random();    var sum = 0;    for (var key in probabilities) {        sum += probabilities[key];        if (r <= sum) return key;    }}function checkAnswer() {    var userAnswer = document.getElementById('userAnswer').value.toLowerCase();    var isCorrect = userAnswer === currentCategory.toLowerCase();    // 获取当前植物的权重百分比    var currentPlant = categories[currentCategory].find(item => item.name === currentItem);    var currentPlantProbability = (currentPlant.weight * 100).toFixed(2);    // 更新问题概率    questionProbabilities[currentCategory] *= isCorrect ? (1 - weightForCorrect) : (1 + weightForIncorrect);    // 更新植物权重    currentPlant.weight *= isCorrect ? (1 - weightForCorrect) : (1 + weightForIncorrect);    // 保存答案记录    answerList.push({        index: answerList.length + 1,        question: currentItem,        userAnswer: userAnswer,        isCorrect: isCorrect,        correctAnswer: currentCategory,        plantProbability: currentPlantProbability,  // 添加当前植物的权重百分比    });    // 更新答案记录显示    updateAnswerList();    // 重新出题    quiz();}function updateAnswerList() {    var answerListContainer = document.getElementById('answerList');    answerListContainer.innerHTML = ""; // 清空旧记录    // 对答案列表按照时间逆序和是否正确进行排序    answerList.sort(function(a, b) {        if (a.index < b.index) return 1; // 逆序排序        if (a.index > b.index) return -1;        return b.isCorrect - a.isCorrect; // 错误的在前，正确的在后    });    // 分别存储正确和错误的历史记录    var correctAnswers = [];    var incorrectAnswers = [];    // 将记录分类存储    answerList.forEach(function(answer) {        if (answer.isCorrect) {            correctAnswers.push(answer);        } else {            incorrectAnswers.push(answer);        }    });    // 显示错误的历史记录在上面    incorrectAnswers.forEach(function(answer) {        var listItem = createListItem(answer);        answerListContainer.appendChild(listItem);    });    // 显示正确的历史记录在下面    correctAnswers.forEach(function(answer) {        var listItem = createListItem(answer);        answerListContainer.appendChild(listItem);    });}// 创建答案记录列表项function createListItem(answer) {    var listItem = document.createElement('li');    listItem.innerHTML =        "<strong>第" + answer.index + "题: </strong>" + answer.question + " | " +        "回答: " + answer.userAnswer +        (answer.isCorrect ? " | <span style='color: green;'>正确</span>" : " | <span style='color: red;'>错误</span>") +        " | 正确答案: " + answer.correctAnswer    // 高亮显示上一题的答案    if (answer.index === answerList.length) {        listItem.style.backgroundColor = "#ffffcc"; // 可以根据需要修改高亮的背景色    }    return listItem;}// 根据权重随机选择function weightedRandom(probabilities) {    var r = Math.random();    var sum = 0;    for (var key in probabilities) {        sum += probabilities[key];        if (r <= sum) return key;    }}// 初始化问答quiz();</script></body></html><h1 id="涉及到的植物"><a href="#涉及到的植物" class="headerlink" title="涉及到的植物"></a>涉及到的植物</h1><table><thead><tr><th>科名</th><th>植物名称</th></tr></thead><tbody><tr><td>蓼科</td><td>唐古特大黄 (R.tanguticum Maxim.et BalF), 何首乌 (Polygonum multiflorum Thunb)</td></tr><tr><td>毛茛科</td><td>乌头 (Aconitum carmichaeli Debx.), 黄连 (Coptis chinensis Franch), 威灵仙 (Clematis chinensis Osbeck)</td></tr><tr><td>木兰科</td><td>厚朴 (Magnolia officinalis Rehb.et Wils.), 八角 (Illicium verum Hook.f.), 五味子 (Schisandra chinensis(Turca.)Baill.)</td></tr><tr><td>十字花科</td><td>菘蓝 (Isatis indigotica Fort.), 荠菜 (Capsella bursa-pastoris(L.)Medic.), 萝卜 (Raphanus sativus L.)</td></tr><tr><td>蔷薇科</td><td>龙牙草 (Agrimonia pilosa Ledeb), 地榆 (Sanguisorba officinalis L.), 玫瑰 (Rosa rugosa Thunb)</td></tr><tr><td>豆科</td><td>合欢 (Albizia julibrissin Durazz.), 决明 (Cassia obtusifolia L.), 槐树 (Sophora japonica L.)</td></tr><tr><td>五加科</td><td>人参 (Panax ginseng C.A.Mey.), 三七 (P. notoginseng (Burk.) F.H. chen), 刺五加 (Acanthopanax senticosus (Rupr.et Maxim.) Harms.)</td></tr><tr><td>伞形科</td><td>当归 (Angelica sinensis (Oliv.) Diels), 川芎 (Ligusticum chuanxiong Hort.), 防风 (Saposhnikovia divaricata (Turez.) Schischk.)</td></tr><tr><td>唇形科</td><td>薄荷 (Mentha haplocalyx Briq.), 丹参 (Salvia miltiorrhiza Bge.), 益母草 (Leonurus japonicus Houtt)</td></tr><tr><td>葫芦科</td><td>栝楼 (Trichosanthes kirilowii Maxim), 木鳖 (Momordica cochinchinensis (Lour.) Spreng.)</td></tr><tr><td>桔梗科</td><td>桔梗 (Platycodon grandiflorum (Jacq.) A.DC.), 党参 (Codonopsis pilosula (Franch.) Nannf.)</td></tr><tr><td>菊科</td><td>菊花 (Chrysanthemum morifolium Ramat.), 红花 (Carthamus tinctorius L.), 白术 (Atractylodes macrocephala Koidz.)</td></tr><tr><td>天南星科</td><td>天南星 (Arisaema erubescens (Wall.) Schott), 半夏 (Pinellia ternata (Thunb.) Breit.)</td></tr><tr><td>百合科</td><td>百合 (Lilium brownii F.E.Brown var. viridulum Baker), 川贝母 (Fritillaria cirrhosa D.Don)</td></tr></tbody></table>]]></content>
-      
-      
+      <tags>
+        <tag>软件</tag>
+        <tag>李跳跳</tag>
+        <tag>apk</tag>
+        <tag>免费下载</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>河南：一图了解平行志愿录取</title>
+    <url>/2023/07/11/he-nan-yi-tu-liao-jie-ping-xing-zhi-yuan-lu-qu/</url>
+    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582697dc458853aefda7e61.png" alt="河南：一图了解平行志愿"></p>
+]]></content>
       <categories>
-          
-          <category> 编程 </category>
-          
+        <category>搬运</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 药用植物学 </tag>
-            
-            <tag> html </tag>
-            
-            <tag> 编程 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>李跳跳最后版本下载</title>
-      <link href="/2023/08/27/li-tiao-tiao-zui-hou-ban-ben-xia-zai/"/>
-      <url>/2023/08/27/li-tiao-tiao-zui-hou-ban-ben-xia-zai/</url>
-      
-        <content type="html"><![CDATA[<blockquote><p>鉴于李跳跳不再更新,在此分享一下之前下的最后一个版本的李跳跳,留作备份</p></blockquote><p><img src="https://pic.imgdb.cn/item/658269b3c458853aefdb7ab1.png"></p><h2 id="点我跳转蓝奏云下载"><a href="#点我跳转蓝奏云下载" class="headerlink" title="点我跳转蓝奏云下载"></a><a href="https://wwi.lanzoup.com/ikZAy16m864d">点我跳转蓝奏云下载</a></h2><p><em>想的话可以打赏一下哦</em></p>]]></content>
-      
-      
+      <tags>
+        <tag>2023高考</tag>
+        <tag>河南</tag>
+        <tag>高考</tag>
+        <tag>志愿</tag>
+        <tag>2023</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>河南：一图了解平行志愿</title>
+    <url>/2023/06/30/he-nan-yi-tu-liao-jie-ping-xing-zhi-yuan/</url>
+    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582692dc458853aefd94339.jpg" alt="来源：河南省教育考试院"></p>
+]]></content>
+      <tags>
+        <tag>高考</tag>
+        <tag>转载</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>药用植物学小问答</title>
+    <url>/2023/12/24/yao-yong-zhi-wu-xue-xiao-wen-da/</url>
+    <content><![CDATA[<h1 id="涉及药用植物学中基础的药用植物科的分类"><a href="#涉及药用植物学中基础的药用植物科的分类" class="headerlink" title="涉及药用植物学中基础的药用植物科的分类"></a>涉及药用植物学中基础的药用植物科的分类</h1><!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>植物学问答</title>
+    <style>
+        /* 植物学问答容器样式 */
+        .quiz-container {
+            width: 100%;
+            margin: auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        /* 问题样式 */
+        .question {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        /* 回答输入框样式 */
+        #userAnswer {
+            width: 80%;
+            padding: 8px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        /* 提交按钮样式 */
+        #submitBtn {
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        /* 答案记录样式 */
+        #answerList {
+            margin-top: 20px;
+            font-size: 16px;
+            list-style-type: none; /* 移除列表默认样式 */
+            padding: 0; /* 移除列表默认内边距 */
+        }
+    </style>
+</head>
+<body>
+<!-- 植物学问答容器 -->
+<div class="quiz-container">
+    <div class="question" id="quizQuestion"></div>
+    <input type="text" id="userAnswer" placeholder="请输入答案">
+    <button id="submitBtn" onclick="checkAnswer()">提交答案</button>
+    <ul id="answerList"></ul>
+</div>
+<script>
+    // 在文档加载完毕后执行
+document.addEventListener('DOMContentLoaded', function() {
+    // 为输入框添加键盘事件监听器
+    document.getElementById('userAnswer').addEventListener('keyup', function(event) {
+        // 判断是否按下 Enter 键（键码13为 Enter 键的键码）
+        if (event.keyCode === 13) {
+            // 调用 checkAnswer() 函数
+            checkAnswer();
+        }
+    });
+});
+    // 植物学问答 JavaScript 代码
+    var categories = {
+    '蓼科': [
+        { name: '唐古特大黄 (R.tanguticum Maxim.et BalF)', weight: 1.0 },
+        { name: '何首乌 (Polygonum multiflorum Thunb)', weight: 1.0 }
+    ],
+    '毛茛科': [
+        { name: '乌头 (Aconitum carmichaeli Debx.)', weight: 1.0 },
+        { name: '黄连 (Coptis chinensis Franch)', weight: 1.0 },
+        { name: '威灵仙 (Clematis chinensis Osbeck)', weight: 1.0 }
+    ],
+    '木兰科': [
+        { name: '厚朴 (Magnolia officinalis Rehb.et Wils.)', weight: 1.0 },
+        { name: '八角 (Illicium verum Hook.f.)', weight: 1.0 },
+        { name: '五味子 (Schisandra chinensis(Turcz.)Baill.)', weight: 1.0 }
+    ],
+    '十字花科': [
+        { name: '菘蓝 (Isatis indigotica Fort.)', weight: 1.0 },
+        { name: '荠菜 (Capsella bursa-pastoris(L.)Medic.)', weight: 1.0 },
+        { name: '萝卜 (Raphanus sativus L.)', weight: 1.0 }
+    ],
+    '蔷薇科': [
+        { name: '龙牙草 (Agrimonia pilosa Ledeb)', weight: 1.0 },
+        { name: '地榆 (Sanguisorba officinalis L.)', weight: 1.0 },
+        { name: '玫瑰 (Rosa rugosa Thunb)', weight: 1.0 }
+    ],
+    '豆科': [
+        { name: '合欢 (Albizia julibrissin Durazz.)', weight: 1.0 },
+        { name: '决明 (Cassia obtusifolia L.)', weight: 1.0 },
+        { name: '槐树 (Sophora japonica L.)', weight: 1.0 }
+    ],
+    '五加科': [
+        { name: '人参 (Panax ginseng C.A.Mey.)', weight: 1.0 },
+        { name: '三七 (Panax notoginseng (Burk.) F.H. Chen)', weight: 1.0 },
+        { name: '刺五加 (Acanthopanax senticosus (Rupr.et Maxim.) Harms.)', weight: 1.0 }
+    ],
+    '伞形科': [
+        { name: '当归 (Angelica sinensis (Oliv.) Diels)', weight: 1.0 },
+        { name: '川芎 (Ligusticum chuanxiong Hort.)', weight: 1.0 },
+        { name: '防风 (Saposhnikovia divaricata (Turez.) Schischk.)', weight: 1.0 }
+    ],
+    '唇形科': [
+        { name: '薄荷 (Mentha haplocalyx Briq.)', weight: 1.0 },
+        { name: '丹参 (Salvia miltiorrhiza Bge.)', weight: 1.0 },
+        { name: '益母草 (Leonurus japonicus Houtt)', weight: 1.0 }
+    ],
+    '葫芦科': [
+        { name: '栝楼 (Trichosanthes kirilowii Maxim)', weight: 1.0 },
+        { name: '木鳖 (Momordica cochinchinensis (Lour.) Spreng.)', weight: 1.0 }
+    ],
+    '桔梗科': [
+        { name: '桔梗 (Platycodon grandiflorum (Jacq.) A.DC.)', weight: 1.0 },
+        { name: '党参 (Codonopsis pilosula (Franch.) Nannf.)', weight: 1.0 }
+    ],
+    '菊科': [
+        { name: '菊花 (Chrysanthemum morifolium Ramat.)', weight: 1.0 },
+        { name: '红花 (Carthamus tinctorius L.)', weight: 1.0 },
+        { name: '白术 (Atractylodes macrocephala Koidz.)', weight: 1.0 }
+    ],
+    '天南星科': [
+        { name: '天南星 (Arisaema erubescens (Wall.) Schott)', weight: 1.0 },
+        { name: '半夏 (Pinellia ternata (Thunb.) Breit.)', weight: 1.0 }
+    ],
+    '百合科': [
+        { name: '百合 (Lilium brownii F.E.Brown var. viridulum Baker)', weight: 1.0 },
+        { name: '川贝母 (Fritillaria cirrhosa D.Don)', weight: 1.0 }
+    ]
+};
+var categoryList = Object.keys(categories);
+var currentItem, currentCategory;
+var answerList = [];
+var questionProbabilities = {}; // 问题概率
+var weightForCorrect = 0.5; // 回答正确时概率减小权重
+var weightForIncorrect = 1.0; // 回答错误时概率增加权重
+// 初始化问题概率
+categoryList.forEach(function(category) {
+    questionProbabilities[category] = 1.0;
+});
+function quiz() {
+    var totalProbability = Object.values(questionProbabilities).reduce((acc, val) => acc + val, 0);
+    var normalizedProbabilities = Object.fromEntries(
+        Object.entries(questionProbabilities).map(([key, value]) => [key, value / totalProbability])
+    );
+    var randomCategory = weightedRandom(normalizedProbabilities);
+    var categoryItems = categories[randomCategory];
+    var itemProbabilities = categoryItems.map(item => item.weight);
+    var normalizedItemProbabilities = itemProbabilities.map(prob => prob / itemProbabilities.reduce((a, b) => a + b, 0));
+    var randomItemIndex = weightedRandom(normalizedItemProbabilities);
+    var randomItem = categoryItems[randomItemIndex].name;
+    document.getElementById('quizQuestion').innerText = `【${randomItem}】是什么科的？`;
+    currentItem = randomItem;
+    currentCategory = randomCategory;
+    document.getElementById('userAnswer').value = "";
+}
+function weightedRandom(probabilities) {
+    var r = Math.random();
+    var sum = 0;
+    for (var key in probabilities) {
+        sum += probabilities[key];
+        if (r <= sum) return key;
+    }
+}
+function checkAnswer() {
+    var userAnswer = document.getElementById('userAnswer').value.toLowerCase();
+    var isCorrect = userAnswer === currentCategory.toLowerCase();
+    // 获取当前植物的权重百分比
+    var currentPlant = categories[currentCategory].find(item => item.name === currentItem);
+    var currentPlantProbability = (currentPlant.weight * 100).toFixed(2);
+    // 更新问题概率
+    questionProbabilities[currentCategory] *= isCorrect ? (1 - weightForCorrect) : (1 + weightForIncorrect);
+    // 更新植物权重
+    currentPlant.weight *= isCorrect ? (1 - weightForCorrect) : (1 + weightForIncorrect);
+    // 保存答案记录
+    answerList.push({
+        index: answerList.length + 1,
+        question: currentItem,
+        userAnswer: userAnswer,
+        isCorrect: isCorrect,
+        correctAnswer: currentCategory,
+        plantProbability: currentPlantProbability,  // 添加当前植物的权重百分比
+    });
+    // 更新答案记录显示
+    updateAnswerList();
+    // 重新出题
+    quiz();
+}
+function updateAnswerList() {
+    var answerListContainer = document.getElementById('answerList');
+    answerListContainer.innerHTML = ""; // 清空旧记录
+    // 对答案列表按照时间逆序和是否正确进行排序
+    answerList.sort(function(a, b) {
+        if (a.index < b.index) return 1; // 逆序排序
+        if (a.index > b.index) return -1;
+        return b.isCorrect - a.isCorrect; // 错误的在前，正确的在后
+    });
+    // 分别存储正确和错误的历史记录
+    var correctAnswers = [];
+    var incorrectAnswers = [];
+    // 将记录分类存储
+    answerList.forEach(function(answer) {
+        if (answer.isCorrect) {
+            correctAnswers.push(answer);
+        } else {
+            incorrectAnswers.push(answer);
+        }
+    });
+    // 显示错误的历史记录在上面
+    incorrectAnswers.forEach(function(answer) {
+        var listItem = createListItem(answer);
+        answerListContainer.appendChild(listItem);
+    });
+    // 显示正确的历史记录在下面
+    correctAnswers.forEach(function(answer) {
+        var listItem = createListItem(answer);
+        answerListContainer.appendChild(listItem);
+    });
+}
+// 创建答案记录列表项
+function createListItem(answer) {
+    var listItem = document.createElement('li');
+    listItem.innerHTML =
+        "<strong>第" + answer.index + "题: </strong>" + answer.question + " | " +
+        "回答: " + answer.userAnswer +
+        (answer.isCorrect ? " | <span style='color: green;'>正确</span>" : " | <span style='color: red;'>错误</span>") +
+        " | 正确答案: " + answer.correctAnswer
+    // 高亮显示上一题的答案
+    if (answer.index === answerList.length) {
+        listItem.style.backgroundColor = "#ffffcc"; // 可以根据需要修改高亮的背景色
+    }
+    return listItem;
+}
+// 根据权重随机选择
+function weightedRandom(probabilities) {
+    var r = Math.random();
+    var sum = 0;
+    for (var key in probabilities) {
+        sum += probabilities[key];
+        if (r <= sum) return key;
+    }
+}
+// 初始化问答
+quiz();
+</script>
+</body>
+</html>
+
+<h1 id="涉及到的植物"><a href="#涉及到的植物" class="headerlink" title="涉及到的植物"></a>涉及到的植物</h1><table>
+<thead>
+<tr>
+<th>科名</th>
+<th>植物名称</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>蓼科</td>
+<td>唐古特大黄 (R.tanguticum Maxim.et BalF), 何首乌 (Polygonum multiflorum Thunb)</td>
+</tr>
+<tr>
+<td>毛茛科</td>
+<td>乌头 (Aconitum carmichaeli Debx.), 黄连 (Coptis chinensis Franch), 威灵仙 (Clematis chinensis Osbeck)</td>
+</tr>
+<tr>
+<td>木兰科</td>
+<td>厚朴 (Magnolia officinalis Rehb.et Wils.), 八角 (Illicium verum Hook.f.), 五味子 (Schisandra chinensis(Turca.)Baill.)</td>
+</tr>
+<tr>
+<td>十字花科</td>
+<td>菘蓝 (Isatis indigotica Fort.), 荠菜 (Capsella bursa-pastoris(L.)Medic.), 萝卜 (Raphanus sativus L.)</td>
+</tr>
+<tr>
+<td>蔷薇科</td>
+<td>龙牙草 (Agrimonia pilosa Ledeb), 地榆 (Sanguisorba officinalis L.), 玫瑰 (Rosa rugosa Thunb)</td>
+</tr>
+<tr>
+<td>豆科</td>
+<td>合欢 (Albizia julibrissin Durazz.), 决明 (Cassia obtusifolia L.), 槐树 (Sophora japonica L.)</td>
+</tr>
+<tr>
+<td>五加科</td>
+<td>人参 (Panax ginseng C.A.Mey.), 三七 (P. notoginseng (Burk.) F.H. chen), 刺五加 (Acanthopanax senticosus (Rupr.et Maxim.) Harms.)</td>
+</tr>
+<tr>
+<td>伞形科</td>
+<td>当归 (Angelica sinensis (Oliv.) Diels), 川芎 (Ligusticum chuanxiong Hort.), 防风 (Saposhnikovia divaricata (Turez.) Schischk.)</td>
+</tr>
+<tr>
+<td>唇形科</td>
+<td>薄荷 (Mentha haplocalyx Briq.), 丹参 (Salvia miltiorrhiza Bge.), 益母草 (Leonurus japonicus Houtt)</td>
+</tr>
+<tr>
+<td>葫芦科</td>
+<td>栝楼 (Trichosanthes kirilowii Maxim), 木鳖 (Momordica cochinchinensis (Lour.) Spreng.)</td>
+</tr>
+<tr>
+<td>桔梗科</td>
+<td>桔梗 (Platycodon grandiflorum (Jacq.) A.DC.), 党参 (Codonopsis pilosula (Franch.) Nannf.)</td>
+</tr>
+<tr>
+<td>菊科</td>
+<td>菊花 (Chrysanthemum morifolium Ramat.), 红花 (Carthamus tinctorius L.), 白术 (Atractylodes macrocephala Koidz.)</td>
+</tr>
+<tr>
+<td>天南星科</td>
+<td>天南星 (Arisaema erubescens (Wall.) Schott), 半夏 (Pinellia ternata (Thunb.) Breit.)</td>
+</tr>
+<tr>
+<td>百合科</td>
+<td>百合 (Lilium brownii F.E.Brown var. viridulum Baker), 川贝母 (Fritillaria cirrhosa D.Don)</td>
+</tr>
+</tbody></table>
+]]></content>
       <categories>
-          
-          <category> 分享 </category>
-          
+        <category>编程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 软件 </tag>
-            
-            <tag> 李跳跳 </tag>
-            
-            <tag> apk </tag>
-            
-            <tag> 免费下载 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>2023河南高考录取时间</title>
-      <link href="/2023/07/20/2023-he-nan-gao-kao-lu-qu-shi-jian/"/>
-      <url>/2023/07/20/2023-he-nan-gao-kao-lu-qu-shi-jian/</url>
-      
-        <content type="html"><![CDATA[<p><img src="https://pic.imgdb.cn/item/658268bbc458853aefd7e0fd.png"></p>]]></content>
-      
-      
+      <tags>
+        <tag>药用植物学</tag>
+        <tag>html</tag>
+        <tag>编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>量子计算机</title>
+    <url>/2023/06/13/liang-zi-ji-suan-ji/</url>
+    <content><![CDATA[<blockquote>
+<p>随着信息技术的飞速发展，计算机已经成为人们日常工作和生活中不可缺少的一部分。但是，传统计算机在某些领域的运算能力已经到达极限，例如在处理复杂的大规模数据、优化问题、密码学等方面。为此，科学家们逐渐将目光投向了量子计算机。</p>
+</blockquote>
+<h1 id="什么是量子计算机？"><a href="#什么是量子计算机？" class="headerlink" title="什么是量子计算机？"></a>什么是量子计算机？</h1><p>传统计算机中的基本单位是比特（bit），而量子计算机中的基本单位是量子位（qubit）。与比特只有两种状态（0或1）不同，量子位则可以处于超级位置态（superposition state），即同时处于0和1两种状态之间。这使得量子计算机在某些运算上具有独特的优势。</p>
+<h1 id="量子计算机的优势"><a href="#量子计算机的优势" class="headerlink" title="量子计算机的优势"></a>量子计算机的优势</h1><p>量子计算机最吸引人的优势莫过于其在高效处理大规模数据上的能力。传统计算机的并行处理方式受制于物理限制，很难同时处理大量数据。而量子计算机则可以通过量子并行的方式来同时处理多个任务，从而有效地提升了计算速度。</p>
+<p>此外，量子计算机对于某些优化问题和密码学问题也具有天然的优势。例如，量子计算机可以在相对较短的时间内解决传统计算机需要几十年甚至几百年才能解决的问题，例如Shor算法可以破解目前常用的RSA加密算法。</p>
+<h1 id="量子计算机的挑战"><a href="#量子计算机的挑战" class="headerlink" title="量子计算机的挑战"></a>量子计算机的挑战</h1><p>尽管量子计算机具备种种优势，但是实现量子计算机仍然面临着诸多技术挑战。量子位的构造、量子纠缠、量子逻辑门等都需要具有极高的精度和稳定性，这对材料、物理学和工程学等领域都提出了极大的挑战。</p>
+<p>此外，量子计算机还需要解决错误校正问题。由于量子信息非常敏感，容易受到环境噪声、测量干扰等因素的影响，因此如何在计算过程中有效地校正和修复错误也是一个极具挑战的问题。</p>
+<h1 id="未来展望"><a href="#未来展望" class="headerlink" title="未来展望"></a>未来展望</h1><p>尽管量子计算机仍然处于发展初期，但其前景无疑是光明的。随着技术的不断进步和创新，我们有理由相信，未来的量子计算机将会成为人类探索宇宙、模拟物质、解决人类智力难题的强有力武器。</p>
+]]></content>
+      <tags>
+        <tag>计算机</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>摄影记录杭州</title>
+    <url>/2024/07/11/she-ying-ji-lu-hang-zhou/</url>
+    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/668f5388d9c307b7e9a2d935.jpg"></p>
+]]></content>
       <categories>
-          
-          <category> 2023高考 </category>
-          
+        <category>摄影</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 2023高考 </tag>
-            
-            <tag> 河南 </tag>
-            
-            <tag> 高考录取 </tag>
-            
-        </tags>
-      
-    </entry>
+      <tags>
+        <tag>摄影</tag>
+        <tag>杭州</tag>
+        <tag>D5300</tag>
+        <tag>35mm f1.8g</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>10.27_神农园</title>
+    <url>/2024/10/27/10-27-shen-nong-yuan/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>中成药学问答</title>
+    <url>/2025/10/22/zhong-cheng-yao-xue-wen-da/</url>
+    <content><![CDATA[<h1 id="中成药分类随机答题游戏"><a href="#中成药分类随机答题游戏" class="headerlink" title="中成药分类随机答题游戏"></a>中成药分类随机答题游戏</h1><p>下面是中成药分类随机答题游戏，点击”下一题”开始，思考后点击”显示答案”查看结果。</p>
+<div class="quiz-container">
+    <h3>中成药分类答题</h3>
+    <p class="info">请判断下列中成药属于哪个小类，点击"显示答案"查看结果</p>
     
-    
-    
-    <entry>
-      <title>河南：一图了解平行志愿录取</title>
-      <link href="/2023/07/11/he-nan-yi-tu-liao-jie-ping-xing-zhi-yuan-lu-qu/"/>
-      <url>/2023/07/11/he-nan-yi-tu-liao-jie-ping-xing-zhi-yuan-lu-qu/</url>
-      
-        <content type="html"><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582697dc458853aefda7e61.png" alt="河南：一图了解平行志愿"></p>]]></content>
-      
-      
+<pre><code>&lt;div class=&quot;drug-name&quot;&gt;点击&quot;下一题&quot;开始答题&lt;/div&gt;
+
+&lt;div class=&quot;answer&quot;&gt;&lt;/div&gt;
+
+&lt;div class=&quot;button-group&quot;&gt;
+    &lt;button id=&quot;show-answer&quot;&gt;显示答案&lt;/button&gt;
+    &lt;button id=&quot;next-question&quot;&gt;下一题&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
+</div>
+
+<style>
+/* 限定在游戏容器内，避免污染全局样式 */
+.quiz-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    margin: 20px auto;
+}
+
+.quiz-container h3 {
+    color: inherit;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+.quiz-container .info {
+    color: #666;
+    text-align: center;
+    font-size: 0.9rem;
+    margin: 0 0 20px 0;
+}
+
+.quiz-container .drug-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    margin: 30px 0;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    border-left: 5px solid #4285f4;
+}
+
+.quiz-container .answer {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #e8f5e9;
+    border-radius: 6px;
+    display: none;
+    line-height: 1.6;
+}
+
+.quiz-container .button-group {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.quiz-container button {
+    padding: 12px 24px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quiz-container #show-answer {
+    background-color: #4caf50;
+    color: white;
+}
+
+.quiz-container #next-question {
+    background-color: #2196f4;
+    color: white;
+}
+
+.quiz-container button:hover {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+</style>
+
+<script>
+// 中成药完整数据
+const drugsData = [
+    // 第五章 解表中成药
+    { name: "九味羌活颗粒", category: "辛温解表类", chapter: "第五章 解表中成药" },
+    { name: "表实感冒颗粒", category: "辛温解表类", chapter: "第五章 解表中成药" },
+    { name: "桂枝合剂", category: "辛温解表类", chapter: "第五章 解表中成药" },
+    { name: "正柴胡饮颗粒", category: "辛温解表类", chapter: "第五章 解表中成药" },
+    { name: "银翘解毒片", category: "辛凉解表类", chapter: "第五章 解表中成药" },
+    { name: "桑菊感冒片", category: "辛凉解表类", chapter: "第五章 解表中成药" },
+    { name: "双黄连口服液", category: "辛凉解表类", chapter: "第五章 解表中成药" },
+    { name: "羚羊感冒片", category: "辛凉解表类", chapter: "第五章 解表中成药" },
+    { name: "参苏丸", category: "扶正解表类", chapter: "第五章 解表中成药" },
+
+    // 第六章 清热中成药
+    { name: "牛黄上清胶囊", category: "清热泻火类", chapter: "第六章 清热中成药" },
+    { name: "黄连上清丸", category: "清热泻火类", chapter: "第六章 清热中成药" },
+    { name: "一清颗粒", category: "清热泻火类", chapter: "第六章 清热中成药" },
+    { name: "牛黄解毒片", category: "清热解毒类", chapter: "第六章 清热中成药" },
+    { name: "清热解毒口服液", category: "清热解毒类", chapter: "第六章 清热中成药" },
+    { name: "清开灵口服液", category: "清热解毒类", chapter: "第六章 清热中成药" },
+    { name: "龙胆泻肝丸（水丸）", category: "清肝利胆类", chapter: "第六章 清热中成药" },
+    { name: "导赤丸", category: "清肝利胆类", chapter: "第六章 清热中成药" },
+    { name: "芩连片", category: "清肝利胆类", chapter: "第六章 清热中成药" },
+    { name: "清胃黄连丸（水丸）", category: "清肝利胆类", chapter: "第六章 清热中成药" },
+    { name: "黛蛤散", category: "清肝利胆类", chapter: "第六章 清热中成药" },
+    { name: "西黄丸", category: "解毒消癥类", chapter: "第六章 清热中成药" },
+
+    // 第七章 表里双解中成药
+    { name: "防风通圣丸", category: "表里双解类", chapter: "第七章 表里双解中成药" },
+    { name: "双清口服液", category: "表里双解类", chapter: "第七章 表里双解中成药" },
+    { name: "葛根芩连片", category: "表里双解类", chapter: "第七章 表里双解中成药" },
+
+    // 第八章 祛暑中成药
+    { name: "六一散", category: "祛暑类", chapter: "第八章 祛暑中成药" },
+    { name: "藿香正气水", category: "祛暑类", chapter: "第八章 祛暑中成药" },
+    { name: "甘露消毒丸", category: "祛暑类", chapter: "第八章 祛暑中成药" },
+    { name: "六合定中丸", category: "祛暑类", chapter: "第八章 祛暑中成药" },
+    { name: "清暑益气丸", category: "祛暑类", chapter: "第八章 祛暑中成药" },
+
+    // 第九章 泻下中成药
+    { name: "九制大黄丸", category: "寒下类", chapter: "第九章 泻下中成药" },
+    { name: "当归龙荟丸", category: "寒下类", chapter: "第九章 泻下中成药" },
+    { name: "麻仁丸", category: "润下类", chapter: "第九章 泻下中成药" },
+    { name: "苁蓉通便口服液", category: "润下类", chapter: "第九章 泻下中成药" },
+    { name: "增液颗粒", category: "润下类", chapter: "第九章 泻下中成药" },
+    { name: "舟车丸", category: "峻下类", chapter: "第九章 泻下中成药" },
+    { name: "十枣丸", category: "峻下类", chapter: "第九章 泻下中成药" },
+    { name: "尿毒清颗粒（无糖型）", category: "通腑降浊类", chapter: "第九章 泻下中成药" },
+
+    // 第十章 温里中成药
+    { name: "小建中合剂", category: "温中祛寒类", chapter: "第十章 温里中成药" },
+    { name: "理中丸", category: "温中祛寒类", chapter: "第十章 温里中成药" },
+    { name: "香砂养胃颗粒", category: "温中祛寒类", chapter: "第十章 温里中成药" },
+    { name: "四逆汤", category: "回阳救逆类", chapter: "第十章 温里中成药" },
+
+    // 第十一章 祛痰中成药
+    { name: "二陈丸", category: "燥湿化痰类", chapter: "第十一章 祛痰中成药" },
+    { name: "礞石滚痰丸", category: "清热化痰类", chapter: "第十一章 祛痰中成药" },
+    { name: "清气化痰丸", category: "清热化痰类", chapter: "第十一章 祛痰中成药" },
+    { name: "橘红丸", category: "清热化痰类", chapter: "第十一章 祛痰中成药" },
+    { name: "半夏天麻丸", category: "化痰息风类", chapter: "第十一章 祛痰中成药" },
+    { name: "消瘿丸", category: "化痰散结类", chapter: "第十一章 祛痰中成药" },
+
+    // 第十二章 止咳平喘中成药
+    { name: "通宣理肺丸", category: "止咳类", chapter: "第十二章 止咳平喘中成药" },
+    { name: "杏苏止咳颗粒", category: "止咳类", chapter: "第十二章 止咳平喘中成药" },
+    { name: "清肺抑火丸", category: "止咳类", chapter: "第十二章 止咳平喘中成药" },
+    { name: "蛇胆川贝液", category: "止咳类", chapter: "第十二章 止咳平喘中成药" },
+    { name: "急支糖浆", category: "止咳类", chapter: "第十二章 止咳平喘中成药" },
+    { name: "养阴清肺膏", category: "止咳类", chapter: "第十二章 止咳平喘中成药" },
+    { name: "二母宁嗽丸", category: "止咳类", chapter: "第十二章 止咳平喘中成药" },
+    { name: "小青龙颗粒", category: "平喘类", chapter: "第十二章 止咳平喘中成药" },
+    { name: "止嗽定喘口服液", category: "平喘类", chapter: "第十二章 止咳平喘中成药" },
+    { name: "降气定喘丸", category: "平喘类", chapter: "第十二章 止咳平喘中成药" },
+    { name: "人参保肺丸", category: "平喘类", chapter: "第十二章 止咳平喘中成药" },
+    { name: "苏子降气丸", category: "平喘类", chapter: "第十二章 止咳平喘中成药" },
+    { name: "七味都气丸", category: "平喘类", chapter: "第十二章 止咳平喘中成药" },
+    { name: "固本咳喘片", category: "平喘类", chapter: "第十二章 止咳平喘中成药" },
+
+    // 第十三章 开窍中成药
+    { name: "安宫牛黄丸", category: "凉开类", chapter: "第十三章 开窍中成药" },
+    { name: "紫雪散", category: "凉开类", chapter: "第十三章 开窍中成药" },
+    { name: "局方至宝散", category: "凉开类", chapter: "第十三章 开窍中成药" },
+    { name: "清开灵注射液", category: "凉开类", chapter: "第十三章 开窍中成药" },
+    { name: "苏合香丸", category: "温开类", chapter: "第十三章 开窍中成药" },
+
+    // 第十四章 补益中成药
+    { name: "四君子丸", category: "补气类", chapter: "第十四章 补益中成药" },
+    { name: "补中益气丸", category: "补气类", chapter: "第十四章 补益中成药" },
+    { name: "参苓白术丸", category: "补气类", chapter: "第十四章 补益中成药" },
+    { name: "启脾丸", category: "补气类", chapter: "第十四章 补益中成药" },
+    { name: "桂附地黄丸", category: "补阳类", chapter: "第十四章 补益中成药" },
+    { name: "右归丸", category: "补阳类", chapter: "第十四章 补益中成药" },
+    { name: "济生肾气丸", category: "补阳类", chapter: "第十四章 补益中成药" },
+    { name: "五子衍宗丸", category: "补阳类", chapter: "第十四章 补益中成药" },
+    { name: "当归补血口服液", category: "补血类", chapter: "第十四章 补益中成药" },
+    { name: "四物合剂", category: "补血类", chapter: "第十四章 补益中成药" },
+    { name: "六味地黄丸", category: "补阴类", chapter: "第十四章 补益中成药" },
+    { name: "左归丸", category: "补阴类", chapter: "第十四章 补益中成药" },
+    { name: "河车大造胶囊", category: "补阴类", chapter: "第十四章 补益中成药" },
+    { name: "知柏地黄丸", category: "补阴类", chapter: "第十四章 补益中成药" },
+    { name: "八珍颗粒", category: "气血双补类", chapter: "第十四章 补益中成药" },
+    { name: "归脾丸", category: "气血双补类", chapter: "第十四章 补益中成药" },
+    { name: "十全大补丸", category: "气血双补类", chapter: "第十四章 补益中成药" },
+    { name: "人参养荣丸", category: "气血双补类", chapter: "第十四章 补益中成药" },
+    { name: "生脉饮", category: "气阴双补类", chapter: "第十四章 补益中成药" },
+    { name: "人参固本丸", category: "气阴双补类", chapter: "第十四章 补益中成药" },
+    { name: "消渴丸", category: "气阴双补类", chapter: "第十四章 补益中成药" },
+    { name: "龟鹿二仙膏", category: "阴阳并补类", chapter: "第十四章 补益中成药" },
+    { name: "七宝美髯颗粒", category: "精血双补类", chapter: "第十四章 补益中成药" },
+
+    // 第十五章 固涩中成药
+    { name: "玉屏风颗粒", category: "固表止汗类", chapter: "第十五章 固涩中成药" },
+    { name: "金锁固精丸", category: "固精缩尿类", chapter: "第十五章 固涩中成药" },
+    { name: "缩泉丸", category: "固精缩尿类", chapter: "第十五章 固涩中成药" },
+    { name: "四神丸", category: "涩肠止泻类", chapter: "第十五章 固涩中成药" },
+    { name: "固本益肠片", category: "涩肠止泻类", chapter: "第十五章 固涩中成药" },
+
+    // 第十六章 安神中成药
+    { name: "朱砂安神丸", category: "清火安神类", chapter: "第十六章 安神中成药" },
+    { name: "天王补心丸", category: "补虚安神类", chapter: "第十六章 安神中成药" },
+    { name: "柏子养心丸", category: "补虚安神类", chapter: "第十六章 安神中成药" },
+    { name: "解郁安神颗粒", category: "解郁安神类", chapter: "第十六章 安神中成药" },
+
+    // 第十七章 和解中成药
+    { name: "小柴胡颗粒", category: "和解类", chapter: "第十七章 和解中成药" },
+    { name: "逍遥丸", category: "和解类", chapter: "第十七章 和解中成药" },
+    { name: "加味逍遥丸", category: "和解类", chapter: "第十七章 和解中成药" },
+
+    // 第十八章 理气中成药
+    { name: "四逆散", category: "理气疏肝类", chapter: "第十八章 理气中成药" },
+    { name: "左金丸", category: "理气疏肝类", chapter: "第十八章 理气中成药" },
+    { name: "气滞胃痛颗粒", category: "理气疏肝类", chapter: "第十八章 理气中成药" },
+    { name: "柴胡疏肝丸", category: "理气疏肝类", chapter: "第十八章 理气中成药" },
+    { name: "木香顺气丸", category: "理气和中类", chapter: "第十八章 理气中成药" },
+    { name: "越鞠丸", category: "理气和中类", chapter: "第十八章 理气中成药" },
+
+    // 第十九章 活血中成药
+    { name: "复方丹参片", category: "活血化瘀类", chapter: "第十九章 活血中成药" },
+    { name: "丹七片", category: "活血化瘀类", chapter: "第十九章 活血中成药" },
+    { name: "血塞通颗粒", category: "活血化瘀类", chapter: "第十九章 活血中成药" },
+    { name: "消栓通络胶囊", category: "活血化瘀类", chapter: "第十九章 活血中成药" },
+    { name: "血府逐瘀口服液", category: "活血行气类", chapter: "第十九章 活血中成药" },
+    { name: "元胡止痛片", category: "活血行气类", chapter: "第十九章 活血中成药" },
+    { name: "九气拈痛丸", category: "活血行气类", chapter: "第十九章 活血中成药" },
+    { name: "麝香保心丸", category: "益气活血类", chapter: "第十九章 活血中成药" },
+    { name: "消栓口服液", category: "益气活血类", chapter: "第十九章 活血中成药" },
+    { name: "稳心颗粒", category: "益气补阴活血类", chapter: "第十九章 活血中成药" },
+    { name: "参松养心胶囊", category: "益气补阴活血类", chapter: "第十九章 活血中成药" },
+    { name: "人参再造丸", category: "化瘀息风类", chapter: "第十九章 活血中成药" },
+
+    // 第二十章 止血中成药
+    { name: "槐角丸", category: "止血类", chapter: "第二十章 止血中成药" },
+    { name: "止血定痛片", category: "止血类", chapter: "第二十章 止血中成药" },
+
+    // 第二十一章 消导中成药
+    { name: "保和丸", category: "消导类", chapter: "第二十一章 消导中成药" },
+    { name: "枳实导滞丸", category: "消导类", chapter: "第二十一章 消导中成药" },
+    { name: "健脾丸", category: "消导类", chapter: "第二十一章 消导中成药" },
+    { name: "开胃健脾丸", category: "消导类", chapter: "第二十一章 消导中成药" },
+
+    // 第二十二章 治风中成药
+    { name: "川芎茶调丸", category: "疏散外风类", chapter: "第二十二章 治风中成药" },
+    { name: "芎菊上清丸", category: "疏散外风类", chapter: "第二十二章 治风中成药" },
+    { name: "正天丸", category: "疏散外风类", chapter: "第二十二章 治风中成药" },
+    { name: "天麻钩藤颗粒", category: "平息内风类", chapter: "第二十二章 治风中成药" },
+    { name: "松龄血脉康胶囊", category: "平息内风类", chapter: "第二十二章 治风中成药" },
+    { name: "脑立清丸", category: "平息内风类", chapter: "第二十二章 治风中成药" },
+
+    // 第二十三章 祛湿中成药
+    { name: "肾炎四味片", category: "清热利湿消肿类", chapter: "第二十三章 祛湿中成药" },
+    { name: "肾炎康复片", category: "清热利湿消肿类", chapter: "第二十三章 祛湿中成药" },
+    { name: "茵栀黄口服液", category: "清热利胆类", chapter: "第二十三章 祛湿中成药" },
+    { name: "茵陈五苓丸", category: "清热利胆类", chapter: "第二十三章 祛湿中成药" },
+    { name: "八正合剂", category: "利湿通淋类", chapter: "第二十三章 祛湿中成药" },
+    { name: "三金片", category: "利湿通淋类", chapter: "第二十三章 祛湿中成药" },
+    { name: "癃闭舒胶囊", category: "利湿通淋类", chapter: "第二十三章 祛湿中成药" },
+    { name: "香连丸", category: "祛湿止泻类", chapter: "第二十三章 祛湿中成药" },
+    { name: "香连化滞丸", category: "祛湿止泻类", chapter: "第二十三章 祛湿中成药" },
+    { name: "五苓散", category: "温化水湿类", chapter: "第二十三章 祛湿中成药" },
+    { name: "萆薢分清丸", category: "温化水湿类", chapter: "第二十三章 祛湿中成药" },
+
+    // 第二十四章 蠲痹中成药
+    { name: "小活络丸", category: "祛寒通痹类", chapter: "第二十四章 蠲痹中成药" },
+    { name: "木瓜丸", category: "祛寒通痹类", chapter: "第二十四章 蠲痹中成药" },
+    { name: "四妙丸", category: "清热通痹类", chapter: "第二十四章 蠲痹中成药" },
+    { name: "颈复康颗粒", category: "活血通痹类", chapter: "第二十四章 蠲痹中成药" },
+    { name: "独活寄生合剂", category: "补虚通痹类", chapter: "第二十四章 蠲痹中成药" },
+    { name: "天麻丸", category: "补虚通痹类", chapter: "第二十四章 蠲痹中成药" },
+
+    // 第二十五章 外科、皮肤科常用中成药
+    { name: "连翘败毒丸", category: "治疮疡类", chapter: "第二十五章 外科、皮肤科常用中成药" },
+    { name: "牛黄醒消丸", category: "治疮疡类", chapter: "第二十五章 外科、皮肤科常用中成药" },
+    { name: "当归苦参丸", category: "治疮疡类", chapter: "第二十五章 外科、皮肤科常用中成药" },
+    { name: "生肌玉红膏", category: "治疮疡类", chapter: "第二十五章 外科、皮肤科常用中成药" },
+    { name: "京万红软膏", category: "治烧伤类", chapter: "第二十五章 外科、皮肤科常用中成药" },
+    { name: "小金丸", category: "治瘰核乳癖类", chapter: "第二十五章 外科、皮肤科常用中成药" },
+    { name: "乳癖消颗粒", category: "治瘰核乳癖类", chapter: "第二十五章 外科、皮肤科常用中成药" },
+    { name: "地榆槐角丸", category: "治痔肿类", chapter: "第二十五章 外科、皮肤科常用中成药" },
+    { name: "消银胶囊", category: "治痒疹类", chapter: "第二十五章 外科、皮肤科常用中成药" },
+
+    // 第二十六章 妇科常用中成药
+    { name: "大黄䗪虫丸", category: "调经类", chapter: "第二十六章 妇科常用中成药" },
+    { name: "七制香附丸", category: "调经类", chapter: "第二十六章 妇科常用中成药" },
+    { name: "八珍益母胶囊", category: "调经类", chapter: "第二十六章 妇科常用中成药" },
+    { name: "乌鸡白凤丸", category: "调经类", chapter: "第二十六章 妇科常用中成药" },
+    { name: "少腹逐瘀丸", category: "调经类", chapter: "第二十六章 妇科常用中成药" },
+    { name: "艾附暖宫丸", category: "调经类", chapter: "第二十六章 妇科常用中成药" },
+    { name: "固经丸", category: "调经类", chapter: "第二十六章 妇科常用中成药" },
+    { name: "更年安片", category: "调经类", chapter: "第二十六章 妇科常用中成药" },
+    { name: "千金止带丸", category: "止带类", chapter: "第二十六章 妇科常用中成药" },
+    { name: "白带丸", category: "止带类", chapter: "第二十六章 妇科常用中成药" },
+    { name: "妇科千金片", category: "止带类", chapter: "第二十六章 妇科常用中成药" },
+    { name: "生化丸", category: "产后康复类", chapter: "第二十六章 妇科常用中成药" },
+    { name: "通乳颗粒", category: "产后康复类", chapter: "第二十六章 妇科常用中成药" },
+    { name: "桂枝茯苓丸", category: "活血消癥类", chapter: "第二十六章 妇科常用中成药" },
+
+    // 第二十七章 儿科常用中成药
+    { name: "小儿热速清口服液", category: "解表类", chapter: "第二十七章 儿科常用中成药" },
+    { name: "解肌宁嗽丸", category: "解表类", chapter: "第二十七章 儿科常用中成药" },
+    { name: "小儿咽扁颗粒", category: "清热类", chapter: "第二十七章 儿科常用中成药" },
+    { name: "小儿泻速停颗粒", category: "止泻类", chapter: "第二十七章 儿科常用中成药" },
+    { name: "止泻灵颗粒", category: "止泻类", chapter: "第二十七章 儿科常用中成药" },
+    { name: "小儿消食片", category: "消导类", chapter: "第二十七章 儿科常用中成药" },
+    { name: "肥儿丸", category: "消导类", chapter: "第二十七章 儿科常用中成药" },
+    { name: "小儿咳喘灵颗粒", category: "止咳喘类", chapter: "第二十七章 儿科常用中成药" },
+    { name: "清宣止咳颗粒", category: "止咳喘类", chapter: "第二十七章 儿科常用中成药" },
+    { name: "鹭鸶咯丸", category: "止咳喘类", chapter: "第二十七章 儿科常用中成药" },
+    { name: "龙牡壮骨颗粒", category: "补虚类", chapter: "第二十七章 儿科常用中成药" },
+    { name: "琥珀抱龙丸", category: "镇惊息风类", chapter: "第二十七章 儿科常用中成药" },
+
+    // 第二十八章 眼科常用中成药
+    { name: "明目蒺藜丸", category: "清热类", chapter: "第二十八章 眼科常用中成药" },
+    { name: "八宝眼药", category: "清热类", chapter: "第二十八章 眼科常用中成药" },
+    { name: "明目地黄丸", category: "扶正类", chapter: "第二十八章 眼科常用中成药" },
+    { name: "石斛夜光丸", category: "扶正类", chapter: "第二十八章 眼科常用中成药" },
+
+    // 第二十九章 耳鼻喉、口腔科常用中成药
+    { name: "耳聋丸", category: "治耳病类", chapter: "第二十九章 耳鼻喉、口腔科常用中成药" },
+    { name: "耳聋左慈丸", category: "治耳病类", chapter: "第二十九章 耳鼻喉、口腔科常用中成药" },
+    { name: "千柏鼻炎胶囊", category: "治鼻病类", chapter: "第二十九章 耳鼻喉、口腔科常用中成药" },
+    { name: "藿胆丸", category: "治鼻病类", chapter: "第二十九章 耳鼻喉、口腔科常用中成药" },
+    { name: "辛芩颗粒", category: "治鼻病类", chapter: "第二十九章 耳鼻喉、口腔科常用中成药" },
+    { name: "冰硼散", category: "治咽喉病类", chapter: "第二十九章 耳鼻喉、口腔科常用中成药" },
+    { name: "玄麦甘桔含片", category: "治咽喉病类", chapter: "第二十九章 耳鼻喉、口腔科常用中成药" },
+    { name: "六神丸", category: "治咽喉病类", chapter: "第二十九章 耳鼻喉、口腔科常用中成药" },
+    { name: "黄氏响声丸", category: "治咽喉病类", chapter: "第二十九章 耳鼻喉、口腔科常用中成药" },
+    { name: "口炎清颗粒", category: "治口腔病类", chapter: "第二十九章 耳鼻喉、口腔科常用中成药" },
+    { name: "口腔溃疡散", category: "治口腔病类", chapter: "第二十九章 耳鼻喉、口腔科常用中成药" },
+
+    // 第三十章 骨伤科常用中成药
+    { name: "接骨丸", category: "骨伤科类", chapter: "第三十章 骨伤科常用中成药" },
+    { name: "七厘散", category: "骨伤科类", chapter: "第三十章 骨伤科常用中成药" },
+    { name: "跌打丸", category: "骨伤科类", chapter: "第三十章 骨伤科常用中成药" },
+    { name: "活血止痛散", category: "骨伤科类", chapter: "第三十章 骨伤科常用中成药" }
+];
+
+// 随机打乱数组
+function shuffleArray(array) {
+    const newArray = [...array];
+    for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+    }
+    return newArray;
+}
+
+// 游戏变量
+let shuffledDrugs = [];
+let currentIndex = 0;
+
+// 等待页面加载完成
+document.addEventListener('DOMContentLoaded', function() {
+    // 获取元素
+    const drugNameEl = document.querySelector('.drug-name');
+    const answerEl = document.querySelector('.answer');
+    const showAnswerBtn = document.getElementById('show-answer');
+    const nextQuestionBtn = document.getElementById('next-question');
+
+    // 初始化
+    function initGame() {
+        shuffledDrugs = shuffleArray(drugsData);
+        currentIndex = 0;
+    }
+
+    // 下一题
+    function showNextQuestion() {
+        if (currentIndex < shuffledDrugs.length) {
+            const currentDrug = shuffledDrugs[currentIndex];
+            drugNameEl.textContent = currentDrug.name;
+            answerEl.style.display = 'none';
+            currentIndex++;
+        } else {
+            drugNameEl.textContent = '已完成所有题目，将重新开始！';
+            answerEl.style.display = 'none';
+            setTimeout(initGame, 1000);
+            setTimeout(showNextQuestion, 1000);
+        }
+    }
+
+    // 显示答案
+    function showAnswer() {
+        if (currentIndex > 0 && currentIndex <= shuffledDrugs.length) {
+            const currentDrug = shuffledDrugs[currentIndex - 1];
+            answerEl.innerHTML = `
+                <strong>所属小类：</strong>${currentDrug.category}<br>
+                <strong>所属章节：</strong>${currentDrug.chapter}
+            `;
+            answerEl.style.display = 'block';
+        }
+    }
+
+    // 绑定事件
+    nextQuestionBtn.addEventListener('click', showNextQuestion);
+    showAnswerBtn.addEventListener('click', showAnswer);
+
+    // 初始化游戏
+    initGame();
+});
+</script>
+]]></content>
       <categories>
-          
-          <category> 搬运 </category>
-          
+        <category>编程</category>
       </categories>
-      
-      
-        <tags>
-            
-            <tag> 2023高考 </tag>
-            
-            <tag> 河南 </tag>
-            
-            <tag> 高考 </tag>
-            
-            <tag> 志愿 </tag>
-            
-            <tag> 2023 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>河南：一图了解平行志愿</title>
-      <link href="/2023/06/30/he-nan-yi-tu-liao-jie-ping-xing-zhi-yuan/"/>
-      <url>/2023/06/30/he-nan-yi-tu-liao-jie-ping-xing-zhi-yuan/</url>
-      
-        <content type="html"><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582692dc458853aefd94339.jpg" alt="来源：河南省教育考试院"></p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 高考 </tag>
-            
-            <tag> 转载 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>新电脑</title>
-      <link href="/2023/06/18/xin-dian-nao/"/>
-      <url>/2023/06/18/xin-dian-nao/</url>
-      
-        <content type="html"><![CDATA[<p><img src="https://pic.imgdb.cn/item/658269ffc458853aefdca16f.jpg" alt="AMD yes!"></p>]]></content>
-      
-      
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>量子计算机</title>
-      <link href="/2023/06/13/liang-zi-ji-suan-ji/"/>
-      <url>/2023/06/13/liang-zi-ji-suan-ji/</url>
-      
-        <content type="html"><![CDATA[<blockquote><p>随着信息技术的飞速发展，计算机已经成为人们日常工作和生活中不可缺少的一部分。但是，传统计算机在某些领域的运算能力已经到达极限，例如在处理复杂的大规模数据、优化问题、密码学等方面。为此，科学家们逐渐将目光投向了量子计算机。</p></blockquote><h1 id="什么是量子计算机？"><a href="#什么是量子计算机？" class="headerlink" title="什么是量子计算机？"></a>什么是量子计算机？</h1><p>传统计算机中的基本单位是比特（bit），而量子计算机中的基本单位是量子位（qubit）。与比特只有两种状态（0或1）不同，量子位则可以处于超级位置态（superposition state），即同时处于0和1两种状态之间。这使得量子计算机在某些运算上具有独特的优势。</p><h1 id="量子计算机的优势"><a href="#量子计算机的优势" class="headerlink" title="量子计算机的优势"></a>量子计算机的优势</h1><p>量子计算机最吸引人的优势莫过于其在高效处理大规模数据上的能力。传统计算机的并行处理方式受制于物理限制，很难同时处理大量数据。而量子计算机则可以通过量子并行的方式来同时处理多个任务，从而有效地提升了计算速度。</p><p>此外，量子计算机对于某些优化问题和密码学问题也具有天然的优势。例如，量子计算机可以在相对较短的时间内解决传统计算机需要几十年甚至几百年才能解决的问题，例如Shor算法可以破解目前常用的RSA加密算法。</p><h1 id="量子计算机的挑战"><a href="#量子计算机的挑战" class="headerlink" title="量子计算机的挑战"></a>量子计算机的挑战</h1><p>尽管量子计算机具备种种优势，但是实现量子计算机仍然面临着诸多技术挑战。量子位的构造、量子纠缠、量子逻辑门等都需要具有极高的精度和稳定性，这对材料、物理学和工程学等领域都提出了极大的挑战。</p><p>此外，量子计算机还需要解决错误校正问题。由于量子信息非常敏感，容易受到环境噪声、测量干扰等因素的影响，因此如何在计算过程中有效地校正和修复错误也是一个极具挑战的问题。</p><h1 id="未来展望"><a href="#未来展望" class="headerlink" title="未来展望"></a>未来展望</h1><p>尽管量子计算机仍然处于发展初期，但其前景无疑是光明的。随着技术的不断进步和创新，我们有理由相信，未来的量子计算机将会成为人类探索宇宙、模拟物质、解决人类智力难题的强有力武器。</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 计算机 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>你好</title>
-      <link href="/2023/06/10/ni-hao/"/>
-      <url>/2023/06/10/ni-hao/</url>
-      
-        <content type="html"><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582442bc458853aef619333.jpg"></p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 杂项 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-  
-  
+      <tags>
+        <tag>药用植物学</tag>
+        <tag>html</tag>
+        <tag>编程</tag>
+      </tags>
+  </entry>
 </search>
