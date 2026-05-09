@@ -15,205 +15,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Python 图片压缩工具</title>
-    <url>/2026/05/03/tu-pian-ya-suo-gong-ju/</url>
-    <content><![CDATA[<h1 id="Python-图片压缩工具"><a href="#Python-图片压缩工具" class="headerlink" title="Python 图片压缩工具"></a>Python 图片压缩工具</h1><h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><p>图床（如 superbed.cn）限制单张图片不超过 5MB，超过则上传失败。为此需要一个自动压缩脚本，将大图片压缩到限制以下，同时尽量保持清晰度。</p>
-<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>压缩策略采用<strong>先缩小尺寸、再降质量</strong>的顺序：</p>
-<ol>
-<li><strong>缩小尺寸优先</strong> — 大图片（短边 &gt;2000px）先按比例缩小到合理尺寸，这比单纯降质量更有效且保真度更高</li>
-<li><strong>质量大步降</strong> — JPEG 从 <code>quality=85</code> 开始，若还超标则跳到 <code>70</code> → <code>60</code>，不再细粒度一点点降</li>
-<li><strong>保留 PNG 透明度</strong> — PNG 图片始终保持 PNG 格式，不转为 JPEG（否则丢失透明度）</li>
-<li><strong>保守下限</strong> — <code>quality</code> 最低只到 60，<code>scale</code> 最多缩小到 50%，避免图片过度模糊</li>
-</ol>
-<blockquote>
-<p>PNG 图片只支持尺寸缩小来压缩，不支持质量调节。</p>
-</blockquote>
-<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python -m venv .venv</span><br><span class="line">.venv/Scripts/pip install Pillow</span><br></pre></td></tr></table></figure>
-
-<h3 id="命令行使用"><a href="#命令行使用" class="headerlink" title="命令行使用"></a>命令行使用</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.venv/Scripts/python tools/compress_image.py &lt;图片路径&gt;</span><br></pre></td></tr></table></figure>
-
-<p>以一张 5712×3213 的 PNG 图片（约 14MB）为例：</p>
-<ul>
-<li>原始大小：<strong>13.26 MB</strong></li>
-<li>压缩后：<strong>1.00 MB</strong>（减少 92.5%）</li>
-<li>尺寸：5712×3213 → 3555×2000</li>
-</ul>
-<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;图片压缩工具 - 快速将图片压缩到指定大小以下&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_file_size</span>(<span class="params">path</span>):</span><br><span class="line">    <span class="keyword">return</span> os.path.getsize(path) / (<span class="number">1024</span> * <span class="number">1024</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">compress_image</span>(<span class="params">input_path, output_path, max_size_mb=<span class="number">5</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;压缩策略：先评估，小图只降质量，大图才缩尺寸&quot;&quot;&quot;</span></span><br><span class="line">    img = Image.<span class="built_in">open</span>(input_path)</span><br><span class="line">    width, height = img.size</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果是 PNG，先转为 JPEG</span></span><br><span class="line">    <span class="keyword">if</span> img.<span class="built_in">format</span> == <span class="string">&#x27;PNG&#x27;</span>:</span><br><span class="line">        img = img.convert(<span class="string">&#x27;RGB&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    target_short = <span class="number">2000</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 只有当图片大于目标时才缩小</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">max</span>(width, height) &gt; target_short:</span><br><span class="line">        ratio = target_short / <span class="built_in">min</span>(width, height)</span><br><span class="line">        new_width = <span class="built_in">int</span>(width * ratio)</span><br><span class="line">        new_height = <span class="built_in">int</span>(height * ratio)</span><br><span class="line">        img = img.resize((new_width, new_height), Image.Resampling.BILINEAR)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 以 quality=85 保存</span></span><br><span class="line">    img.save(output_path, <span class="built_in">format</span>=<span class="string">&#x27;JPEG&#x27;</span>, quality=<span class="number">85</span>, optimize=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 还超标？大步降质量（85 -&gt; 70 -&gt; 60）</span></span><br><span class="line">    <span class="keyword">if</span> get_file_size(output_path) &gt; max_size_mb:</span><br><span class="line">        <span class="keyword">for</span> quality <span class="keyword">in</span> [<span class="number">70</span>, <span class="number">60</span>]:</span><br><span class="line">            img.save(output_path, <span class="built_in">format</span>=<span class="string">&#x27;JPEG&#x27;</span>, quality=quality, optimize=<span class="literal">True</span>)</span><br><span class="line">            <span class="keyword">if</span> get_file_size(output_path) &lt;= max_size_mb:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># quality=60 仍超标？温和缩小尺寸（每次缩10%）</span></span><br><span class="line">    <span class="keyword">if</span> get_file_size(output_path) &gt; max_size_mb:</span><br><span class="line">        current_img = Image.<span class="built_in">open</span>(output_path)</span><br><span class="line">        w, h = current_img.size</span><br><span class="line">        scale = <span class="number">0.9</span></span><br><span class="line">        <span class="keyword">while</span> get_file_size(output_path) &gt; max_size_mb <span class="keyword">and</span> scale &gt;= <span class="number">0.5</span>:</span><br><span class="line">            new_w, new_h = <span class="built_in">int</span>(w * scale), <span class="built_in">int</span>(h * scale)</span><br><span class="line">            resized = current_img.resize((new_w, new_h), Image.Resampling.BILINEAR)</span><br><span class="line">            resized.save(output_path, <span class="built_in">format</span>=<span class="string">&#x27;JPEG&#x27;</span>, quality=<span class="number">85</span>, optimize=<span class="literal">True</span>)</span><br><span class="line">            scale -= <span class="number">0.1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> output_path</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;用法: python compress_image.py &lt;图片路径&gt;&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    input_path = sys.argv[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(input_path):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;文件不存在: <span class="subst">&#123;input_path&#125;</span>&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    original_size = get_file_size(input_path)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;原始大小: <span class="subst">&#123;original_size:<span class="number">.2</span>f&#125;</span> MB&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> original_size &lt;= <span class="number">5</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;无需压缩&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 备份原文件</span></span><br><span class="line">    backup_path = input_path + <span class="string">&#x27;.bak&#x27;</span></span><br><span class="line">    os.rename(input_path, backup_path)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        compress_image(backup_path, input_path, max_size_mb=<span class="number">5</span>)</span><br><span class="line">        new_size = get_file_size(input_path)</span><br><span class="line">        ratio = (<span class="number">1</span> - new_size / original_size) * <span class="number">100</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;压缩后: <span class="subst">&#123;new_size:<span class="number">.2</span>f&#125;</span> MB (减少 <span class="subst">&#123;ratio:<span class="number">.1</span>f&#125;</span>%)&quot;</span>)</span><br><span class="line">        os.remove(backup_path)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;完成: <span class="subst">&#123;input_path&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        os.rename(backup_path, input_path)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;失败: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="关键参数"><a href="#关键参数" class="headerlink" title="关键参数"></a>关键参数</h2><table>
-<thead>
-<tr>
-<th>参数</th>
-<th>值</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>target_short</code></td>
-<td>2000</td>
-<td>缩小目标：短边最多 2000px</td>
-</tr>
-<tr>
-<td>质量梯度</td>
-<td>85→70→60</td>
-<td>大步降质量，避免反复编码</td>
-</tr>
-<tr>
-<td>尺寸步进</td>
-<td>90%</td>
-<td>每次缩小到原来的 90%</td>
-</tr>
-<tr>
-<td>尺寸下限</td>
-<td>50%</td>
-<td>最多缩小到原来的一半</td>
-</tr>
-</tbody></table>
-]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>Python</tag>
-        <tag>图片处理</tag>
-        <tag>工具</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>河南中医药大学2027年硕士研究生招生考试初试科目调整公告</title>
-    <url>/2026/04/24/2027-nian-he-nan-zhong-yi-yao-da-xue-shuo-shi-yan-jiu-sheng-zhao-sheng-chu-shi-ke-mu-diao-zheng-gong-gao/</url>
-    <content><![CDATA[<h1 id="关于我校2027年硕士研究生招生考试初试科目调整的公告"><a href="#关于我校2027年硕士研究生招生考试初试科目调整的公告" class="headerlink" title="关于我校2027年硕士研究生招生考试初试科目调整的公告"></a>关于我校2027年硕士研究生招生考试初试科目调整的公告</h1><blockquote>
-<p>来源：<a href="https://yjsy.hactcm.edu.cn/info/1121/52311.htm">河南中医药大学研究生院官网</a><br>发布时间：2026-04-24<br>浏览量：4477（抓取时间：2026-05-09）</p>
-</blockquote>
-<p>各位考生：</p>
-<p>根据教育部相关文件精神，结合学校实际情况，我校拟对2027年硕士研究生招生考试初试部分专业考试科目进行调整。详见下表：</p>
-<p><img src="https://pic1.imgdb.cn/item/69ff88008a9a8c274c5c2e51.png" alt="原网站表格截图"></p>
-<table>
-<thead>
-<tr>
-<th>专业代码</th>
-<th>专业名称</th>
-<th>原初试科目名称</th>
-<th>原科目内容</th>
-<th>调整后初试科目名称</th>
-<th>调整后科目内容</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1007</td>
-<td>药物化学</td>
-<td>药学综合</td>
-<td>药物化学、药理学、药事法规</td>
-<td>药学综合</td>
-<td>有机化学、分析化学、药理学</td>
-</tr>
-<tr>
-<td>1007</td>
-<td>药剂学</td>
-<td>—</td>
-<td>—</td>
-<td>药学综合</td>
-<td>有机化学、分析化学、药理学</td>
-</tr>
-<tr>
-<td>1007</td>
-<td>生药学</td>
-<td>—</td>
-<td>—</td>
-<td>药学综合</td>
-<td>有机化学、分析化学、药理学</td>
-</tr>
-<tr>
-<td>1007</td>
-<td>药物分析学</td>
-<td>—</td>
-<td>—</td>
-<td>药学综合</td>
-<td>有机化学、分析化学、药理学</td>
-</tr>
-<tr>
-<td>1007</td>
-<td>药理学</td>
-<td>药学基础综合（一）</td>
-<td>有机化学、分析化学、药用植物学</td>
-<td>药学综合</td>
-<td>有机化学、分析化学、药用植物学</td>
-</tr>
-<tr>
-<td>1007</td>
-<td>药学（专业学位）</td>
-<td>349药学综合</td>
-<td>药物化学、药理学、药事法规</td>
-<td>药学综合</td>
-<td>有机化学、分析化学、药理学</td>
-</tr>
-<tr>
-<td>1005</td>
-<td>中药学（专业学位）</td>
-<td>350中药学专业基础综合</td>
-<td>中药学、中药化学、中药鉴定学、中药药剂学</td>
-<td>中药学专业基础综合</td>
-<td>中药学、中药化学、中药鉴定学、中药药剂学</td>
-</tr>
-<tr>
-<td>1008</td>
-<td>中药学</td>
-<td>中药学专业基础综合</td>
-<td>中药学、中药化学、中药鉴定学、中药药剂学</td>
-<td>中药学专业基础综合</td>
-<td>中药学、中药化学、中药分析学</td>
-</tr>
-<tr>
-<td>1008</td>
-<td>中药学</td>
-<td>617药学基础综合（一）</td>
-<td>有机化学、分析化学、药用植物学</td>
-<td>药学基础综合（一）</td>
-<td>有机化学、分析化学、药用植物学</td>
-</tr>
-</tbody></table>
-<p><strong>注：</strong> 原科目内容标注”—“者，表示与调整前相同或无变化。</p>
-<hr>
-<p><strong>特此公告。请广大考生知悉，上级部门若有政策调整，最终以《河南中医药大学2027年硕士研究生招生章程》发布为准。</strong></p>
-<hr>
-<blockquote>
-<p>原文链接：<a href="https://yjsy.hactcm.edu.cn/info/1121/52311.htm">https://yjsy.hactcm.edu.cn/info/1121/52311.htm</a></p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>搬运</category>
-      </categories>
-      <tags>
-        <tag>考研</tag>
-        <tag>河南中医药大学</tag>
-        <tag>招生</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>摄影记录杭州</title>
-    <url>/2024/07/11/she-ying-ji-lu-hang-zhou/</url>
-    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/668f5388d9c307b7e9a2d935.jpg"></p>
-]]></content>
-      <categories>
-        <category>摄影</category>
-      </categories>
-      <tags>
-        <tag>摄影</tag>
-        <tag>杭州</tag>
-        <tag>D5300</tag>
-        <tag>35mm f1.8g</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>你好</title>
-    <url>/2023/06/10/ni-hao/</url>
-    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582442bc458853aef619333.jpg"></p>
-]]></content>
-      <tags>
-        <tag>杂项</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>中成药学问答</title>
     <url>/2025/10/22/zhong-cheng-yao-xue-wen-da/</url>
     <content><![CDATA[
@@ -687,10 +488,170 @@ window.addEventListener('load', function() {
       </tags>
   </entry>
   <entry>
+    <title>你好</title>
+    <url>/2023/06/10/ni-hao/</url>
+    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582442bc458853aef619333.jpg"></p>
+]]></content>
+      <tags>
+        <tag>杂项</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>河南中医药大学2027年硕士研究生招生考试初试科目调整公告</title>
+    <url>/2026/05/10/2027-nian-he-nan-zhong-yi-yao-da-xue-shuo-shi-yan-jiu-sheng-zhao-sheng-chu-shi-ke-mu-diao-zheng-gong-gao/</url>
+    <content><![CDATA[<h1 id="关于我校2027年硕士研究生招生考试初试科目调整的公告"><a href="#关于我校2027年硕士研究生招生考试初试科目调整的公告" class="headerlink" title="关于我校2027年硕士研究生招生考试初试科目调整的公告"></a>关于我校2027年硕士研究生招生考试初试科目调整的公告</h1><blockquote>
+<p>来源：<a href="https://yjsy.hactcm.edu.cn/info/1121/52311.htm">河南中医药大学研究生院官网</a><br>发布时间：2026-04-24<br>浏览量：4477（抓取时间：2026-05-09）</p>
+</blockquote>
+<p>各位考生：</p>
+<p>根据教育部相关文件精神，结合学校实际情况，我校拟对2027年硕士研究生招生考试初试部分专业考试科目进行调整。详见下表：</p>
+<p><img src="https://pic1.imgdb.cn/item/69ff88008a9a8c274c5c2e51.png" alt="原网站表格截图"></p>
+<table>
+<thead>
+<tr>
+<th>专业代码</th>
+<th>专业名称</th>
+<th>原初试科目名称</th>
+<th>原科目内容</th>
+<th>调整后初试科目名称</th>
+<th>调整后科目内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1007</td>
+<td>药物化学</td>
+<td>药学综合</td>
+<td>药物化学、药理学、药事法规</td>
+<td>药学综合</td>
+<td>有机化学、分析化学、药理学</td>
+</tr>
+<tr>
+<td>1007</td>
+<td>药剂学</td>
+<td>—</td>
+<td>—</td>
+<td>药学综合</td>
+<td>有机化学、分析化学、药理学</td>
+</tr>
+<tr>
+<td>1007</td>
+<td>生药学</td>
+<td>—</td>
+<td>—</td>
+<td>药学综合</td>
+<td>有机化学、分析化学、药理学</td>
+</tr>
+<tr>
+<td>1007</td>
+<td>药物分析学</td>
+<td>—</td>
+<td>—</td>
+<td>药学综合</td>
+<td>有机化学、分析化学、药理学</td>
+</tr>
+<tr>
+<td>1007</td>
+<td>药理学</td>
+<td>药学基础综合（一）</td>
+<td>有机化学、分析化学、药用植物学</td>
+<td>药学综合</td>
+<td>有机化学、分析化学、药用植物学</td>
+</tr>
+<tr>
+<td>1007</td>
+<td>药学（专业学位）</td>
+<td>349药学综合</td>
+<td>药物化学、药理学、药事法规</td>
+<td>药学综合</td>
+<td>有机化学、分析化学、药理学</td>
+</tr>
+<tr>
+<td>1005</td>
+<td>中药学（专业学位）</td>
+<td>350中药学专业基础综合</td>
+<td>中药学、中药化学、中药鉴定学、中药药剂学</td>
+<td>中药学专业基础综合</td>
+<td>中药学、中药化学、中药鉴定学、中药药剂学</td>
+</tr>
+<tr>
+<td>1008</td>
+<td>中药学</td>
+<td>中药学专业基础综合</td>
+<td>中药学、中药化学、中药鉴定学、中药药剂学</td>
+<td>中药学专业基础综合</td>
+<td>中药学、中药化学、中药分析学</td>
+</tr>
+<tr>
+<td>1008</td>
+<td>中药学</td>
+<td>617药学基础综合（一）</td>
+<td>有机化学、分析化学、药用植物学</td>
+<td>药学基础综合（一）</td>
+<td>有机化学、分析化学、药用植物学</td>
+</tr>
+</tbody></table>
+<p><strong>注：</strong> 原科目内容标注”—“者，表示与调整前相同或无变化。</p>
+<hr>
+<p><strong>特此公告。请广大考生知悉，上级部门若有政策调整，最终以《河南中医药大学2027年硕士研究生招生章程》发布为准。</strong></p>
+<hr>
+<blockquote>
+<p>原文链接：<a href="https://yjsy.hactcm.edu.cn/info/1121/52311.htm">https://yjsy.hactcm.edu.cn/info/1121/52311.htm</a></p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>搬运</category>
+      </categories>
+      <tags>
+        <tag>考研</tag>
+        <tag>河南中医药大学</tag>
+        <tag>招生</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>新电脑</title>
     <url>/2023/06/18/xin-dian-nao/</url>
     <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/658269ffc458853aefdca16f.jpg" alt="AMD yes!"></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>河南：一图了解平行志愿</title>
+    <url>/2023/06/30/he-nan-yi-tu-liao-jie-ping-xing-zhi-yuan/</url>
+    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582692dc458853aefd94339.jpg" alt="来源：河南省教育考试院"></p>
+]]></content>
+      <tags>
+        <tag>高考</tag>
+        <tag>转载</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>摄影记录杭州</title>
+    <url>/2024/07/11/she-ying-ji-lu-hang-zhou/</url>
+    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/668f5388d9c307b7e9a2d935.jpg"></p>
+]]></content>
+      <categories>
+        <category>摄影</category>
+      </categories>
+      <tags>
+        <tag>摄影</tag>
+        <tag>杭州</tag>
+        <tag>D5300</tag>
+        <tag>35mm f1.8g</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>河南：一图了解平行志愿录取</title>
+    <url>/2023/07/11/he-nan-yi-tu-liao-jie-ping-xing-zhi-yuan-lu-qu/</url>
+    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582697dc458853aefda7e61.png" alt="河南：一图了解平行志愿"></p>
+]]></content>
+      <categories>
+        <category>搬运</category>
+      </categories>
+      <tags>
+        <tag>2023高考</tag>
+        <tag>河南</tag>
+        <tag>高考</tag>
+        <tag>志愿</tag>
+        <tag>2023</tag>
+      </tags>
   </entry>
   <entry>
     <title>李跳跳最后版本下载</title>
@@ -712,29 +673,68 @@ window.addEventListener('load', function() {
       </tags>
   </entry>
   <entry>
-    <title>河南：一图了解平行志愿录取</title>
-    <url>/2023/07/11/he-nan-yi-tu-liao-jie-ping-xing-zhi-yuan-lu-qu/</url>
-    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582697dc458853aefda7e61.png" alt="河南：一图了解平行志愿"></p>
+    <title>Python 图片压缩工具</title>
+    <url>/2026/05/03/tu-pian-ya-suo-gong-ju/</url>
+    <content><![CDATA[<h1 id="Python-图片压缩工具"><a href="#Python-图片压缩工具" class="headerlink" title="Python 图片压缩工具"></a>Python 图片压缩工具</h1><h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><p>图床（如 superbed.cn）限制单张图片不超过 5MB，超过则上传失败。为此需要一个自动压缩脚本，将大图片压缩到限制以下，同时尽量保持清晰度。</p>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>压缩策略采用<strong>先缩小尺寸、再降质量</strong>的顺序：</p>
+<ol>
+<li><strong>缩小尺寸优先</strong> — 大图片（短边 &gt;2000px）先按比例缩小到合理尺寸，这比单纯降质量更有效且保真度更高</li>
+<li><strong>质量大步降</strong> — JPEG 从 <code>quality=85</code> 开始，若还超标则跳到 <code>70</code> → <code>60</code>，不再细粒度一点点降</li>
+<li><strong>保留 PNG 透明度</strong> — PNG 图片始终保持 PNG 格式，不转为 JPEG（否则丢失透明度）</li>
+<li><strong>保守下限</strong> — <code>quality</code> 最低只到 60，<code>scale</code> 最多缩小到 50%，避免图片过度模糊</li>
+</ol>
+<blockquote>
+<p>PNG 图片只支持尺寸缩小来压缩，不支持质量调节。</p>
+</blockquote>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python -m venv .venv</span><br><span class="line">.venv/Scripts/pip install Pillow</span><br></pre></td></tr></table></figure>
+
+<h3 id="命令行使用"><a href="#命令行使用" class="headerlink" title="命令行使用"></a>命令行使用</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.venv/Scripts/python tools/compress_image.py &lt;图片路径&gt;</span><br></pre></td></tr></table></figure>
+
+<p>以一张 5712×3213 的 PNG 图片（约 14MB）为例：</p>
+<ul>
+<li>原始大小：<strong>13.26 MB</strong></li>
+<li>压缩后：<strong>1.00 MB</strong>（减少 92.5%）</li>
+<li>尺寸：5712×3213 → 3555×2000</li>
+</ul>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;图片压缩工具 - 快速将图片压缩到指定大小以下&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_file_size</span>(<span class="params">path</span>):</span><br><span class="line">    <span class="keyword">return</span> os.path.getsize(path) / (<span class="number">1024</span> * <span class="number">1024</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">compress_image</span>(<span class="params">input_path, output_path, max_size_mb=<span class="number">5</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;压缩策略：先评估，小图只降质量，大图才缩尺寸&quot;&quot;&quot;</span></span><br><span class="line">    img = Image.<span class="built_in">open</span>(input_path)</span><br><span class="line">    width, height = img.size</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果是 PNG，先转为 JPEG</span></span><br><span class="line">    <span class="keyword">if</span> img.<span class="built_in">format</span> == <span class="string">&#x27;PNG&#x27;</span>:</span><br><span class="line">        img = img.convert(<span class="string">&#x27;RGB&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    target_short = <span class="number">2000</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 只有当图片大于目标时才缩小</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">max</span>(width, height) &gt; target_short:</span><br><span class="line">        ratio = target_short / <span class="built_in">min</span>(width, height)</span><br><span class="line">        new_width = <span class="built_in">int</span>(width * ratio)</span><br><span class="line">        new_height = <span class="built_in">int</span>(height * ratio)</span><br><span class="line">        img = img.resize((new_width, new_height), Image.Resampling.BILINEAR)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 以 quality=85 保存</span></span><br><span class="line">    img.save(output_path, <span class="built_in">format</span>=<span class="string">&#x27;JPEG&#x27;</span>, quality=<span class="number">85</span>, optimize=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 还超标？大步降质量（85 -&gt; 70 -&gt; 60）</span></span><br><span class="line">    <span class="keyword">if</span> get_file_size(output_path) &gt; max_size_mb:</span><br><span class="line">        <span class="keyword">for</span> quality <span class="keyword">in</span> [<span class="number">70</span>, <span class="number">60</span>]:</span><br><span class="line">            img.save(output_path, <span class="built_in">format</span>=<span class="string">&#x27;JPEG&#x27;</span>, quality=quality, optimize=<span class="literal">True</span>)</span><br><span class="line">            <span class="keyword">if</span> get_file_size(output_path) &lt;= max_size_mb:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># quality=60 仍超标？温和缩小尺寸（每次缩10%）</span></span><br><span class="line">    <span class="keyword">if</span> get_file_size(output_path) &gt; max_size_mb:</span><br><span class="line">        current_img = Image.<span class="built_in">open</span>(output_path)</span><br><span class="line">        w, h = current_img.size</span><br><span class="line">        scale = <span class="number">0.9</span></span><br><span class="line">        <span class="keyword">while</span> get_file_size(output_path) &gt; max_size_mb <span class="keyword">and</span> scale &gt;= <span class="number">0.5</span>:</span><br><span class="line">            new_w, new_h = <span class="built_in">int</span>(w * scale), <span class="built_in">int</span>(h * scale)</span><br><span class="line">            resized = current_img.resize((new_w, new_h), Image.Resampling.BILINEAR)</span><br><span class="line">            resized.save(output_path, <span class="built_in">format</span>=<span class="string">&#x27;JPEG&#x27;</span>, quality=<span class="number">85</span>, optimize=<span class="literal">True</span>)</span><br><span class="line">            scale -= <span class="number">0.1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> output_path</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;用法: python compress_image.py &lt;图片路径&gt;&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    input_path = sys.argv[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(input_path):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;文件不存在: <span class="subst">&#123;input_path&#125;</span>&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    original_size = get_file_size(input_path)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;原始大小: <span class="subst">&#123;original_size:<span class="number">.2</span>f&#125;</span> MB&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> original_size &lt;= <span class="number">5</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;无需压缩&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 备份原文件</span></span><br><span class="line">    backup_path = input_path + <span class="string">&#x27;.bak&#x27;</span></span><br><span class="line">    os.rename(input_path, backup_path)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        compress_image(backup_path, input_path, max_size_mb=<span class="number">5</span>)</span><br><span class="line">        new_size = get_file_size(input_path)</span><br><span class="line">        ratio = (<span class="number">1</span> - new_size / original_size) * <span class="number">100</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;压缩后: <span class="subst">&#123;new_size:<span class="number">.2</span>f&#125;</span> MB (减少 <span class="subst">&#123;ratio:<span class="number">.1</span>f&#125;</span>%)&quot;</span>)</span><br><span class="line">        os.remove(backup_path)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;完成: <span class="subst">&#123;input_path&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        os.rename(backup_path, input_path)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;失败: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="关键参数"><a href="#关键参数" class="headerlink" title="关键参数"></a>关键参数</h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>target_short</code></td>
+<td>2000</td>
+<td>缩小目标：短边最多 2000px</td>
+</tr>
+<tr>
+<td>质量梯度</td>
+<td>85→70→60</td>
+<td>大步降质量，避免反复编码</td>
+</tr>
+<tr>
+<td>尺寸步进</td>
+<td>90%</td>
+<td>每次缩小到原来的 90%</td>
+</tr>
+<tr>
+<td>尺寸下限</td>
+<td>50%</td>
+<td>最多缩小到原来的一半</td>
+</tr>
+</tbody></table>
 ]]></content>
       <categories>
-        <category>搬运</category>
+        <category>编程</category>
       </categories>
       <tags>
-        <tag>2023高考</tag>
-        <tag>河南</tag>
-        <tag>高考</tag>
-        <tag>志愿</tag>
-        <tag>2023</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>河南：一图了解平行志愿</title>
-    <url>/2023/06/30/he-nan-yi-tu-liao-jie-ping-xing-zhi-yuan/</url>
-    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582692dc458853aefd94339.jpg" alt="来源：河南省教育考试院"></p>
-]]></content>
-      <tags>
-        <tag>高考</tag>
-        <tag>转载</tag>
+        <tag>Python</tag>
+        <tag>图片处理</tag>
+        <tag>工具</tag>
       </tags>
   </entry>
   <entry>
