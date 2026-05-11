@@ -3,7 +3,7 @@
   <entry>
     <title>2023河南高考录取时间</title>
     <url>/2023/07/20/2023-he-nan-gao-kao-lu-qu-shi-jian/</url>
-    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/658268bbc458853aefd7e0fd.png" alt=""></p>
+    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/658268bbc458853aefd7e0fd.png"></p>
 ]]></content>
       <categories>
         <category>2023高考</category>
@@ -23,7 +23,6 @@
 <p>各位考生：</p>
 <p>根据教育部相关文件精神，结合学校实际情况，我校拟对2027年硕士研究生招生考试初试部分专业考试科目进行调整。详见下表：</p>
 <p><img src="https://pic1.imgdb.cn/item/69ff88008a9a8c274c5c2e51.png" alt="原网站表格截图"></p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -35,8 +34,7 @@
 <th>调整后科目内容</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>105500</td>
 <td>药学（专业学位）</td>
 <td>349药学综合</td>
@@ -68,9 +66,7 @@
 <td>350中药专业基础综合</td>
 <td>中药学、中药化学、中药分析学</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <p><strong>注：</strong> 上级部门若有政策调整，最终以《河南中医药大学2027年硕士研究生招生章程》发布为准。</p>
 <blockquote>
 <p>原文链接：<a href="https://yjsy.hactcm.edu.cn/info/1121/52311.htm">https://yjsy.hactcm.edu.cn/info/1121/52311.htm</a></p>
@@ -88,91 +84,596 @@
   <entry>
     <title>你好</title>
     <url>/2023/06/10/ni-hao/</url>
-    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582442bc458853aef619333.jpg" alt=""></p>
+    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582442bc458853aef619333.jpg"></p>
 ]]></content>
       <tags>
         <tag>杂项</tag>
       </tags>
   </entry>
   <entry>
-    <title>Python 图片压缩工具</title>
-    <url>/2026/05/03/tu-pian-ya-suo-gong-ju/</url>
-    <content><![CDATA[<h1 id="Python-图片压缩工具"><a href="#Python-图片压缩工具" class="headerlink" title="Python 图片压缩工具"></a>Python 图片压缩工具</h1><h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><p>图床（如 superbed.cn）限制单张图片不超过 5MB，超过则上传失败。为此需要一个自动压缩脚本，将大图片压缩到限制以下，同时尽量保持清晰度。</p>
-<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>压缩策略采用<strong>先缩小尺寸、再降质量</strong>的顺序：</p>
-<ol>
-<li><strong>缩小尺寸优先</strong> — 大图片（短边 &gt;2000px）先按比例缩小到合理尺寸，这比单纯降质量更有效且保真度更高</li>
-<li><strong>质量大步降</strong> — JPEG 从 <code>quality=85</code> 开始，若还超标则跳到 <code>70</code> → <code>60</code>，不再细粒度一点点降</li>
-<li><strong>保留 PNG 透明度</strong> — PNG 图片始终保持 PNG 格式，不转为 JPEG（否则丢失透明度）</li>
-<li><strong>保守下限</strong> — <code>quality</code> 最低只到 60，<code>scale</code> 最多缩小到 50%，避免图片过度模糊</li>
-</ol>
-<blockquote>
-<p>PNG 图片只支持尺寸缩小来压缩，不支持质量调节。</p>
+    <title>国内 Coding Plan 套餐对比 (2026年5月)</title>
+    <url>/2026/05/11/guo-nei-coding-plan-dui-bi-2026/</url>
+    <content><![CDATA[<blockquote>
+<p>数据更新时间：2026-05-11<br>注：本文中 “M” &#x3D; 百万（1M &#x3D; 1,000,000）<br>⚠️ <strong>重要提示</strong>：以下数据来源于各平台官方网站，部分平台需要登录后才能查看完整套餐信息。建议前往各平台官网获取最新信息。</p>
 </blockquote>
-<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python -m venv .venv</span><br><span class="line">.venv/Scripts/pip install Pillow</span><br></pre></td></tr></table></figure>
-<h3 id="命令行使用"><a href="#命令行使用" class="headerlink" title="命令行使用"></a>命令行使用</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.venv/Scripts/python tools/compress_image.py &lt;图片路径&gt;</span><br></pre></td></tr></table></figure>
-<p>以一张 5712×3213 的 PNG 图片（约 14MB）为例：</p>
-<ul>
-<li>原始大小：<strong>13.26 MB</strong></li>
-<li>压缩后：<strong>1.00 MB</strong>（减少 92.5%）</li>
-<li>尺寸：5712×3213 → 3555×2000</li>
-</ul>
-<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;图片压缩工具 - 快速将图片压缩到指定大小以下&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_file_size</span>(<span class="params">path</span>):</span><br><span class="line">    <span class="keyword">return</span> os.path.getsize(path) / (<span class="number">1024</span> * <span class="number">1024</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">compress_image</span>(<span class="params">input_path, output_path, max_size_mb=<span class="number">5</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;压缩策略：先评估，小图只降质量，大图才缩尺寸&quot;&quot;&quot;</span></span><br><span class="line">    img = Image.<span class="built_in">open</span>(input_path)</span><br><span class="line">    width, height = img.size</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果是 PNG，先转为 JPEG</span></span><br><span class="line">    <span class="keyword">if</span> img.<span class="built_in">format</span> == <span class="string">&#x27;PNG&#x27;</span>:</span><br><span class="line">        img = img.convert(<span class="string">&#x27;RGB&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    target_short = <span class="number">2000</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 只有当图片大于目标时才缩小</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">max</span>(width, height) &gt; target_short:</span><br><span class="line">        ratio = target_short / <span class="built_in">min</span>(width, height)</span><br><span class="line">        new_width = <span class="built_in">int</span>(width * ratio)</span><br><span class="line">        new_height = <span class="built_in">int</span>(height * ratio)</span><br><span class="line">        img = img.resize((new_width, new_height), Image.Resampling.BILINEAR)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 以 quality=85 保存</span></span><br><span class="line">    img.save(output_path, <span class="built_in">format</span>=<span class="string">&#x27;JPEG&#x27;</span>, quality=<span class="number">85</span>, optimize=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 还超标？大步降质量（85 -&gt; 70 -&gt; 60）</span></span><br><span class="line">    <span class="keyword">if</span> get_file_size(output_path) &gt; max_size_mb:</span><br><span class="line">        <span class="keyword">for</span> quality <span class="keyword">in</span> [<span class="number">70</span>, <span class="number">60</span>]:</span><br><span class="line">            img.save(output_path, <span class="built_in">format</span>=<span class="string">&#x27;JPEG&#x27;</span>, quality=quality, optimize=<span class="literal">True</span>)</span><br><span class="line">            <span class="keyword">if</span> get_file_size(output_path) &lt;= max_size_mb:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># quality=60 仍超标？温和缩小尺寸（每次缩10%）</span></span><br><span class="line">    <span class="keyword">if</span> get_file_size(output_path) &gt; max_size_mb:</span><br><span class="line">        current_img = Image.<span class="built_in">open</span>(output_path)</span><br><span class="line">        w, h = current_img.size</span><br><span class="line">        scale = <span class="number">0.9</span></span><br><span class="line">        <span class="keyword">while</span> get_file_size(output_path) &gt; max_size_mb <span class="keyword">and</span> scale &gt;= <span class="number">0.5</span>:</span><br><span class="line">            new_w, new_h = <span class="built_in">int</span>(w * scale), <span class="built_in">int</span>(h * scale)</span><br><span class="line">            resized = current_img.resize((new_w, new_h), Image.Resampling.BILINEAR)</span><br><span class="line">            resized.save(output_path, <span class="built_in">format</span>=<span class="string">&#x27;JPEG&#x27;</span>, quality=<span class="number">85</span>, optimize=<span class="literal">True</span>)</span><br><span class="line">            scale -= <span class="number">0.1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> output_path</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;用法: python compress_image.py &lt;图片路径&gt;&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    input_path = sys.argv[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(input_path):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;文件不存在: <span class="subst">&#123;input_path&#125;</span>&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    original_size = get_file_size(input_path)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;原始大小: <span class="subst">&#123;original_size:<span class="number">.2</span>f&#125;</span> MB&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> original_size &lt;= <span class="number">5</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;无需压缩&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 备份原文件</span></span><br><span class="line">    backup_path = input_path + <span class="string">&#x27;.bak&#x27;</span></span><br><span class="line">    os.rename(input_path, backup_path)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        compress_image(backup_path, input_path, max_size_mb=<span class="number">5</span>)</span><br><span class="line">        new_size = get_file_size(input_path)</span><br><span class="line">        ratio = (<span class="number">1</span> - new_size / original_size) * <span class="number">100</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;压缩后: <span class="subst">&#123;new_size:<span class="number">.2</span>f&#125;</span> MB (减少 <span class="subst">&#123;ratio:<span class="number">.1</span>f&#125;</span>%)&quot;</span>)</span><br><span class="line">        os.remove(backup_path)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;完成: <span class="subst">&#123;input_path&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        os.rename(backup_path, input_path)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;失败: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="关键参数"><a href="#关键参数" class="headerlink" title="关键参数"></a>关键参数</h2><div class="table-container">
+<h2 id="一、各平台最低套餐对比"><a href="#一、各平台最低套餐对比" class="headerlink" title="一、各平台最低套餐对比"></a>一、各平台最低套餐对比</h2><table>
+<thead>
+<tr>
+<th>平台</th>
+<th>套餐名</th>
+<th>月费(元)</th>
+<th>额度类型</th>
+<th>官方额度</th>
+<th>每月M tokens</th>
+<th>每元M tokens</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>智谱 GLM</td>
+<td>Lite</td>
+<td>49</td>
+<td>prompts</td>
+<td>80 prompts&#x2F;5h</td>
+<td><strong>约35M</strong></td>
+<td>0.71</td>
+<td>官方数据</td>
+</tr>
+<tr>
+<td>MiniMax</td>
+<td>Starter</td>
+<td>29</td>
+<td>请求次数</td>
+<td>600次&#x2F;5h</td>
+<td><strong>约86M</strong></td>
+<td>2.97</td>
+<td>按请求估算</td>
+</tr>
+<tr>
+<td>Kimi</td>
+<td>Andante</td>
+<td>39(49)</td>
+<td>Token计费</td>
+<td>-</td>
+<td><strong>约50M</strong></td>
+<td>1.02</td>
+<td>年付¥39&#x2F;月</td>
+</tr>
+<tr>
+<td>火山方舟</td>
+<td>Lite</td>
+<td>40</td>
+<td>请求次数</td>
+<td>1,200次&#x2F;5h</td>
+<td><strong>约27M</strong></td>
+<td>0.68</td>
+<td></td>
+</tr>
+<tr>
+<td>阿里云百炼</td>
+<td>标准版</td>
+<td>-</td>
+<td>Credits</td>
+<td>未公开</td>
+<td>-</td>
+<td>-</td>
+<td>需登录查看</td>
+</tr>
+<tr>
+<td>小米 MiMo</td>
+<td>Lite</td>
+<td>39</td>
+<td>Credits</td>
+<td>60M Credits</td>
+<td><strong>约60M</strong></td>
+<td>1.54</td>
+<td>无5h限制</td>
+</tr>
+<tr>
+<td>阶跃星辰</td>
+<td>Mini</td>
+<td>25(49)</td>
+<td>请求次数</td>
+<td>~1,500次&#x2F;5h</td>
+<td><strong>约36M</strong></td>
+<td>1.44</td>
+<td>限时5折</td>
+</tr>
+<tr>
+<td>讯飞星火</td>
+<td>无忧版</td>
+<td>19</td>
+<td>不限次</td>
+<td><strong>无限</strong></td>
+<td><strong>∞</strong></td>
+<td>∞</td>
+<td>不限次数</td>
+</tr>
+<tr>
+<td>移动云</td>
+<td>基础版</td>
+<td>40</td>
+<td>请求次数</td>
+<td>1,200次&#x2F;5h</td>
+<td><strong>约27M</strong></td>
+<td>0.68</td>
+<td></td>
+</tr>
+<tr>
+<td>百度千帆</td>
+<td>Lite</td>
+<td>40</td>
+<td>请求次数</td>
+<td>1,200次&#x2F;5h</td>
+<td><strong>约27M</strong></td>
+<td>0.68</td>
+<td>首月¥9.9</td>
+</tr>
+<tr>
+<td>无问芯穹</td>
+<td>Lite</td>
+<td>40</td>
+<td>请求次数</td>
+<td>1,000次&#x2F;5h</td>
+<td><strong>约22M</strong></td>
+<td>0.56</td>
+<td><strong>售罄</strong></td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>Lite</td>
+<td>40</td>
+<td>请求次数</td>
+<td>1,200次&#x2F;5h</td>
+<td><strong>约27M</strong></td>
+<td>0.68</td>
+<td>首月¥7.9</td>
+</tr>
+<tr>
+<td>硅基流动</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>免费额度</td>
+<td>-</td>
+<td>-</td>
+<td>非订阅制</td>
+</tr>
+</tbody></table>
+<h2 id="二、各平台官方数据详情"><a href="#二、各平台官方数据详情" class="headerlink" title="二、各平台官方数据详情"></a>二、各平台官方数据详情</h2><h3 id="1-智谱-GLM-Coding-Plan"><a href="#1-智谱-GLM-Coding-Plan" class="headerlink" title="1. 智谱 GLM Coding Plan"></a>1. 智谱 GLM Coding Plan</h3><p><strong>官网</strong>: <a href="https://bigmodel.cn/">https://bigmodel.cn/</a></p>
 <table>
 <thead>
 <tr>
-<th>参数</th>
-<th>值</th>
-<th>说明</th>
+<th>套餐</th>
+<th>月费</th>
+<th>每5h额度</th>
+<th>每月M tokens</th>
+<th>适用场景</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td><code>target_short</code></td>
-<td>2000</td>
-<td>缩小目标：短边最多 2000px</td>
+<tbody><tr>
+<td>Lite</td>
+<td>¥49</td>
+<td>80 prompts</td>
+<td>~35M</td>
+<td>小型Repo轻量迭代</td>
 </tr>
 <tr>
-<td>质量梯度</td>
-<td>85→70→60</td>
-<td>大步降质量，避免反复编码</td>
+<td>Pro</td>
+<td>¥149</td>
+<td>400 prompts</td>
+<td>~175M</td>
+<td>中型Repo日常开发</td>
 </tr>
 <tr>
-<td>尺寸步进</td>
-<td>90%</td>
-<td>每次缩小到原来的 90%</td>
+<td>Max</td>
+<td>¥469</td>
+<td>1,600 prompts</td>
+<td>~700M</td>
+<td>大型Repo深度开发</td>
+</tr>
+</tbody></table>
+<p><strong>官方换算</strong>: 80 prompts ≈ 35M tokens&#x2F;月<br><strong>支持工具</strong>: Claude Code, Cline, Cursor, Roo Code, Kilo Code 等20+款<br><strong>支持模型</strong>: GLM-5.1, GLM-5, GLM-4.7, GLM-4.6 等</p>
+<h3 id="2-MiniMax-Token-Plan"><a href="#2-MiniMax-Token-Plan" class="headerlink" title="2. MiniMax Token Plan"></a>2. MiniMax Token Plan</h3><p><strong>官网</strong>: <a href="https://www.minimaxi.com/">https://www.minimaxi.com/</a></p>
+<table>
+<thead>
+<tr>
+<th>套餐</th>
+<th>月费</th>
+<th>每5h额度</th>
+<th>每月M tokens</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Starter</td>
+<td>¥29</td>
+<td>600次</td>
+<td>~86M</td>
+<td>入门级开发</td>
 </tr>
 <tr>
-<td>尺寸下限</td>
-<td>50%</td>
-<td>最多缩小到原来的一半</td>
+<td>Plus</td>
+<td>¥49</td>
+<td>1,500次</td>
+<td>~215M</td>
+<td>专业开发</td>
 </tr>
-</tbody>
-</table>
-</div>
+<tr>
+<td>Max</td>
+<td>¥119</td>
+<td>4,500次</td>
+<td>~645M</td>
+<td>高级开发</td>
+</tr>
+<tr>
+<td>Plus-极速版</td>
+<td>¥98</td>
+<td>1,500次(100TPS)</td>
+<td>~215M</td>
+<td>追求高速度</td>
+</tr>
+<tr>
+<td>Max-极速版</td>
+<td>¥199</td>
+<td>4,500次(100TPS)</td>
+<td>~645M</td>
+<td>高并发编程</td>
+</tr>
+<tr>
+<td>Ultra-极速版</td>
+<td>¥899</td>
+<td>30,000次(100TPS)</td>
+<td>~4300M</td>
+<td>企业级重度</td>
+</tr>
+</tbody></table>
+<p><strong>支持模型</strong>: M2.7, M2.5, M2.5-highspeed 等<br><strong>特点</strong>: 100+ TPS 高速生成，编程模型性能强，Plus及以上送多模态权益</p>
+<h3 id="3-Kimi-Coding-Plan"><a href="#3-Kimi-Coding-Plan" class="headerlink" title="3. Kimi Coding Plan"></a>3. Kimi Coding Plan</h3><p><strong>官网</strong>: <a href="https://kimi.moonshot.cn/">https://kimi.moonshot.cn/</a></p>
+<table>
+<thead>
+<tr>
+<th>套餐</th>
+<th>月费(年付)</th>
+<th>每月M tokens</th>
+<th>主要权益</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Andante</td>
+<td>¥39(¥468&#x2F;年)</td>
+<td>~50M</td>
+<td>基础额度</td>
+</tr>
+<tr>
+<td>Moderato</td>
+<td>¥79(¥948&#x2F;年)</td>
+<td>~200M</td>
+<td>约4倍额度，推荐</td>
+</tr>
+<tr>
+<td>Allegretto</td>
+<td>¥159(¥1908&#x2F;年)</td>
+<td>~1000M</td>
+<td>约20倍额度</td>
+</tr>
+<tr>
+<td>Allegro</td>
+<td>¥559(¥6708&#x2F;年)</td>
+<td>~3000M</td>
+<td>企业级重度</td>
+</tr>
+</tbody></table>
+<p><strong>计费方式</strong>: 2026年1月28日起全面切换为Token计费<br><strong>支持模型</strong>: Kimi K2.6, K2.5, K2, Kimi-Claw<br><strong>特点</strong>: Token计费不惧长时连续编程，支持多模态+Agent集群</p>
+<h3 id="4-火山方舟-Token-Plan"><a href="#4-火山方舟-Token-Plan" class="headerlink" title="4. 火山方舟 Token Plan"></a>4. 火山方舟 Token Plan</h3><p><strong>官网</strong>: <a href="https://www.volcengine.com/product/coding-plan">https://www.volcengine.com/product/coding-plan</a></p>
+<table>
+<thead>
+<tr>
+<th>套餐</th>
+<th>月费</th>
+<th>每5h额度</th>
+<th>每月M tokens</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Lite</td>
+<td>¥40</td>
+<td>1,200次</td>
+<td>~27M</td>
+<td></td>
+</tr>
+<tr>
+<td>Pro</td>
+<td>¥200</td>
+<td>6,000次</td>
+<td>~135M</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong>支持模型</strong>: Doubao-Seed-Code, DeepSeek-V3.2, GLM-4.7, Kimi-K2 等<br><strong>特点</strong>: 原生支持Anthropic协议，Auto智能选模型</p>
+<h3 id="5-阿里云百炼-Token-Plan-团队版"><a href="#5-阿里云百炼-Token-Plan-团队版" class="headerlink" title="5. 阿里云百炼 Token Plan 团队版"></a>5. 阿里云百炼 Token Plan 团队版</h3><p><strong>官网</strong>: <a href="https://bailian.console.aliyun.com/">https://bailian.console.aliyun.com/</a></p>
+<blockquote>
+<p>需要登录后才能查看具体套餐和Credits额度</p>
+</blockquote>
+<p><strong>套餐类型</strong>: 标准版、高级版、尊享版<br><strong>支持模型</strong>: Qwen3.6-Plus, Qwen3.6-Flash, Kimi-K2.6, GLM-5.1, MiniMax-M2.5 等<br><strong>特点</strong>: 多模型灵活切换，兼容主流编程与智能体工具</p>
+<h3 id="6-小米-MiMo-Token-Plan"><a href="#6-小米-MiMo-Token-Plan" class="headerlink" title="6. 小米 MiMo Token Plan"></a>6. 小米 MiMo Token Plan</h3><p><strong>官网</strong>: <a href="https://platform.xiaomimimo.com/">https://platform.xiaomimimo.com/</a></p>
+<table>
+<thead>
+<tr>
+<th>套餐</th>
+<th>月费(年付)</th>
+<th>Credits</th>
+<th>每月M tokens</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Lite</td>
+<td>¥33(¥468&#x2F;年)</td>
+<td>720M</td>
+<td>~60M</td>
+<td>入门探索</td>
+</tr>
+<tr>
+<td>Standard</td>
+<td>¥87(¥1188&#x2F;年)</td>
+<td>2,400M</td>
+<td>~200M</td>
+<td>日常开发者</td>
+</tr>
+<tr>
+<td>Pro</td>
+<td>¥289(¥3948&#x2F;年)</td>
+<td>8,400M</td>
+<td>~700M</td>
+<td>专业深度</td>
+</tr>
+<tr>
+<td>Max</td>
+<td>¥580(¥7908&#x2F;年)</td>
+<td>19,200M</td>
+<td>~1600M</td>
+<td>企业级重度</td>
+</tr>
+</tbody></table>
+<p><strong>计费特点</strong>:</p>
+<ul>
+<li>无5小时滚动窗口限制，支持集中消耗</li>
+<li>不同模型消耗系数不同</li>
+<li>非高峰期(00:00-08:00) 0.8x 系数</li>
+<li>TTS模型限时免费</li>
+</ul>
+<h3 id="7-阶跃星辰-Step-Plan"><a href="#7-阶跃星辰-Step-Plan" class="headerlink" title="7. 阶跃星辰 Step Plan"></a>7. 阶跃星辰 Step Plan</h3><p><strong>官网</strong>: <a href="https://stepchat.com/">https://stepchat.com/</a></p>
+<table>
+<thead>
+<tr>
+<th>套餐</th>
+<th>月费(原价)</th>
+<th>限时5折价</th>
+<th>每5h额度</th>
+<th>每月M tokens</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Mini</td>
+<td>¥49</td>
+<td>¥25</td>
+<td>~1,500次</td>
+<td>~36M</td>
+</tr>
+<tr>
+<td>Plus</td>
+<td>¥99</td>
+<td>¥49</td>
+<td>~6,000次</td>
+<td>~144M</td>
+</tr>
+<tr>
+<td>Pro</td>
+<td>¥199</td>
+<td>¥99</td>
+<td>~22,500次</td>
+<td>~540M</td>
+</tr>
+<tr>
+<td>Max</td>
+<td>¥699</td>
+<td>¥349</td>
+<td>~75,000次</td>
+<td>~1800M</td>
+</tr>
+</tbody></table>
+<p><strong>支持模型</strong>: step-3.5-flash<br><strong>计费方式</strong>: Prompt次数（1 prompt ≈ 15-20次模型调用）</p>
+<h3 id="8-讯飞星火-Coding-Plan"><a href="#8-讯飞星火-Coding-Plan" class="headerlink" title="8. 讯飞星火 Coding Plan"></a>8. 讯飞星火 Coding Plan</h3><p><strong>官网</strong>: <a href="https://xinghuo.xfyun.cn/">https://xinghuo.xfyun.cn/</a></p>
+<table>
+<thead>
+<tr>
+<th>套餐</th>
+<th>月费</th>
+<th>每月M tokens</th>
+<th>核心权益</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>无忧版</td>
+<td>¥19</td>
+<td><strong>无限</strong></td>
+<td>不限次数，性价比最高</td>
+</tr>
+<tr>
+<td>专业版</td>
+<td>¥39.9</td>
+<td><strong>无限</strong></td>
+<td>不限次数，更多模型</td>
+</tr>
+</tbody></table>
+<p><strong>支持模型</strong>: 星火X2, DeepSeek-V3.2, GLM-4.7-Flash, Qwen3.5 等</p>
+<h3 id="9-其他平台"><a href="#9-其他平台" class="headerlink" title="9. 其他平台"></a>9. 其他平台</h3><h4 id="移动云"><a href="#移动云" class="headerlink" title="移动云"></a>移动云</h4><p><strong>官网</strong>: <a href="https://ecloud.10086.cn/">https://ecloud.10086.cn/</a></p>
+<ul>
+<li>基础版: ¥40&#x2F;月，~27M tokens</li>
+</ul>
+<h4 id="百度千帆"><a href="#百度千帆" class="headerlink" title="百度千帆"></a>百度千帆</h4><p><strong>官网</strong>: <a href="https://qianfan.ai/">https://qianfan.ai/</a></p>
+<ul>
+<li>Lite: ¥40&#x2F;月，~27M tokens（首月¥9.9）</li>
+</ul>
+<h4 id="无问芯穹"><a href="#无问芯穹" class="headerlink" title="无问芯穹"></a>无问芯穹</h4><p><strong>官网</strong>: <a href="https://cloud.infini-ai.com/">https://cloud.infini-ai.com/</a></p>
+<ul>
+<li>Lite: ¥40&#x2F;月，~22M tokens（<strong>目前售罄</strong>）</li>
+</ul>
+<h4 id="腾讯云"><a href="#腾讯云" class="headerlink" title="腾讯云"></a>腾讯云</h4><p><strong>官网</strong>: <a href="https://cloud.tencent.com/">https://cloud.tencent.com/</a></p>
+<ul>
+<li>Lite: ¥40&#x2F;月，~27M tokens（首月¥7.9）</li>
+</ul>
+<h4 id="硅基流动"><a href="#硅基流动" class="headerlink" title="硅基流动"></a>硅基流动</h4><p><strong>官网</strong>: <a href="https://siliconflow.cn/">https://siliconflow.cn/</a></p>
+<ul>
+<li>非订阅制，是按量付费+免费额度模式</li>
+</ul>
+<h2 id="三、关键换算公式"><a href="#三、关键换算公式" class="headerlink" title="三、关键换算公式"></a>三、关键换算公式</h2><table>
+<thead>
+<tr>
+<th>平台</th>
+<th>官方换算关系</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>智谱 GLM</td>
+<td>80 prompts ≈ 35M tokens&#x2F;月</td>
+</tr>
+<tr>
+<td>MiniMax</td>
+<td>600次&#x2F;5h ≈ 86M tokens&#x2F;月（估算）</td>
+</tr>
+<tr>
+<td>Kimi</td>
+<td>Token计费，1元 ≈ ~2M tokens</td>
+</tr>
+<tr>
+<td>火山方舟</td>
+<td>200元 ≈ 2亿tokens&#x2F;月（用户实测）</td>
+</tr>
+<tr>
+<td>小米</td>
+<td>1 Credit ≈ 1 token</td>
+</tr>
+</tbody></table>
+<h2 id="四、选型建议"><a href="#四、选型建议" class="headerlink" title="四、选型建议"></a>四、选型建议</h2><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐平台</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>预算优先&#x2F;不限量</strong></td>
+<td>讯飞星火(¥19&#x2F;月)</td>
+<td>不限次数，性价比最高</td>
+</tr>
+<tr>
+<td><strong>性价比首选</strong></td>
+<td>MiniMax Starter(¥29&#x2F;月)</td>
+<td>约86M tokens&#x2F;月</td>
+</tr>
+<tr>
+<td><strong>长文本&#x2F;Agent</strong></td>
+<td>Kimi</td>
+<td>Token计费，不惧长时连续编程</td>
+</tr>
+<tr>
+<td><strong>Claude Code兼容</strong></td>
+<td>火山方舟</td>
+<td>原生Anthropic协议</td>
+</tr>
+<tr>
+<td><strong>模型丰富度</strong></td>
+<td>阿里云百炼</td>
+<td>Qwen+GLM+Kimi+MiniMax聚合</td>
+</tr>
+<tr>
+<td><strong>无5h滚动限制</strong></td>
+<td>小米 MiMo</td>
+<td>无时间窗口限制</td>
+</tr>
+</tbody></table>
+<h2 id="五、各平台官网链接"><a href="#五、各平台官网链接" class="headerlink" title="五、各平台官网链接"></a>五、各平台官网链接</h2><table>
+<thead>
+<tr>
+<th>平台</th>
+<th>官网</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>智谱 GLM</td>
+<td><a href="https://bigmodel.cn/">https://bigmodel.cn/</a></td>
+</tr>
+<tr>
+<td>MiniMax</td>
+<td><a href="https://www.minimaxi.com/">https://www.minimaxi.com/</a></td>
+</tr>
+<tr>
+<td>Kimi</td>
+<td><a href="https://kimi.moonshot.cn/">https://kimi.moonshot.cn/</a></td>
+</tr>
+<tr>
+<td>火山方舟</td>
+<td><a href="https://www.volcengine.com/product/coding-plan">https://www.volcengine.com/product/coding-plan</a></td>
+</tr>
+<tr>
+<td>阿里云百炼</td>
+<td><a href="https://bailian.console.aliyun.com/">https://bailian.console.aliyun.com/</a></td>
+</tr>
+<tr>
+<td>小米 MiMo</td>
+<td><a href="https://platform.xiaomimimo.com/">https://platform.xiaomimimo.com/</a></td>
+</tr>
+<tr>
+<td>阶跃星辰</td>
+<td><a href="https://stepchat.com/">https://stepchat.com/</a></td>
+</tr>
+<tr>
+<td>讯飞星火</td>
+<td><a href="https://xinghuo.xfyun.cn/">https://xinghuo.xfyun.cn/</a></td>
+</tr>
+<tr>
+<td>移动云</td>
+<td><a href="https://ecloud.10086.cn/">https://ecloud.10086.cn/</a></td>
+</tr>
+<tr>
+<td>百度千帆</td>
+<td><a href="https://qianfan.ai/">https://qianfan.ai/</a></td>
+</tr>
+<tr>
+<td>无问芯穹</td>
+<td><a href="https://cloud.infini-ai.com/">https://cloud.infini-ai.com/</a></td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td><a href="https://cloud.tencent.com/">https://cloud.tencent.com/</a></td>
+</tr>
+<tr>
+<td>硅基流动</td>
+<td><a href="https://siliconflow.cn/">https://siliconflow.cn/</a></td>
+</tr>
+</tbody></table>
+<h2 id="六、注意事项"><a href="#六、注意事项" class="headerlink" title="六、注意事项"></a>六、注意事项</h2><ol>
+<li><strong>5小时滚动窗口</strong>: 大多数平台采用此机制，突发高强度使用可能触发限流。小米 MiMo 是例外</li>
+<li><strong>套餐调整</strong>: 各平台价格和套餐内容时有调整，请以官方最新公告为准</li>
+<li><strong>限购情况</strong>: 部分平台热门套餐可能限量销售或停售</li>
+<li><strong>退订政策</strong>: 多数平台不支持退款，订阅前请确认需求</li>
+<li><strong>登录要求</strong>: 阿里云百炼等平台需要登录后才能查看完整套餐信息</li>
+</ol>
+<hr>
+<p><em>数据更新时间：2026-05-11</em><br><em>建议前往各平台官网获取最新和最准确的信息</em></p>
 ]]></content>
       <categories>
-        <category>编程</category>
+        <category>工具测评</category>
       </categories>
       <tags>
-        <tag>Python</tag>
-        <tag>图片处理</tag>
-        <tag>工具</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>摄影记录杭州</title>
-    <url>/2024/07/11/she-ying-ji-lu-hang-zhou/</url>
-    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/668f5388d9c307b7e9a2d935.jpg" alt=""></p>
-]]></content>
-      <categories>
-        <category>摄影</category>
-      </categories>
-      <tags>
-        <tag>摄影</tag>
-        <tag>杭州</tag>
-        <tag>D5300</tag>
-        <tag>35mm f1.8g</tag>
+        <tag>AI编程</tag>
+        <tag>Coding Plan</tag>
+        <tag>Token Plan</tag>
+        <tag>平台对比</tag>
       </tags>
   </entry>
   <entry>
@@ -649,12 +1150,77 @@ window.addEventListener('load', function() {
       </tags>
   </entry>
   <entry>
+    <title>Python 图片压缩工具</title>
+    <url>/2026/05/03/tu-pian-ya-suo-gong-ju/</url>
+    <content><![CDATA[<h1 id="Python-图片压缩工具"><a href="#Python-图片压缩工具" class="headerlink" title="Python 图片压缩工具"></a>Python 图片压缩工具</h1><h2 id="需求背景"><a href="#需求背景" class="headerlink" title="需求背景"></a>需求背景</h2><p>图床（如 superbed.cn）限制单张图片不超过 5MB，超过则上传失败。为此需要一个自动压缩脚本，将大图片压缩到限制以下，同时尽量保持清晰度。</p>
+<h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>压缩策略采用<strong>先缩小尺寸、再降质量</strong>的顺序：</p>
+<ol>
+<li><strong>缩小尺寸优先</strong> — 大图片（短边 &gt;2000px）先按比例缩小到合理尺寸，这比单纯降质量更有效且保真度更高</li>
+<li><strong>质量大步降</strong> — JPEG 从 <code>quality=85</code> 开始，若还超标则跳到 <code>70</code> → <code>60</code>，不再细粒度一点点降</li>
+<li><strong>保留 PNG 透明度</strong> — PNG 图片始终保持 PNG 格式，不转为 JPEG（否则丢失透明度）</li>
+<li><strong>保守下限</strong> — <code>quality</code> 最低只到 60，<code>scale</code> 最多缩小到 50%，避免图片过度模糊</li>
+</ol>
+<blockquote>
+<p>PNG 图片只支持尺寸缩小来压缩，不支持质量调节。</p>
+</blockquote>
+<h2 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h2><h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python -m venv .venv</span><br><span class="line">.venv/Scripts/pip install Pillow</span><br></pre></td></tr></table></figure>
+
+<h3 id="命令行使用"><a href="#命令行使用" class="headerlink" title="命令行使用"></a>命令行使用</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">.venv/Scripts/python tools/compress_image.py &lt;图片路径&gt;</span><br></pre></td></tr></table></figure>
+
+<p>以一张 5712×3213 的 PNG 图片（约 14MB）为例：</p>
+<ul>
+<li>原始大小：<strong>13.26 MB</strong></li>
+<li>压缩后：<strong>1.00 MB</strong>（减少 92.5%）</li>
+<li>尺寸：5712×3213 → 3555×2000</li>
+</ul>
+<h2 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;图片压缩工具 - 快速将图片压缩到指定大小以下&quot;&quot;&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_file_size</span>(<span class="params">path</span>):</span><br><span class="line">    <span class="keyword">return</span> os.path.getsize(path) / (<span class="number">1024</span> * <span class="number">1024</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">compress_image</span>(<span class="params">input_path, output_path, max_size_mb=<span class="number">5</span></span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;压缩策略：先评估，小图只降质量，大图才缩尺寸&quot;&quot;&quot;</span></span><br><span class="line">    img = Image.<span class="built_in">open</span>(input_path)</span><br><span class="line">    width, height = img.size</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 如果是 PNG，先转为 JPEG</span></span><br><span class="line">    <span class="keyword">if</span> img.<span class="built_in">format</span> == <span class="string">&#x27;PNG&#x27;</span>:</span><br><span class="line">        img = img.convert(<span class="string">&#x27;RGB&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    target_short = <span class="number">2000</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 只有当图片大于目标时才缩小</span></span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">max</span>(width, height) &gt; target_short:</span><br><span class="line">        ratio = target_short / <span class="built_in">min</span>(width, height)</span><br><span class="line">        new_width = <span class="built_in">int</span>(width * ratio)</span><br><span class="line">        new_height = <span class="built_in">int</span>(height * ratio)</span><br><span class="line">        img = img.resize((new_width, new_height), Image.Resampling.BILINEAR)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 以 quality=85 保存</span></span><br><span class="line">    img.save(output_path, <span class="built_in">format</span>=<span class="string">&#x27;JPEG&#x27;</span>, quality=<span class="number">85</span>, optimize=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 还超标？大步降质量（85 -&gt; 70 -&gt; 60）</span></span><br><span class="line">    <span class="keyword">if</span> get_file_size(output_path) &gt; max_size_mb:</span><br><span class="line">        <span class="keyword">for</span> quality <span class="keyword">in</span> [<span class="number">70</span>, <span class="number">60</span>]:</span><br><span class="line">            img.save(output_path, <span class="built_in">format</span>=<span class="string">&#x27;JPEG&#x27;</span>, quality=quality, optimize=<span class="literal">True</span>)</span><br><span class="line">            <span class="keyword">if</span> get_file_size(output_path) &lt;= max_size_mb:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># quality=60 仍超标？温和缩小尺寸（每次缩10%）</span></span><br><span class="line">    <span class="keyword">if</span> get_file_size(output_path) &gt; max_size_mb:</span><br><span class="line">        current_img = Image.<span class="built_in">open</span>(output_path)</span><br><span class="line">        w, h = current_img.size</span><br><span class="line">        scale = <span class="number">0.9</span></span><br><span class="line">        <span class="keyword">while</span> get_file_size(output_path) &gt; max_size_mb <span class="keyword">and</span> scale &gt;= <span class="number">0.5</span>:</span><br><span class="line">            new_w, new_h = <span class="built_in">int</span>(w * scale), <span class="built_in">int</span>(h * scale)</span><br><span class="line">            resized = current_img.resize((new_w, new_h), Image.Resampling.BILINEAR)</span><br><span class="line">            resized.save(output_path, <span class="built_in">format</span>=<span class="string">&#x27;JPEG&#x27;</span>, quality=<span class="number">85</span>, optimize=<span class="literal">True</span>)</span><br><span class="line">            scale -= <span class="number">0.1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> output_path</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">len</span>(sys.argv) &lt; <span class="number">2</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;用法: python compress_image.py &lt;图片路径&gt;&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    input_path = sys.argv[<span class="number">1</span>]</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(input_path):</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;文件不存在: <span class="subst">&#123;input_path&#125;</span>&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">    original_size = get_file_size(input_path)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;原始大小: <span class="subst">&#123;original_size:<span class="number">.2</span>f&#125;</span> MB&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> original_size &lt;= <span class="number">5</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;无需压缩&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 备份原文件</span></span><br><span class="line">    backup_path = input_path + <span class="string">&#x27;.bak&#x27;</span></span><br><span class="line">    os.rename(input_path, backup_path)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        compress_image(backup_path, input_path, max_size_mb=<span class="number">5</span>)</span><br><span class="line">        new_size = get_file_size(input_path)</span><br><span class="line">        ratio = (<span class="number">1</span> - new_size / original_size) * <span class="number">100</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;压缩后: <span class="subst">&#123;new_size:<span class="number">.2</span>f&#125;</span> MB (减少 <span class="subst">&#123;ratio:<span class="number">.1</span>f&#125;</span>%)&quot;</span>)</span><br><span class="line">        os.remove(backup_path)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;完成: <span class="subst">&#123;input_path&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        os.rename(backup_path, input_path)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;失败: <span class="subst">&#123;e&#125;</span>&quot;</span>)</span><br><span class="line">        sys.exit(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="关键参数"><a href="#关键参数" class="headerlink" title="关键参数"></a>关键参数</h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>target_short</code></td>
+<td>2000</td>
+<td>缩小目标：短边最多 2000px</td>
+</tr>
+<tr>
+<td>质量梯度</td>
+<td>85→70→60</td>
+<td>大步降质量，避免反复编码</td>
+</tr>
+<tr>
+<td>尺寸步进</td>
+<td>90%</td>
+<td>每次缩小到原来的 90%</td>
+</tr>
+<tr>
+<td>尺寸下限</td>
+<td>50%</td>
+<td>最多缩小到原来的一半</td>
+</tr>
+</tbody></table>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>图片处理</tag>
+        <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>李跳跳最后版本下载</title>
     <url>/2023/08/27/li-tiao-tiao-zui-hou-ban-ben-xia-zai/</url>
     <content><![CDATA[<blockquote>
 <p>鉴于李跳跳不再更新,在此分享一下之前下的最后一个版本的李跳跳,留作备份</p>
 </blockquote>
-<p><img src="https://pic.imgdb.cn/item/658269b3c458853aefdb7ab1.png" alt=""></p>
+<p><img src="https://pic.imgdb.cn/item/658269b3c458853aefdb7ab1.png"></p>
 <h2 id="点我跳转蓝奏云下载"><a href="#点我跳转蓝奏云下载" class="headerlink" title="点我跳转蓝奏云下载"></a><a href="https://wwi.lanzoup.com/ikZAy16m864d">点我跳转蓝奏云下载</a></h2><p><em>想的话可以打赏一下哦</em></p>
 ]]></content>
       <categories>
@@ -674,13 +1240,18 @@ window.addEventListener('load', function() {
 ]]></content>
   </entry>
   <entry>
-    <title>河南：一图了解平行志愿</title>
-    <url>/2023/06/30/he-nan-yi-tu-liao-jie-ping-xing-zhi-yuan/</url>
-    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582692dc458853aefd94339.jpg" alt="来源：河南省教育考试院"></p>
+    <title>摄影记录杭州</title>
+    <url>/2024/07/11/she-ying-ji-lu-hang-zhou/</url>
+    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/668f5388d9c307b7e9a2d935.jpg"></p>
 ]]></content>
+      <categories>
+        <category>摄影</category>
+      </categories>
       <tags>
-        <tag>高考</tag>
-        <tag>转载</tag>
+        <tag>摄影</tag>
+        <tag>杭州</tag>
+        <tag>D5300</tag>
+        <tag>35mm f1.8g</tag>
       </tags>
   </entry>
   <entry>
@@ -700,26 +1271,19 @@ window.addEventListener('load', function() {
       </tags>
   </entry>
   <entry>
-    <title>量子计算机</title>
-    <url>/2023/06/13/liang-zi-ji-suan-ji/</url>
-    <content><![CDATA[<blockquote>
-<p>随着信息技术的飞速发展，计算机已经成为人们日常工作和生活中不可缺少的一部分。但是，传统计算机在某些领域的运算能力已经到达极限，例如在处理复杂的大规模数据、优化问题、密码学等方面。为此，科学家们逐渐将目光投向了量子计算机。</p>
-</blockquote>
-<h1 id="什么是量子计算机？"><a href="#什么是量子计算机？" class="headerlink" title="什么是量子计算机？"></a>什么是量子计算机？</h1><p>传统计算机中的基本单位是比特（bit），而量子计算机中的基本单位是量子位（qubit）。与比特只有两种状态（0或1）不同，量子位则可以处于超级位置态（superposition state），即同时处于0和1两种状态之间。这使得量子计算机在某些运算上具有独特的优势。</p>
-<h1 id="量子计算机的优势"><a href="#量子计算机的优势" class="headerlink" title="量子计算机的优势"></a>量子计算机的优势</h1><p>量子计算机最吸引人的优势莫过于其在高效处理大规模数据上的能力。传统计算机的并行处理方式受制于物理限制，很难同时处理大量数据。而量子计算机则可以通过量子并行的方式来同时处理多个任务，从而有效地提升了计算速度。</p>
-<p>此外，量子计算机对于某些优化问题和密码学问题也具有天然的优势。例如，量子计算机可以在相对较短的时间内解决传统计算机需要几十年甚至几百年才能解决的问题，例如Shor算法可以破解目前常用的RSA加密算法。</p>
-<h1 id="量子计算机的挑战"><a href="#量子计算机的挑战" class="headerlink" title="量子计算机的挑战"></a>量子计算机的挑战</h1><p>尽管量子计算机具备种种优势，但是实现量子计算机仍然面临着诸多技术挑战。量子位的构造、量子纠缠、量子逻辑门等都需要具有极高的精度和稳定性，这对材料、物理学和工程学等领域都提出了极大的挑战。</p>
-<p>此外，量子计算机还需要解决错误校正问题。由于量子信息非常敏感，容易受到环境噪声、测量干扰等因素的影响，因此如何在计算过程中有效地校正和修复错误也是一个极具挑战的问题。</p>
-<h1 id="未来展望"><a href="#未来展望" class="headerlink" title="未来展望"></a>未来展望</h1><p>尽管量子计算机仍然处于发展初期，但其前景无疑是光明的。随着技术的不断进步和创新，我们有理由相信，未来的量子计算机将会成为人类探索宇宙、模拟物质、解决人类智力难题的强有力武器。</p>
+    <title>河南：一图了解平行志愿</title>
+    <url>/2023/06/30/he-nan-yi-tu-liao-jie-ping-xing-zhi-yuan/</url>
+    <content><![CDATA[<p><img src="https://pic.imgdb.cn/item/6582692dc458853aefd94339.jpg" alt="来源：河南省教育考试院"></p>
 ]]></content>
       <tags>
-        <tag>计算机</tag>
+        <tag>高考</tag>
+        <tag>转载</tag>
       </tags>
   </entry>
   <entry>
     <title>药用植物学小问答</title>
     <url>/2023/12/24/yao-yong-zhi-wu-xue-xiao-wen-da/</url>
-    <content><![CDATA[<h1 id="涉及药用植物学中基础的药用植物科的分类"><a href="#涉及药用植物学中基础的药用植物科的分类" class="headerlink" title="涉及药用植物学中基础的药用植物科的分类"></a>涉及药用植物学中基础的药用植物科的分类</h1><p>&lt;!DOCTYPE html&gt;</p>
+    <content><![CDATA[<h1 id="涉及药用植物学中基础的药用植物科的分类"><a href="#涉及药用植物学中基础的药用植物科的分类" class="headerlink" title="涉及药用植物学中基础的药用植物科的分类"></a>涉及药用植物学中基础的药用植物科的分类</h1><!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -972,16 +1536,14 @@ quiz();
 </body>
 </html>
 
-<h1 id="涉及到的植物"><a href="#涉及到的植物" class="headerlink" title="涉及到的植物"></a>涉及到的植物</h1><div class="table-container">
-<table>
+<h1 id="涉及到的植物"><a href="#涉及到的植物" class="headerlink" title="涉及到的植物"></a>涉及到的植物</h1><table>
 <thead>
 <tr>
 <th>科名</th>
 <th>植物名称</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>蓼科</td>
 <td>唐古特大黄 (R.tanguticum Maxim.et BalF), 何首乌 (Polygonum multiflorum Thunb)</td>
 </tr>
@@ -1037,9 +1599,7 @@ quiz();
 <td>百合科</td>
 <td>百合 (Lilium brownii F.E.Brown var. viridulum Baker), 川贝母 (Fritillaria cirrhosa D.Don)</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 ]]></content>
       <categories>
         <category>编程</category>
@@ -1048,6 +1608,23 @@ quiz();
         <tag>药用植物学</tag>
         <tag>html</tag>
         <tag>编程</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>量子计算机</title>
+    <url>/2023/06/13/liang-zi-ji-suan-ji/</url>
+    <content><![CDATA[<blockquote>
+<p>随着信息技术的飞速发展，计算机已经成为人们日常工作和生活中不可缺少的一部分。但是，传统计算机在某些领域的运算能力已经到达极限，例如在处理复杂的大规模数据、优化问题、密码学等方面。为此，科学家们逐渐将目光投向了量子计算机。</p>
+</blockquote>
+<h1 id="什么是量子计算机？"><a href="#什么是量子计算机？" class="headerlink" title="什么是量子计算机？"></a>什么是量子计算机？</h1><p>传统计算机中的基本单位是比特（bit），而量子计算机中的基本单位是量子位（qubit）。与比特只有两种状态（0或1）不同，量子位则可以处于超级位置态（superposition state），即同时处于0和1两种状态之间。这使得量子计算机在某些运算上具有独特的优势。</p>
+<h1 id="量子计算机的优势"><a href="#量子计算机的优势" class="headerlink" title="量子计算机的优势"></a>量子计算机的优势</h1><p>量子计算机最吸引人的优势莫过于其在高效处理大规模数据上的能力。传统计算机的并行处理方式受制于物理限制，很难同时处理大量数据。而量子计算机则可以通过量子并行的方式来同时处理多个任务，从而有效地提升了计算速度。</p>
+<p>此外，量子计算机对于某些优化问题和密码学问题也具有天然的优势。例如，量子计算机可以在相对较短的时间内解决传统计算机需要几十年甚至几百年才能解决的问题，例如Shor算法可以破解目前常用的RSA加密算法。</p>
+<h1 id="量子计算机的挑战"><a href="#量子计算机的挑战" class="headerlink" title="量子计算机的挑战"></a>量子计算机的挑战</h1><p>尽管量子计算机具备种种优势，但是实现量子计算机仍然面临着诸多技术挑战。量子位的构造、量子纠缠、量子逻辑门等都需要具有极高的精度和稳定性，这对材料、物理学和工程学等领域都提出了极大的挑战。</p>
+<p>此外，量子计算机还需要解决错误校正问题。由于量子信息非常敏感，容易受到环境噪声、测量干扰等因素的影响，因此如何在计算过程中有效地校正和修复错误也是一个极具挑战的问题。</p>
+<h1 id="未来展望"><a href="#未来展望" class="headerlink" title="未来展望"></a>未来展望</h1><p>尽管量子计算机仍然处于发展初期，但其前景无疑是光明的。随着技术的不断进步和创新，我们有理由相信，未来的量子计算机将会成为人类探索宇宙、模拟物质、解决人类智力难题的强有力武器。</p>
+]]></content>
+      <tags>
+        <tag>计算机</tag>
       </tags>
   </entry>
 </search>
