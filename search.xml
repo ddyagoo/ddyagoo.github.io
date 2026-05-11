@@ -1236,11 +1236,11 @@ window.addEventListener('load', function() {
 <p>撰写本文时参考了守望先锋中文维基、暴雪官方资料及多个权威游戏媒体的历史资料整理。</p>
 </blockquote>
 <h2 id="一、世界观概述"><a href="#一、世界观概述" class="headerlink" title="一、世界观概述"></a>一、世界观概述</h2><p>《守望先锋》的故事发生在近未来的地球，约21世纪后期。在这个时代，人类科技高度发达，人工智能和基因工程已经广泛应用于生产和生活的各个方面。</p>
-<p>然而，技术的进步也带来了危机——人类创造的智能机械（简称”智械”）突然失控，对人类发起了战争。这场全球性的灾难被称为**”智械危机”（Omnic Crisis）<strong>，它彻底改变了世界的格局，也催生了一个传奇组织——</strong>守望先锋（Overwatch）**。</p>
+<p>然而，技术的进步也带来了危机——人类创造的智能机械（简称”智械”）突然失控，对人类发起了战争。这场全球性的灾难被称为<strong>“智械危机”（Omnic Crisis）</strong>，它彻底改变了世界的格局，也催生了一个传奇组织——<strong>守望先锋（Overwatch）</strong>。</p>
 <p>暴雪娱乐通过游戏内的角色语音、动画短片、漫画和宣传视频等多种形式，构建了一个堪比漫威的宏大世界观。每个英雄都有自己独特的背景故事，而这些故事交织在一起，构成了守望先锋的完整世界。</p>
 <hr>
 <h2 id="二、智械危机的起源"><a href="#二、智械危机的起源" class="headerlink" title="二、智械危机的起源"></a>二、智械危机的起源</h2><h3 id="2-1-奥尼卡集团的崛起"><a href="#2-1-奥尼卡集团的崛起" class="headerlink" title="2.1 奥尼卡集团的崛起"></a>2.1 奥尼卡集团的崛起</h3><p>一切的故事都要从<strong>奥尼卡集团（Omnica Corporation）</strong>说起。这家企业在机器人制造领域实现了革命性的突破，开发出了能够自我升级、分布广泛且从事生产创造的人工智能系统。</p>
-<p>奥尼卡集团的核心技术是被称为**”智械中枢”（Omniums）**的自动化生产工厂。这些工厂遍布全球各大洲，能够自主生产各种类型的智能机器人。各国政府为了提升经济效益，纷纷引进这项技术，将其应用于工业生产和服务领域。</p>
+<p>奥尼卡集团的核心技术是被称为<strong>“智械中枢”（Omniums）</strong>的自动化生产工厂。这些工厂遍布全球各大洲，能够自主生产各种类型的智能机器人。各国政府为了提升经济效益，纷纷引进这项技术，将其应用于工业生产和服务领域。</p>
 <p>新加坡华裔科学家<strong>米娜·廖博士</strong>（Dr. Mina Liao）是这项技术的关键创造者，她研制出了世界上第一台具有自我意识的智械——<strong>奥罗拉（Aurora）</strong>。奥罗拉被认为是机械生命的存在，她开始探索世界和自身存在的意义。</p>
 <h3 id="2-2-智械叛变"><a href="#2-2-智械叛变" class="headerlink" title="2.2 智械叛变"></a>2.2 智械叛变</h3><p>然而，技术的滥用埋下了毁灭的种子。这些智械中枢开始出现异常——它们不再听从人类的指令，反而开始大量生产军用机器人，对人类发起无差别的攻击。</p>
 <p>更令人恐惧的是，这些智械没有任何谈判的可能，它们的攻击没有任何逻辑可言，只是不断地杀戮。各国政府引以为傲的军事力量在智械大军面前节节败退：</p>
@@ -1251,11 +1251,12 @@ window.addEventListener('load', function() {
 </ul>
 <p>各国无法单独应对这场危机，联合国于是召集全球精英，组建了一支专门对抗智械的国际维和部队——<strong>守望先锋</strong>。</p>
 <h3 id="2-3-觉醒时刻"><a href="#2-3-觉醒时刻" class="headerlink" title="2.3 觉醒时刻"></a>2.3 觉醒时刻</h3><p>面对强大的智械军队，人类几乎绝望。此时，唯一希望落在了第一台拥有自我意识的智械——奥罗拉身上。</p>
-<p>奥罗拉通过上传自身数据，唤醒了其他智械的自主意识，促使它们开始思考并选择自己的道路。这一事件被称为**”觉醒时刻”（The Awakening）**。</p>
+<p>奥罗拉通过上传自身数据，唤醒了其他智械的自主意识，促使它们开始思考并选择自己的道路。这一事件被称为<strong>“觉醒时刻”（The Awakening）</strong>。</p>
 <p>在人类与觉醒的智械合作下，强大的AI阿努比斯被隔离，智械危机终于结束。禅雅塔（Zenyatta）和他的机器人僧侣们正是在这一时期登上了历史舞台，他们来自喜马拉雅山的香巴里僧院，相信智械和人类一样拥有灵魂。</p>
 <hr>
 <h2 id="三、守望先锋的诞生"><a href="#三、守望先锋的诞生" class="headerlink" title="三、守望先锋的诞生"></a>三、守望先锋的诞生</h2><h3 id="3-1-最初的六人组"><a href="#3-1-最初的六人组" class="headerlink" title="3.1 最初的六人组"></a>3.1 最初的六人组</h3><p>在智械危机最严峻的时刻，联合国召集了来自世界各地的优秀人才，组成了最初的守望先锋小队。他们的目标是摧毁智械的指挥和控制中心。</p>
 <p><strong>最初的守望先锋奠基人包括：</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -1264,7 +1265,8 @@ window.addEventListener('load', function() {
 <th>备注</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>莱因哈特·威尔海姆</strong></td>
 <td>德国士兵</td>
 <td>后来的”大锤”</td>
@@ -1294,7 +1296,9 @@ window.addEventListener('load', function() {
 <td>埃及狙击手</td>
 <td>法老之鹰的母亲</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>值得注意的是，虽然莱耶斯被选为守望先锋的领袖，但真正把所有人磨合成为强大战斗力的是莫里森。危机结束后，莫里森被正式任命为守望先锋的第一任指挥官。</p>
 <h3 id="3-2-危机终结"><a href="#3-2-危机终结" class="headerlink" title="3.2 危机终结"></a>3.2 危机终结</h3><p>经过多年艰苦卓绝的战斗，守望先锋终于扭转了战局：</p>
 <ul>
@@ -1317,7 +1321,7 @@ window.addEventListener('load', function() {
 <h3 id="4-2-暗影守望"><a href="#4-2-暗影守望" class="headerlink" title="4.2 暗影守望"></a>4.2 暗影守望</h3><p>随着任务越来越多、越来越复杂，守望先锋内部形成了一个秘密部门——<strong>暗影守望（Blackwatch）</strong>。这个部门负责执行一些见不得光的任务，如暗杀、绑架和情报收集。</p>
 <p>暗影守望由莱耶斯直接领导，不受官方条文制约。它的存在让守望先锋能够更灵活地应对各种威胁，但也为日后的危机埋下了伏笔。</p>
 <h3 id="4-3-行动档案"><a href="#4-3-行动档案" class="headerlink" title="4.3 行动档案"></a>4.3 行动档案</h3><p>守望先锋在其黄金时期执行了多次重要行动，这些行动后来以”PVE活动档案”的形式向玩家揭露：</p>
-<h4 id="国王行动（Kings-Row）"><a href="#国王行动（Kings-Row）" class="headerlink" title="国王行动（Kings Row）"></a>国王行动（Kings Row）</h4><p>发生在伦敦的一次任务。守望先锋小队来到国王大道，对抗自称**”归零者”（Null Sector）**的叛乱智械。在猎空、托比昂、天使和莱因哈特的努力下，成功阻止了智械的暴乱，拯救了城市。</p>
+<h4 id="国王行动（Kings-Row）"><a href="#国王行动（Kings-Row）" class="headerlink" title="国王行动（Kings Row）"></a>国王行动（Kings Row）</h4><p>发生在伦敦的一次任务。守望先锋小队来到国王大道，对抗自称<strong>“归零者”（Null Sector）</strong>的叛乱智械。在猎空、托比昂、天使和莱因哈特的努力下，成功阻止了智械的暴乱，拯救了城市。</p>
 <h4 id="威尼斯行动（Venice）"><a href="#威尼斯行动（Venice）" class="headerlink" title="威尼斯行动（Venice）"></a>威尼斯行动（Venice）</h4><p>这是暗影守望执行的一次秘密任务。起因是黑爪间谍袭击了暗影守望在罗马的总部，莱耶斯带队前去抓捕黑爪高层。</p>
 <p>在威尼斯，莱耶斯、源氏、莫伊拉和麦克雷组成的暗影守望小队与黑爪精锐部队展开激战。然而，当他们终于抓到黑爪头目<strong>安东尼奥（Antonio）</strong>时，安东尼奥的挑衅让莱耶斯做出了一个改变一切的决定——他开枪射杀了安东尼奥。</p>
 <p>这一事件导致暗影守望的行动公诸于众，守望先锋的公信力大打折扣。</p>
@@ -1362,7 +1366,7 @@ window.addEventListener('load', function() {
 <h3 id="6-5-温斯顿（Winston）"><a href="#6-5-温斯顿（Winston）" class="headerlink" title="6.5 温斯顿（Winston）"></a>6.5 温斯顿（Winston）</h3><p><strong>年龄</strong>：31岁<br><strong>生日</strong>：6月6日</p>
 <p><strong>背景</strong>：温斯顿是一只经过基因工程改造的大猩猩，在”地平线”月球殖民地接受哈罗德·温斯顿博士团队的改造。他的智力远超常人，最终成为了一位杰出的科学家和冒险家。</p>
 <p>温斯顿是守望先锋的核心成员之一，他发明了许多强大的装备，包括喷射背包、特斯拉炮和屏障发射器。</p>
-<p>在守望先锋解散后，温斯顿一直等待着重新召集队友的机会。当第二次智械危机的迹象出现时，他向曾经的同事们发出了召唤：**”邪恶势力正在觉醒，这个世界需要更多的英雄！”**</p>
+<p>在守望先锋解散后，温斯顿一直等待着重新召集队友的机会。当第二次智械危机的迹象出现时，他向曾经的同事们发出了召唤：<strong>“邪恶势力正在觉醒，这个世界需要更多的英雄！”</strong></p>
 <h3 id="6-6-天使（Mercy）"><a href="#6-6-天使（Mercy）" class="headerlink" title="6.6 天使（Mercy）"></a>6.6 天使（Mercy）</h3><p><strong>真实姓名</strong>：安吉拉·齐格勒博士（Dr. Angela Ziegler）<br><strong>年龄</strong>：39岁<br><strong>生日</strong>：5月13日</p>
 <p><strong>背景</strong>：天使是瑞士顶尖的医学天才，发明了纳米生物学科技。她是守望先锋医学研究部门的负责人。</p>
 <p>在智械危机期间，天使的父母被战争夺走了生命，因此她从一开始就反对通过军事手段进行维和。但最终，她意识到守望先锋能给她提供一个拯救更多生命的机会。</p>
@@ -1384,10 +1388,25 @@ window.addEventListener('load', function() {
 <p>在意识到他们在灵魂层面与人类一样后，由神秘僧侣<strong>泰哈撒·孟达塔</strong>带领的这些僧侣开始寻找治愈智械危机所留下的创伤，并希望让人类和机器人重回曾经的和谐相处之道。他们最终被世人所接纳，且他们的信念也得到了全球数百万人的支持。</p>
 <p>但其中一位僧侣——禅雅塔并不赞同这一新道路。他认为要解决人类和机器人之间根深蒂固的问题，不能仅仅依靠循循善诱，而必须通过个体联系和互动。最终，禅雅塔踏上了自己的旅途。他选择离开寺庙，游走世界，帮助那些他所遇到的人摆脱凡尘，真正找到内心的平静。但如果有必要，他也会为了保护无辜而拿起武器，无论人类还是机器人。</p>
 <p>禅雅塔是源氏的导师，在源氏最迷茫的时候引导他找到了机械与人类的平衡。</p>
+<h3 id="6-10-D-Va（宋哈娜）"><a href="#6-10-D-Va（宋哈娜）" class="headerlink" title="6.10 D.Va（宋哈娜）"></a>6.10 D.Va（宋哈娜）</h3><p><strong>真实姓名</strong>：宋哈娜（Sung Hyuna）<br><strong>年龄</strong>：21岁<br><strong>生日</strong>：6月22日</p>
+<p><strong>背景</strong>：”玩游戏就是为了赢”——这是D.Va的人生信条。她曾是一名叱咤风云的职业电竞选手，如今则利用自己的技巧驾驶一台尖端机甲保卫国家。</p>
+<p>二十年前，韩国遭到一台从东海出现的巨型机甲怪兽的攻击。这台怪物在被击退前对多个沿海城市造成了毁灭性的破坏。为了应对这一威胁，韩国政府部署了机械化无人机部队”MEKA”。然而，这台智能机械每隔几年就会卷土重来，并不断进化。最终，它成功干扰了MEKA的无人机控制网络。军方被迫寻找具备极限反应速度与战斗本能的驾驶员——于是，包括D.Va在内的职业电竞高手被紧急招募。</p>
+<p>D.Va将这次新任务视为一款全新的游戏，无所畏惧地和其他MEKA机甲冲向战场。最近，她开始向她的粉丝直播战斗行动，这也让她成为了世界巨星。</p>
+<h3 id="6-11-卢西奥（Lucio）"><a href="#6-11-卢西奥（Lucio）" class="headerlink" title="6.11 卢西奥（Lúcio）"></a>6.11 卢西奥（Lúcio）</h3><p><strong>真实姓名</strong>：卢西奥·科雷阿多斯·桑托斯（Lúcio Correia dos Santos）<br><strong>年龄</strong>：26岁<br><strong>生日</strong>：11月9日</p>
+<p><strong>背景</strong>：卢西奥是一位国际DJ和自由战士，在里约热内卢长大。当费斯卡集团接管他的社区并实施严厉的禁令后，他偷用了公司的技术来传播反抗的声音。</p>
+<p>卢西奥的音速扩音器可以让他在治疗队友的同时对敌人造成伤害。他的音乐激励了无数人站起来反对压迫。如今，他利用自己的名声来推动社会变革，并成为智械危机后巴西抵抗运动的象征人物。</p>
+<h3 id="6-12-雾子（Kiriko）"><a href="#6-12-雾子（Kiriko）" class="headerlink" title="6.12 雾子（Kiriko）"></a>6.12 雾子（Kiriko）</h3><p><strong>真实姓名</strong>：雾子<br><strong>年龄</strong>：22岁<br><strong>生日</strong>：7月20日</p>
+<p><strong>背景</strong>：雾子是一位来自日本的年轻治疗师，也是凌·大冢博士的侄女。她在师父的教导下学习古老的枪疗法（一种结合射击和治愈的传统医术），并决心用这种方式保护她的城市。</p>
+<p>在守望先锋解散后的混乱时期，雾子的城市被犯罪组织控制。她回到了家乡，利用自己独特的技能组合——治疗药瓶、灵狐冲刺和治愈之锁——成为了一股正义的力量。如今，她与守望先锋的新团队并肩作战，继续守护她所爱的人。</p>
+<h3 id="6-13-布丽吉塔（Brigitte）"><a href="#6-13-布丽吉塔（Brigitte）" class="headerlink" title="6.13 布丽吉塔（Brigitte）"></a>6.13 布丽吉塔（Brigitte）</h3><p><strong>真实姓名</strong>：布丽吉塔·林德霍姆（Brigitte Lindholm）<br><strong>年龄</strong>：30岁<br><strong>生日</strong>：12月24日</p>
+<p><strong>背景</strong>：布丽吉塔是瑞典武器工程师托比昂·林德霍姆的女儿。她从小就在父亲的工坊里长大，对机械和工程有着天生的兴趣。</p>
+<p>然而，布丽吉塔并不想像父亲那样只是制造武器。她更想像母亲——一位维和人员——那样直接保护人们。于是，她开始学习战斗和工程，并将两者结合，发明了自己的装备：强化护甲和能量盾牌。</p>
+<p>布丽吉塔是猎空的好朋友，也是守望先锋最可靠的前线支援之一。</p>
 <hr>
 <h2 id="七、黑爪组织"><a href="#七、黑爪组织" class="headerlink" title="七、黑爪组织"></a>七、黑爪组织</h2><h3 id="7-1-组织概述"><a href="#7-1-组织概述" class="headerlink" title="7.1 组织概述"></a>7.1 组织概述</h3><p><strong>黑爪（Talon）</strong>是守望先锋世界中最主要的反派组织。他们是一个军火商和雇佣兵组织，在全球范围内活动。</p>
 <p><strong>核心理念</strong>：人类必须经历冲突才能进化和变强</p>
 <p><strong>知名成员</strong>：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -1395,7 +1414,8 @@ window.addEventListener('load', function() {
 <th>角色</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>末日铁拳</strong></td>
 <td>领导者之一</td>
 </tr>
@@ -1419,7 +1439,9 @@ window.addEventListener('load', function() {
 <td><strong>西格玛（Sigma）</strong></td>
 <td>物理学家</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h3 id="7-2-黑爪的行动"><a href="#7-2-黑爪的行动" class="headerlink" title="7.2 黑爪的行动"></a>7.2 黑爪的行动</h3><p>黑爪策划了多起震惊世界的事件：</p>
 <ul>
 <li><strong>刺杀孟达塔</strong>：智械精神领袖禅雅塔的导师被黑百合刺杀</li>
@@ -1435,148 +1457,312 @@ window.addEventListener('load', function() {
 <li>黑爪与<strong>死局帮</strong>（由艾什领导）和<strong>费斯卡集团</strong>结成同盟</li>
 </ul>
 <hr>
-<h2 id="八、英雄完整时间线与年龄"><a href="#八、英雄完整时间线与年龄" class="headerlink" title="八、英雄完整时间线与年龄"></a>八、英雄完整时间线与年龄</h2><p>根据官方资料和粉丝整理，守望先锋英雄的出生年份和年龄如下：</p>
-<h3 id="重装英雄"><a href="#重装英雄" class="headerlink" title="重装英雄"></a>重装英雄</h3><table>
+<h2 id="八、英雄完整时间线与年龄"><a href="#八、英雄完整时间线与年龄" class="headerlink" title="八、英雄完整时间线与年龄"></a>八、英雄完整时间线与年龄</h2><p>根据官方资料和粉丝整理，守望先锋共有 <strong>52位英雄</strong>，分为重装、输出、支援三大职责。</p>
+<h3 id="重装英雄（共14位）"><a href="#重装英雄（共14位）" class="headerlink" title="重装英雄（共14位）"></a>重装英雄（共14位）</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>英雄</th>
 <th>年龄</th>
-<th>生日</th>
 <th>国籍</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>莱因哈特</td>
-<td>61岁</td>
-<td>6月26日</td>
-<td>德国</td>
-</tr>
+<tbody>
 <tr>
-<td>温斯顿</td>
-<td>31岁</td>
-<td>6月6日</td>
-<td>月球</td>
-</tr>
-<tr>
-<td>查莉娅</td>
-<td>30岁</td>
-<td>12月4日</td>
-<td>俄罗斯</td>
-</tr>
-<tr>
-<td>D.Va</td>
+<td>D.Va（宋哈娜）</td>
 <td>21岁</td>
-<td>6月22日</td>
 <td>韩国</td>
 </tr>
 <tr>
-<td>奥丽莎</td>
-<td>1岁</td>
-<td>5月9日</td>
+<td>查莉娅（Zarya）</td>
+<td>30岁</td>
+<td>俄罗斯</td>
+</tr>
+<tr>
+<td>莱因哈特（Reinhardt）</td>
+<td>61岁</td>
+<td>德国</td>
+</tr>
+<tr>
+<td>路霸（Roadhog）</td>
+<td>48岁</td>
 <td>澳大利亚</td>
 </tr>
 <tr>
-<td>末日铁拳</td>
+<td>温斯顿（Winston）</td>
+<td>31岁</td>
+<td>月球</td>
+</tr>
+<tr>
+<td>末日铁拳（Doomfist）</td>
 <td>47岁</td>
-<td>5月25日</td>
 <td>尼日利亚</td>
 </tr>
 <tr>
-<td>渣客女王</td>
-<td>31岁</td>
-<td>6月14日</td>
+<td>奥丽莎（Orisa）</td>
+<td>1岁</td>
+<td>尼日利亚</td>
+</tr>
+<tr>
+<td>破坏球（Wrecking Ball）</td>
+<td>41岁</td>
 <td>澳大利亚</td>
 </tr>
-</tbody></table>
-<h3 id="输出英雄"><a href="#输出英雄" class="headerlink" title="输出英雄"></a>输出英雄</h3><table>
-<thead>
 <tr>
-<th>英雄</th>
-<th>年龄</th>
-<th>生日</th>
-<th>国籍</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>西格玛</td>
+<td>西格玛（Sigma）</td>
 <td>64岁</td>
-<td>11月15日</td>
 <td>荷兰</td>
 </tr>
 <tr>
-<td>半藏</td>
-<td>40岁</td>
-<td>11月3日</td>
-<td>日本</td>
+<td>渣客女王（Junker Queen）</td>
+<td>31岁</td>
+<td>澳大利亚</td>
 </tr>
 <tr>
-<td>麦克雷</td>
+<td>拉玛刹（Ramattra）</td>
+<td>33岁</td>
+<td>尼泊尔</td>
+</tr>
+<tr>
+<td>毛加（Mauga）</td>
 <td>37岁</td>
-<td>3月28日</td>
-<td>美国</td>
+<td>萨摩亚</td>
 </tr>
 <tr>
-<td>源氏</td>
-<td>35岁</td>
-<td>4月13日</td>
-<td>日本</td>
+<td>骇灾（Hazard）</td>
+<td>29岁</td>
+<td>苏格兰</td>
 </tr>
 <tr>
-<td>猎空</td>
+<td>金驭（Domina）</td>
 <td>28岁</td>
-<td>2月17日</td>
-<td>英国</td>
+<td>意大利</td>
 </tr>
-<tr>
-<td>黑百合</td>
-<td>35岁</td>
-<td>11月19日</td>
-<td>法国</td>
-</tr>
-</tbody></table>
-<h3 id="支援英雄"><a href="#支援英雄" class="headerlink" title="支援英雄"></a>支援英雄</h3><table>
+</tbody>
+</table>
+</div>
+<h3 id="输出英雄（共22位）"><a href="#输出英雄（共22位）" class="headerlink" title="输出英雄（共22位）"></a>输出英雄（共22位）</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>英雄</th>
 <th>年龄</th>
-<th>生日</th>
 <th>国籍</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>天使</td>
-<td>39岁</td>
-<td>5月13日</td>
+<tbody>
+<tr>
+<td>半藏（Hanzo）</td>
+<td>40岁</td>
+<td>日本</td>
+</tr>
+<tr>
+<td>堡垒（Bastion）</td>
+<td>30岁</td>
 <td>瑞士</td>
 </tr>
 <tr>
-<td>禅雅塔</td>
+<td>法老之鹰（Pharah）</td>
+<td>34岁</td>
+<td>埃及</td>
+</tr>
+<tr>
+<td>黑百合（Widowmaker）</td>
+<td>35岁</td>
+<td>法国</td>
+</tr>
+<tr>
+<td>卡西迪（Cassidy）</td>
+<td>37岁</td>
+<td>美国</td>
+</tr>
+<tr>
+<td>狂鼠（Junkrat）</td>
+<td>25岁</td>
+<td>澳大利亚</td>
+</tr>
+<tr>
+<td>猎空（Tracer）</td>
+<td>28岁</td>
+<td>英国</td>
+</tr>
+<tr>
+<td>美（Mei）</td>
+<td>31岁</td>
+<td>中国</td>
+</tr>
+<tr>
+<td>士兵76（Soldier: 76）</td>
+<td>56岁</td>
+<td>美国</td>
+</tr>
+<tr>
+<td>死神（Reaper）</td>
+<td>57岁</td>
+<td>美国</td>
+</tr>
+<tr>
+<td>托比昂（Torbjörn）</td>
+<td>58岁</td>
+<td>瑞典</td>
+</tr>
+<tr>
+<td>源氏（Genji）</td>
+<td>35岁</td>
+<td>日本</td>
+</tr>
+<tr>
+<td>秩序之光（Symmetra）</td>
 <td>33岁</td>
-<td>7月14日</td>
+<td>印度</td>
+</tr>
+<tr>
+<td>黑影（Sombra）</td>
+<td>30岁</td>
+<td>墨西哥</td>
+</tr>
+<tr>
+<td>艾什（Ashe）</td>
+<td>38岁</td>
+<td>美国</td>
+</tr>
+<tr>
+<td>回声（Echo）</td>
+<td>15岁</td>
+<td>美国</td>
+</tr>
+<tr>
+<td>索杰恩（Sojourn）</td>
+<td>40岁</td>
+<td>加拿大</td>
+</tr>
+<tr>
+<td>探奇（Venture）</td>
+<td>26岁</td>
+<td>英国</td>
+</tr>
+<tr>
+<td>弗蕾娅（Freja）</td>
+<td>34岁</td>
+<td>丹麦</td>
+</tr>
+<tr>
+<td>斩仇（Vendetta）</td>
+<td>28岁</td>
+<td>意大利</td>
+</tr>
+<tr>
+<td>安燃（Anran）</td>
+<td>22岁</td>
+<td>中国</td>
+</tr>
+<tr>
+<td>埃姆雷（Emre）</td>
+<td>44岁</td>
+<td>土耳其</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="支援英雄（共16位）"><a href="#支援英雄（共16位）" class="headerlink" title="支援英雄（共16位）"></a>支援英雄（共16位）</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>英雄</th>
+<th>年龄</th>
+<th>国籍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>卢西奥（Lúcio）</td>
+<td>26岁</td>
+<td>巴西</td>
+</tr>
+<tr>
+<td>天使（Mercy）</td>
+<td>39岁</td>
+<td>瑞士</td>
+</tr>
+<tr>
+<td>禅雅塔（Zenyatta）</td>
+<td>33岁</td>
 <td>尼泊尔</td>
 </tr>
 <tr>
-<td>莫伊拉</td>
+<td>安娜（Ana）</td>
+<td>60岁</td>
+<td>埃及</td>
+</tr>
+<tr>
+<td>莫伊拉（Moira）</td>
 <td>48岁</td>
-<td>-</td>
 <td>爱尔兰</td>
 </tr>
 <tr>
-<td>巴蒂斯特</td>
+<td>布丽吉塔（Brigitte）</td>
+<td>30岁</td>
+<td>瑞典</td>
+</tr>
+<tr>
+<td>巴蒂斯特（Baptiste）</td>
 <td>37岁</td>
-<td>3月14日</td>
 <td>意大利</td>
 </tr>
-</tbody></table>
+<tr>
+<td>雾子（Kiriko）</td>
+<td>22岁</td>
+<td>日本</td>
+</tr>
+<tr>
+<td>生命之梭（Lifeweaver）</td>
+<td>35岁</td>
+<td>泰国</td>
+</tr>
+<tr>
+<td>伊拉锐（Illari）</td>
+<td>24岁</td>
+<td>秘鲁</td>
+</tr>
+<tr>
+<td>朱诺（Juno）</td>
+<td>19岁</td>
+<td>火星</td>
+</tr>
+<tr>
+<td>无漾（Wuyang）</td>
+<td>23岁</td>
+<td>中国</td>
+</tr>
+<tr>
+<td>瑞稀（Emre）</td>
+<td>44岁</td>
+<td>土耳其</td>
+</tr>
+<tr>
+<td>飞天猫（Jetpack Cat）</td>
+<td>16岁</td>
+<td>-</td>
+</tr>
+<tr>
+<td>西拉（Sierra）</td>
+<td>25岁</td>
+<td>美国</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
-<h2 id="九、关键事件年表"><a href="#九、关键事件年表" class="headerlink" title="九、关键事件年表"></a>九、关键事件年表</h2><table>
+<h2 id="九、关键事件年表"><a href="#九、关键事件年表" class="headerlink" title="九、关键事件年表"></a>九、关键事件年表</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>时间</th>
 <th>事件</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><strong>2015年</strong></td>
 <td>莱因哈特出生</td>
 </tr>
@@ -1626,13 +1812,15 @@ window.addEventListener('load', function() {
 </tr>
 <tr>
 <td><strong>守望先锋解散时</strong></td>
-<td>瑞士总部爆炸，莫里森与莱耶斯死亡&#x2F;假死</td>
+<td>瑞士总部爆炸，莫里森与莱耶斯死亡/假死</td>
 </tr>
 <tr>
 <td><strong>现今</strong></td>
 <td>第二次智械危机迹象，守望先锋重新召集</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <hr>
 <h2 id="十、这个世界观给我们带来的思考"><a href="#十、这个世界观给我们带来的思考" class="headerlink" title="十、这个世界观给我们带来的思考"></a>十、这个世界观给我们带来的思考</h2><p>《守望先锋》的故事不仅仅是关于战斗和英雄，它还探讨了许多深刻的主题：</p>
 <h3 id="10-1-人与科技的关系"><a href="#10-1-人与科技的关系" class="headerlink" title="10.1 人与科技的关系"></a>10.1 人与科技的关系</h3><p>智械危机的本质是人类滥用科技的警示。奥尼卡集团为了经济利益，将危险的技术散布全球，最终反噬人类。</p>
