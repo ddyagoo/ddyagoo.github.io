@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>守望先锋 - 英雄选择</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --orange: #f5a623;
+            --orange-glow: rgba(245, 166, 35, 0.4);
+            --orange-dim: rgba(245, 166, 35, 0.15);
+            --bg-dark: #0a0e17;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --bg-card-hover: rgba(255, 255, 255, 0.08);
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --text-dim: rgba(255, 255, 255, 0.45);
+            --text-mid: rgba(255, 255, 255, 0.7);
+            --tank: #4a9eff;
+            --damage: #ff6b4a;
+            --support: #4ae8a0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', 'Microsoft YaHei', sans-serif;
+            background: var(--bg-dark);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Animated background grid */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                linear-gradient(rgba(245, 166, 35, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(245, 166, 35, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: -50%;
+            right: -30%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(245, 166, 35, 0.04) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 28px 0 20px;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 28px;
+        }
+
+        .ow-logo {
+            height: 32px;
+            width: auto;
+            flex-shrink: 0;
+            opacity: 0.85;
+            transition: opacity 0.2s;
+        }
+        .ow-logo:hover { opacity: 1; }
+
+        .ow-logo-icon {
+            height: 38px;
+            width: auto;
+            flex-shrink: 0;
+            opacity: 0.9;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .ow-logo-icon:hover { opacity: 1; transform: scale(1.08); }
+
+        header h1 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            font-size: 1.6em;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #fff;
+            position: relative;
+        }
+
+        header h1 span {
+            color: var(--orange);
+        }
+
+        .header-count {
+            margin-left: auto;
+            font-size: 0.85em;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        /* ===== HERO DETAIL ===== */
+        .hero-detail {
+            background: linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 28px;
+            display: flex;
+            gap: 32px;
+            min-height: 280px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s;
+        }
+
+        .hero-detail.has-hero {
+            border-color: rgba(245, 166, 35, 0.25);
+        }
+
+        .hero-detail::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--orange);
+            border-radius: 0 2px 2px 0;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .hero-detail.has-hero::before { opacity: 1; }
+
+        .hero-portrait-wrap {
+            flex-shrink: 0;
+            width: 240px;
+            height: 240px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            border: 2px solid var(--border-subtle);
+            transition: border-color 0.4s;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .hero-detail.has-hero .hero-portrait-wrap {
+            border-color: var(--orange);
+            box-shadow: 0 0 40px var(--orange-glow);
+        }
+
+        .hero-portrait-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.4s;
+        }
+
+        .hero-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 0;
+        }
+
+        .hero-info .hero-type-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+            width: fit-content;
+        }
+
+        .hero-type-badge.tank { background: rgba(74, 158, 255, 0.15); color: var(--tank); }
+        .hero-type-badge.damage { background: rgba(255, 107, 74, 0.15); color: var(--damage); }
+        .hero-type-badge.support { background: rgba(74, 232, 160, 0.15); color: var(--support); }
+
+        .hero-info h2 {
+            font-family: 'Oswald', sans-serif;
+            font-size: 2.4em;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+            line-height: 1.1;
+        }
+
+        .hero-info .hero-subtitle {
+            font-size: 1em;
+            color: var(--text-mid);
+            margin-bottom: 8px;
+        }
+
+        .hero-info .meta-row {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .hero-info .meta-item {
+            display: flex;
+            gap: 6px;
+            font-size: 0.9em;
+        }
+
+        .hero-info .meta-item .label {
+            color: var(--text-dim);
+        }
+        .hero-info .meta-item .value {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .hero-bg {
+            margin-top: 4px;
+            padding: 16px 18px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            color: var(--text-mid);
+            line-height: 1.7;
+            font-size: 0.9em;
+            border-left: 3px solid var(--orange-dim);
+            flex: 1;
+        }
+
+        .hero-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            color: var(--text-dim);
+            gap: 8px;
+        }
+
+        .hero-placeholder .icon {
+            font-size: 3em;
+            opacity: 0.3;
+        }
+        .hero-placeholder .text {
+            font-size: 0.95em;
+            letter-spacing: 1px;
+        }
+
+        /* ===== CATEGORY TABS ===== */
+        .category-tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 10px;
+            padding: 4px;
+            border: 1px solid var(--border-subtle);
+            width: fit-content;
+        }
+
+        .tab-btn {
+            padding: 10px 28px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            background: transparent;
+            color: var(--text-dim);
+            letter-spacing: 1px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            position: relative;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-mid);
+            background: rgba(255,255,255,0.04);
+        }
+
+        .tab-btn.active {
+            background: var(--orange);
+            color: #0a0e17;
+            box-shadow: 0 0 20px var(--orange-glow);
+        }
+
+        .tab-btn .tab-count {
+            display: inline-block;
+            margin-left: 6px;
+            font-size: 0.8em;
+            opacity: 0.6;
+        }
+        .tab-btn.active .tab-count { opacity: 0.8; }
+
+        /* ===== HERO GRID ===== */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+            gap: 12px;
+            padding: 4px 0 40px;
+        }
+
+        .hero-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 14px 8px 10px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: center;
+            animation: cardFadeIn 0.4s ease backwards;
+        }
+
+        .hero-card:nth-child(2) { animation-delay: 0.02s; }
+        .hero-card:nth-child(3) { animation-delay: 0.04s; }
+        .hero-card:nth-child(4) { animation-delay: 0.06s; }
+        .hero-card:nth-child(5) { animation-delay: 0.08s; }
+        .hero-card:nth-child(6) { animation-delay: 0.10s; }
+        .hero-card:nth-child(7) { animation-delay: 0.12s; }
+        .hero-card:nth-child(8) { animation-delay: 0.14s; }
+        .hero-card:nth-child(9) { animation-delay: 0.16s; }
+        .hero-card:nth-child(10) { animation-delay: 0.18s; }
+        .hero-card:nth-child(11) { animation-delay: 0.20s; }
+        .hero-card:nth-child(12) { animation-delay: 0.22s; }
+        .hero-card:nth-child(13) { animation-delay: 0.24s; }
+        .hero-card:nth-child(14) { animation-delay: 0.26s; }
+        .hero-card:nth-child(15) { animation-delay: 0.28s; }
+        .hero-card:nth-child(16) { animation-delay: 0.30s; }
+        .hero-card:nth-child(17) { animation-delay: 0.32s; }
+        .hero-card:nth-child(18) { animation-delay: 0.34s; }
+        .hero-card:nth-child(19) { animation-delay: 0.36s; }
+        .hero-card:nth-child(20) { animation-delay: 0.38s; }
+        .hero-card:nth-child(21) { animation-delay: 0.40s; }
+        .hero-card:nth-child(22) { animation-delay: 0.42s; }
+        .hero-card:nth-child(23) { animation-delay: 0.44s; }
+        .hero-card:nth-child(24) { animation-delay: 0.46s; }
+        .hero-card:nth-child(25) { animation-delay: 0.48s; }
+
+        @keyframes cardFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(12px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .hero-card:hover {
+            transform: translateY(-6px);
+            background: var(--bg-card-hover);
+            border-color: rgba(245, 166, 35, 0.3);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
+
+        .hero-card.selected {
+            border-color: var(--orange);
+            background: var(--orange-dim);
+            box-shadow: 0 0 20px var(--orange-glow);
+        }
+
+        .hero-card img {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.12);
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .hero-card:hover img {
+            border-color: rgba(245, 166, 35, 0.4);
+            transform: scale(1.08);
+        }
+
+        .hero-card.selected img {
+            border-color: var(--orange);
+        }
+
+        .hero-card .name {
+            font-size: 0.82em;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-card .alias {
+            font-size: 0.7em;
+            color: var(--text-dim);
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .category-title {
+            grid-column: 1 / -1;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1em;
+            font-weight: 600;
+            color: var(--orange);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 12px 0 4px;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 4px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .container { padding: 0 16px; }
+
+            header {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            header h1 { font-size: 1.2em; letter-spacing: 2px; }
+            .header-count { font-size: 0.75em; }
+
+            .hero-detail {
+                flex-direction: column;
+                padding: 20px;
+                gap: 20px;
+            }
+
+            .hero-portrait-wrap {
+                width: 160px;
+                height: 160px;
+                align-self: center;
+            }
+
+            .hero-info h2 { font-size: 1.6em; }
+            .meta-row { gap: 12px; }
+
+            .category-tabs {
+                width: 100%;
+                overflow-x: auto;
+            }
+            .tab-btn {
+                flex: 1;
+                padding: 10px 14px;
+                font-size: 0.8em;
+                white-space: nowrap;
+            }
+
+            .hero-grid {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                gap: 8px;
+            }
+
+            .hero-card { padding: 10px 4px 8px; }
+            .hero-card img { width: 48px; height: 48px; }
+            .hero-card .name { font-size: 0.72em; }
+            .hero-card .alias { font-size: 0.6em; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 6px;
+            }
+            .hero-card img { width: 40px; height: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ===== HEADER ===== -->
+        <header>
+            <img class="ow-logo-icon" src="https://pic1.imgdb.cn/item/6a02b44bc05e72d9171b19e8.png" alt="OW">
+            <img class="ow-logo" src="https://pic1.imgdb.cn/item/6a02b06dc05e72d9171aebb3.png" alt="Overwatch">
+            <h1>英雄<span>选择</span></h1>
+            <div class="header-count">全部 51 位英雄</div>
+        </header>
+
+        <!-- ===== HERO DETAIL ===== -->
+        <div class="hero-detail" id="heroDetail">
+            <div class="hero-portrait-wrap">
+                <img id="heroImg" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Crect fill='%231a1a2e' width='240' height='240'/%3E%3Ctext fill='%23444' font-size='60' x='50%25' y='50%25' text-anchor='middle' dy='.3em'%3E?%3C/text%3E%3C/svg%3E" alt="hero">
+            </div>
+            <div class="hero-info" id="heroInfo">
+                <div class="hero-type-badge" id="heroTypeBadge">选择英雄</div>
+                <h2 id="heroName">选择一位英雄</h2>
+                <div class="hero-subtitle" id="heroRealName">点击下方卡片查看详情</div>
+                <div class="meta-row">
+                    <div class="meta-item"><span class="label">年龄</span><span class="value" id="heroAge">—</span></div>
+                    <div class="meta-item"><span class="label">国籍</span><span class="value" id="heroNationality">—</span></div>
+                </div>
+                <div class="hero-bg" id="heroBg">
+                    点击下方英雄头像查看详细背景故事
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== CATEGORY TABS ===== -->
+        <div class="category-tabs">
+            <button class="tab-btn active" data-category="tank">重装 <span class="tab-count" id="countTank"></span></button>
+            <button class="tab-btn" data-category="damage">输出 <span class="tab-count" id="countDmg"></span></button>
+            <button class="tab-btn" data-category="support">支援 <span class="tab-count" id="countSupport"></span></button>
+            <button class="tab-btn" data-category="all">全部 <span class="tab-count" id="countAll"></span></button>
+        </div>
+
+        <!-- ===== HERO GRID ===== -->
+        <div class="hero-grid" id="heroGrid"></div>
+    </div>
+
+    <script>
+        const heroes = [
+            // 重装 - 14位
+            { name: "D.Va", realName: "宋哈娜（Sung Hyuna）", age: "21岁", nationality: "韩国", type: "重装", img: "https://pic1.imgdb.cn/item/6a01f15a620857b8d494ba6e.png", bg: "前职业电竞选手，驾驶尖端机甲保卫国家。韩国MEKA部队驾驶员，曾是全球机甲大赛卫冕冠军。" },
+            { name: "查莉娅", realName: "亚历山德拉·扎里亚诺娃（Aleksandra Zaryanova）", age: "30岁", nationality: "俄罗斯", type: "重装", img: "https://pic1.imgdb.cn/item/6a01f166620857b8d494ba75.png", bg: "查莉娅是一位信念坚定的士兵，她相信为了更大的利益可以做出牺牲。她的家乡经历让她对威胁有着敏锐的察觉。" },
+            { name: "莱因哈特", realName: "莱因哈特·威尔海姆（Reinhardt Wilhelm）", age: "61岁", nationality: "德国", type: "重装", img: "https://pic1.imgdb.cn/item/6a01f169620857b8d494ba76.png", bg: "莱因哈特的故事是关于忠诚和赎罪的故事——他始终坚守着自己的信念，即使世界已经改变。" },
+            { name: "温斯顿", realName: "温斯顿", age: "31岁", nationality: "月球", type: "重装", img: "https://pic1.imgdb.cn/item/6a01f14d620857b8d494ba67.png", bg: "经过基因工程改造的大猩猩，智力远超常人。守望先锋核心成员之一，发明了喷射背包、特斯拉炮和屏障发射器。" },
+            { name: "末日铁拳", realName: "阿坎·奥古迪姆（Akande Ogundimu）", age: "47岁", nationality: "尼日利亚", type: "重装", img: "https://pic1.imgdb.cn/item/6a01f152620857b8d494ba69.png", bg: "黑爪组织领导者，坚信只有将世界拖入新的冲突才能让人类变得更强。根据2026年剧情，已被斩仇击败并杀死。" },
+            { name: "奥丽莎", realName: "无（机器人）", age: "1岁", nationality: "尼日利亚", type: "重装", img: "https://pic1.imgdb.cn/item/6a01f16e620857b8d494ba78.png", bg: "作为新型机器人，奥丽莎不断学习和成长，她的存在证明了即使是最年轻的创造者也能对世界产生重大影响。" },
+            { name: "破坏球", realName: "哈蒙德（Hammond）", age: "41岁", nationality: "澳大利亚", type: "重装", img: "https://pic1.imgdb.cn/item/6a01f171620857b8d494ba79.png", bg: "尽管他的外表是一个机甲，但破坏球内心善良，喜欢帮助他人。他的故事是一个关于自由和归属的故事。" },
+            { name: "西格玛", realName: "西布伦·德·库佩尔博士（Dr. Siebren de Kuiper）", age: "64岁", nationality: "荷兰", type: "重装", img: "https://pic1.imgdb.cn/item/6a01f173620857b8d494ba7a.png", bg: "他被认为是他所在领域的先驱，以开创性的研究和古怪的个性而闻名。现在他挣扎着维持与现实的联系。" },
+            { name: "渣客女王", realName: '奥德赛·"德兹"·斯通（Odessa "Dez" Stone）', age: "31岁", nationality: "澳大利亚", type: "重装", img: "https://pic1.imgdb.cn/item/6a01f176620857b8d494ba7b.png", bg: "渣客女王是黑爪组织的新盟友，与斩仇等黑爪高层共同行动。" },
+            { name: "路霸", realName: '马克·"玛科"·拉特利奇（Mako "Marco" Rutledge）', age: "50岁", nationality: "澳大利亚", type: "重装", img: "https://pic1.imgdb.cn/item/6a01f16c620857b8d494ba77.png", bg: "路霸是一个冷酷的面具杀手，以随机和肆无忌惮的破坏闻名。他漫游在受辐射污染、遍布残骸的澳大利亚内陆地区，与狂鼠是搭档。马克曾是澳大利亚解放阵线（ALF）的前成员，该组织成立是为了夺回被政府送给智械的土地。ALF破坏了智械中枢的聚变核心，导致爆炸摧毁了中枢，辐射了周边地区，使澳大利亚内陆变成了末日荒原。玛科适应了新环境，戴上面具，骑上破旧的摩托车巡游破碎的公路。久而久之，他的人性被遗忘，最后的玛科身份褪去，路霸诞生了。" },
+            { name: "拉玛刹", realName: "拉玛刹（Ramattra）", age: "33岁", nationality: "尼泊尔", type: "重装", img: "https://pic1.imgdb.cn/item/6a01f178620857b8d494ba7c.png", bg: "最终他创建了Null Sector，为他的世界愿景而战——一个智械不再受压迫的世界。" },
+            { name: "毛加", realName: "毛嘎洛阿·毛加·马洛西（Maugaloa Mauga Malosi）", age: "37岁", nationality: "萨摩亚", type: "重装", img: "https://pic1.imgdb.cn/item/6a01f17b620857b8d494ba7d.png", bg: "毛加是一个直率的人，他相信力量就是一切。他与同是黑爪成员的末日铁拳是好友，两人共同为黑爪效力。" },
+            { name: "骇灾", realName: "芬德雷·多切蒂（Findlay Docherty）", age: "29岁", nationality: "苏格兰", type: "重装", img: "https://pic1.imgdb.cn/item/6a01f17d620857b8d494ba7e.png", bg: "作为Phreaks的成员，他为保护那些他认为被系统抛弃的人而战。充满热情和激进，骇灾为他的改造人大家庭感到自豪。" },
+            { name: "金驭", realName: "瓦伊拉·辛格哈尼亚（Vaira Singhania）", age: "28岁", nationality: "意大利", type: "重装", img: "https://pic1.imgdb.cn/item/6a01f180620857b8d494ba7f.png", bg: "Domina将利用她作为谈判者的技巧和她定制的硬光技术，即使是最腐败的势力也能成为盟友。" },
+            { name: "半藏", realName: "岛田半藏", age: "40岁", nationality: "日本", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f14b620857b8d494ba66.png", bg: "半藏是岛田家族血统的年轻继承人，最终选择了一条赎罪之路，成为了独行的忍者。" },
+            // 输出 - 22位
+            { name: "堡垒", realName: "E54（SST Laboratories Siege Automaton E54）", age: "30岁", nationality: "瑞士", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f182620857b8d494ba80.png", bg: "在智械危机结束后，堡垒独自在荒野中游荡，寻找属于自己的位置。它的故事是关于探索自我和寻找和平的故事。" },
+            { name: "法老之鹰", realName: "法芮尔·艾玛莉（Fareeha Amari）", age: "34岁", nationality: "埃及", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f185620857b8d494ba81.png", bg: "她驾驶着强大的机动装甲，用Raptora战斗装甲在战场上翱翔，为队友提供强大的火力支援。" },
+            { name: "黑百合", realName: "艾米丽（Amélie）", age: "35岁", nationality: "法国", type: "输出", img: "https://pic1.imgdb.cn/item/6a01efd8620857b8d494ba3a.png", bg: "黑百合是一位致命的杀手，曾经是守望先锋的成员。在被黑爪改造后，她成为了冷血刺客。" },
+            { name: "卡西迪", realName: "科尔·卡西迪（Cole Cassidy）", age: "37岁", nationality: "美国", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f187620857b8d494ba82.png", bg: "他性格直率，但内心善良。他与艾什曾是恋人，也是商业伙伴，现在两人共同经营亡影帮。" },
+            { name: "狂鼠", realName: "詹米森·法尔克斯（Jamison Fawkes）", age: "25岁", nationality: "澳大利亚", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f18a620857b8d494ba83.png", bg: "他总是戴着那个奇怪的萤火虫面具，笑容诡异，让人无法预测他下一步会做什么。" },
+            { name: "猎空", realName: "林德霍姆（Tracer）", age: "28岁", nationality: "英国", type: "输出", img: "https://pic1.imgdb.cn/item/6a01ef67620857b8d494ba31.png", bg: "猎空是守望先锋最年轻的成员之一，以其机动性和乐观态度著称。她总是充满活力，是团队的精神支柱。" },
+            { name: "美", realName: "周美玲（Mei-Ling Zhou）", age: "31岁", nationality: "中国", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f18c620857b8d494ba84.png", bg: "美决定加入新的守望先锋团队，立志用科学保护这个世界。她的终极生存装置能够操纵天气。" },
+            { name: "士兵76", realName: "约翰·莫里森（Jack Morrison）", age: "56岁", nationality: "美国", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f18f620857b8d494ba85.png", bg: "在2026年的剧情中，士兵76的身份已经公开，他重新集结守望先锋成员，为拯救世界而战。" },
+            { name: "死神", realName: "加布里尔·雷耶斯（Gabriel Reyes）", age: "57岁", nationality: "美国", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f191620857b8d494ba86.png", bg: "在瑞士总部爆炸事件中，他与莫里森发生了致命对决，双方都假死逃生。如今他是黑爪的核心成员。" },
+            { name: "托比昂", realName: "托比昂·林德霍姆（Torbjörn Lindholm）", age: "58岁", nationality: "瑞典", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f194620857b8d494ba88.png", bg: "在守望先锋解散后，他隐居在瑞典，但仍然继续改进他的武器装备。" },
+            { name: "源氏", realName: "岛田源氏", age: "35岁", nationality: "日本", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f164620857b8d494ba74.png", bg: "现在，他不再被过去所束缚，而是用自己的方式保护无辜者。他的机械之身让他有了新的视角来审视自己的血统和身份。" },
+            { name: "秩序之光", realName: "萨塔·韦斯瓦尼（Satya Vaswani）", age: "33岁", nationality: "印度", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f197620857b8d494ba89.png", bg: "秩序之光相信秩序和完美是解决社会问题的答案，对混乱和无序有着本能的厌恶。" },
+            { name: "黑影", realName: "不明", age: "30岁", nationality: "墨西哥", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f155620857b8d494ba6b.png", bg: "作为全世界最臭名昭著的黑客，黑影利用信息与情报操控权贵。她加入了黑爪并参与了一系列大规模网络攻击。" },
+            { name: "艾什", realName: "伊丽莎白·卡莱迪恩·佛斯科（Elizabeth Caledonia Forsythe）", age: "38岁", nationality: "美国", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f199620857b8d494ba8a.png", bg: "根据2026年剧情，艾什的死局帮与黑爪结成同盟，共同对抗新守望先锋。" },
+            { name: "回声", realName: "艾可（Echo）", age: "15岁", nationality: "美国", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f19b620857b8d494ba8b.png", bg: "回声是守望先锋最新的成员之一，她的空战能力和高机动性使她成为战场上的多面手。" },
+            { name: "索杰恩", realName: "不明（仅知代号）", age: "40岁", nationality: "加拿大", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f19e620857b8d494ba8c.png", bg: "守望先锋解散后，她继续在暗中活动，组织反抗压迫势力的抵抗运动。是新一代守望先锋的核心人物之一。" },
+            { name: "探奇", realName: "哈丽·夸梅·奥塞博士（Dr. Harriet Kuiper Ose）", age: "26岁", nationality: "英国", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f1a1620857b8d494ba8d.png", bg: "她加入了守望先锋，希望能够保护世界免受威胁。她的钻探能力使她能够在战场上快速机动。" },
+            { name: "弗蕾娅", realName: "弗蕾娅·安徒生（Freja Andersen）", age: "34岁", nationality: "丹麦", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f1a3620857b8d494ba8e.png", bg: "根据2026年剧情，弗蕾娅与埃姆雷是盟友，两人曾共同对抗黑爪的统治。" },
+            { name: "斩仇", realName: "不明", age: "28岁", nationality: "意大利", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f1a6620857b8d494ba8f.png", bg: "斩仇带领黑爪与死局帮和费斯卡集团结成同盟，在全球范围内扩张势力。她是新守望先锋面临的主要威胁之一。" },
+            { name: "安燃", realName: "叶安然（Ye Anran）", age: "22岁", nationality: "中国", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f1a8620857b8d494ba90.png", bg: "如今，她与妹妹无漾一起在成都与Null Sector作战，保护市民免受威胁。" },
+            { name: "埃姆雷", realName: "埃姆雷·萨里奥格鲁（Emre Sarioglu）", age: "44岁", nationality: "土耳其", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f1ab620857b8d494ba91.png", bg: "根据2026年剧情，埃姆雷已经加入黑爪组织，与斩仇等黑爪高层共同行动。" },
+            { name: "天使", realName: "安吉拉·齐格勒博士（Dr. Angela Ziegler）", age: "39岁", nationality: "瑞士", type: "支援", img: "https://pic1.imgdb.cn/item/6a01f150620857b8d494ba68.png", bg: "天使是瑞士顶尖的医学天才，发明了纳米生物学科技。天使的复活能力让她成为战场上最受欢迎的后援之一。" },
+            // 支援 - 16位
+            { name: "卢西奥", realName: "卢西奥·科雷阿多斯·桑托斯（Lúcio Correia dos Santos）", age: "26岁", nationality: "巴西", type: "支援", img: "https://pic1.imgdb.cn/item/6a01f15c620857b8d494ba6f.png", bg: "卢西奥是一位国际DJ和自由战士。卢西奥的音速扩音器可以让他在治疗队友的同时对敌人造成伤害。" },
+            { name: "禅雅塔", realName: "泰哈撒·禅雅塔（Tekhartha Zenyatta）", age: "33岁", nationality: "尼泊尔", type: "支援", img: "https://pic1.imgdb.cn/item/6a01f157620857b8d494ba6d.png", bg: "禅雅塔是一位游走于世界寻找灵魂升华之道的机械僧侣。他是源氏的导师，在源氏最迷茫的时候引导他找到了机械与人类的平衡。" },
+            { name: "安娜", realName: "安娜·艾玛莉（Ana Amari）", age: "60岁", nationality: "埃及", type: "支援", img: "https://pic1.imgdb.cn/item/6a01f1ad620857b8d494ba92.png", bg: "在一次任务中，黑百合的狙击差点夺走她的生命，她不得不假死来保护家人。但这位传奇狙击手并没有真正消失。" },
+            { name: "莫伊拉", realName: "莫伊拉·法斯瓦尼（Moira Faddon）", age: "48岁", nationality: "爱尔兰", type: "支援", img: "https://pic1.imgdb.cn/item/6a01f1b0620857b8d494ba93.png", bg: "莫伊拉是一个复杂的角色，她既不是完全的邪恶，也不是完全的善良。她只是单纯地追求科学进步。" },
+            { name: "巴蒂斯特", realName: "亚历山大·巴蒂斯特（Alexandre Baptiste）", age: "37岁", nationality: "意大利", type: "支援", img: "https://pic1.imgdb.cn/item/6a01f1b2620857b8d494ba94.png", bg: "他擅长使用各种医疗装备，包括能够阻止队友死亡的不朽领域无人机和可以跳跃到高处的外骨骼战靴。" },
+            { name: "雾子", realName: "雾子", age: "22岁", nationality: "日本", type: "支援", img: "https://pic1.imgdb.cn/item/6a01f15f620857b8d494ba72.png", bg: "雾子是一位来自日本的年轻治疗师，也是凌·大冢博士的侄女。她在师父的教导下学习古老的枪疗法。" },
+            { name: "瑞稀", realName: "河野瑞稀（Kawano Mizuki）", age: "22岁", nationality: "日本", type: "支援", img: "https://pic1.imgdb.cn/item/6a0299b1620857b8d496344e.png", bg: "瑞稀是与黑爪结盟的桥元家族成员，担任支援型英雄角色。他从出生起便被厄运笼罩，在等级森严的家族中饱受压迫。瑞稀头戴巨大的斗笠，手持幻灵锁镰，利用河童主题的科技装备进行战斗。他凭借自身努力在家族中逐步站稳脚跟，后被派遣渗透铁坂的妖怪团，决心做自己命运的主宰。" },
+            { name: "生命之梭", realName: "生命之梭", age: "35岁", nationality: "泰国", type: "支援", img: "https://pic1.imgdb.cn/item/6a01f1b5620857b8d494ba95.png", bg: "生命之梭是一位科学家和医生，他相信科技应该用来治愈和保护，而非伤害。" },
+            { name: "伊拉锐", realName: "伊拉锐", age: "24岁", nationality: "秘鲁", type: "支援", img: "https://pic1.imgdb.cn/item/6a01f1b7620857b8d494ba96.png", bg: "伊拉锐是一位太阳神庙的守护者，利用太阳能量治疗队友并伤害敌人。" },
+            { name: "朱诺", realName: "朱诺", age: "19岁", nationality: "火星", type: "支援", img: "https://pic1.imgdb.cn/item/6a01f1ba620857b8d494ba97.png", bg: "朱诺是一位来自火星的年轻飞行员，是新守望先锋的成员。" },
+            { name: "无漾", realName: "无漾", age: "23岁", nationality: "中国", type: "支援", img: "https://pic1.imgdb.cn/item/6a01f1bc620857b8d494ba98.png", bg: "无漾与姐姐安燃一起在成都与Null Sector作战，保护市民免受威胁。" },
+            { name: "飞天猫", realName: "飞天猫", age: "16岁", nationality: "-", type: "支援", img: "https://pic1.imgdb.cn/item/6a01f1bf620857b8d494ba99.png", bg: "作为一名战术家，飞天猫带来可爱的空中支援。这只勇敢的小猫成为了守望先锋最独特的成员之一。" },
+            { name: "西拉", realName: "西拉·特纳·伍兹（Sierra Turner Woods）", age: "25岁", nationality: "美国", type: "输出", img: "https://pic1.imgdb.cn/item/6a01f1c1620857b8d494ba9a.png", bg: "凭借增强能力和积极态度，Sierra已晋升为Helix Security International的高级成员。她在Summit Squad服役，是一位专注的团队成员。" },
+            { name: "布丽吉塔", realName: "布丽吉塔·林德霍姆（Brigitte Lindholm）", age: "30岁", nationality: "瑞典", type: "支援", img: "https://pic1.imgdb.cn/item/6a01f161620857b8d494ba73.png", bg: "布丽吉塔是猎空的好朋友，也是守望先锋最可靠的前线支援之一。她是托比昂的女儿。" },
+        ];
+
+        const typeBadgeMap = { '重装': 'tank', '输出': 'damage', '支援': 'support' };
+
+        // ---- DOM ----
+        const heroGrid = document.getElementById('heroGrid');
+        const heroDetail = document.getElementById('heroDetail');
+        const heroName = document.getElementById('heroName');
+        const heroRealName = document.getElementById('heroRealName');
+        const heroAge = document.getElementById('heroAge');
+        const heroNationality = document.getElementById('heroNationality');
+        const heroBg = document.getElementById('heroBg');
+        const heroImg = document.getElementById('heroImg');
+        const heroTypeBadge = document.getElementById('heroTypeBadge');
+        const tabBtns = document.querySelectorAll('.tab-btn');
+
+        let currentCategory = 'tank';
+        let selectedHero = null;
+
+        // ---- Counts ----
+        document.getElementById('countTank').textContent = heroes.filter(h => h.type === '重装').length;
+        document.getElementById('countDmg').textContent = heroes.filter(h => h.type === '输出').length;
+        document.getElementById('countSupport').textContent = heroes.filter(h => h.type === '支援').length;
+        document.getElementById('countAll').textContent = heroes.length;
+
+        // ---- Render ----
+        function renderHeroes(category) {
+            heroGrid.innerHTML = '';
+            const typeNames = { tank: '重装', damage: '输出', support: '支援', all: '全部' };
+            const typeName = typeNames[category];
+            const filtered = category === 'all' ? heroes : heroes.filter(h => h.type === typeName);
+
+            const title = document.createElement('div');
+            title.className = 'category-title';
+            title.textContent = `${typeName} 英雄  ( ${filtered.length} )`;
+            heroGrid.appendChild(title);
+
+            filtered.forEach((hero, i) => {
+                const card = document.createElement('div');
+                card.className = 'hero-card' + (selectedHero === hero.name ? ' selected' : '');
+                // Stagger animation using inline style for more than 25 items
+                card.style.animationDelay = `${Math.min(i * 0.02, 0.5)}s`;
+                card.innerHTML = `
+                    <img src="${hero.img}" alt="${hero.name}" loading="lazy">
+                    <div class="name">${hero.name}</div>
+                    <div class="alias">${hero.realName.replace(/（.*/, '')}</div>
+                `;
+                card.onclick = () => selectHero(hero);
+                heroGrid.appendChild(card);
+            });
+        }
+
+        // ---- Select ----
+        function selectHero(hero) {
+            selectedHero = hero.name;
+            heroDetail.classList.add('has-hero');
+            heroName.textContent = hero.name;
+            heroRealName.textContent = hero.realName;
+            heroAge.textContent = hero.age;
+            heroNationality.textContent = hero.nationality;
+            heroBg.textContent = hero.bg;
+            heroImg.src = hero.img;
+
+            const badge = typeBadgeMap[hero.type] || '';
+            heroTypeBadge.className = 'hero-type-badge ' + badge;
+            heroTypeBadge.textContent = hero.type;
+
+            document.querySelectorAll('.hero-card').forEach(card => {
+                card.classList.toggle('selected', card.querySelector('.name').textContent === hero.name);
+            });
+        }
+
+        // ---- Tabs ----
+        tabBtns.forEach(btn => {
+            btn.onclick = () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentCategory = btn.dataset.category;
+                renderHeroes(currentCategory);
+            };
+        });
+
+        // ---- Init ----
+        renderHeroes(currentCategory);
+    </script>
+</body>
+</html>
