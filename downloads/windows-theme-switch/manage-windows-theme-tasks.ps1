@@ -15,8 +15,10 @@ $taskNames = @(
     'NightDark_2300'
 )
 $scriptDirectory = $PSScriptRoot
-$workerPath = Join-Path -Path $scriptDirectory -ChildPath 'set-windows-theme.bat'
-$comSpec = Join-Path -Path $env:SystemRoot -ChildPath 'System32\cmd.exe'
+$themeScriptPath = Join-Path -Path $scriptDirectory -ChildPath 'windows-theme.ps1'
+$launcherPath = Join-Path -Path $scriptDirectory -ChildPath 'run-windows-theme-hidden.vbs'
+$systemWScript = Join-Path -Path $env:SystemRoot -ChildPath 'System32\wscript.exe'
+$wscriptExe = if (Test-Path -LiteralPath $systemWScript) { $systemWScript } else { 'wscript.exe' }
 $currentUser = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
 
 function Get-TaskSchedulerService {
@@ -76,14 +78,17 @@ try {
         exit 0
     }
 
-    if (-not (Test-Path -LiteralPath $workerPath)) {
-        throw ("Theme worker was not found: {0}" -f $workerPath)
+    if (-not (Test-Path -LiteralPath $themeScriptPath)) {
+        throw ("Theme worker was not found: {0}" -f $themeScriptPath)
+    }
+    if (-not (Test-Path -LiteralPath $launcherPath)) {
+        throw ("Hidden launcher was not found: {0}" -f $launcherPath)
     }
 
     [void](Ensure-TaskFolder -Service $service)
 
-    $actionArguments = '/d /c call "{0}" auto' -f $workerPath
-    $taskAction = New-ScheduledTaskAction -Execute $comSpec -Argument $actionArguments
+    $actionArguments = '"{0}" auto' -f $launcherPath
+    $taskAction = New-ScheduledTaskAction -Execute $wscriptExe -Argument $actionArguments
     $taskSettings = New-ScheduledTaskSettingsSet `
         -StartWhenAvailable `
         -MultipleInstances IgnoreNew `
@@ -95,7 +100,9 @@ try {
 
     $today = (Get-Date).Date
     $startupTrigger = New-ScheduledTaskTrigger -AtLogOn -User $currentUser
+    # 修改这里的 8 可以调整浅色任务的触发时间，按 24 小时制填写，例如 9 表示 09:00。
     $morningTrigger = New-ScheduledTaskTrigger -Daily -At $today.AddHours(8)
+    # 修改这里的 23 可以调整深色任务的触发时间，按 24 小时制填写，例如 22 表示 22:00。
     $nightTrigger = New-ScheduledTaskTrigger -Daily -At $today.AddHours(23)
 
     $definitions = @(
@@ -130,10 +137,9 @@ try {
         Write-Output ("Registered task: {0}{1}" -f $taskPath, $definition.Name)
     }
 
-    $applyArguments = '/d /c call "{0}" auto' -f $workerPath
     $applyProcess = Start-Process `
-        -FilePath $comSpec `
-        -ArgumentList $applyArguments `
+        -FilePath $wscriptExe `
+        -ArgumentList $actionArguments `
         -Wait `
         -PassThru `
         -WindowStyle Hidden

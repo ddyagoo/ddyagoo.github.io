@@ -11,7 +11,11 @@ $now = Get-Date
 
 if ($requestedMode -eq 'auto') {
     $minutes = ($now.Hour * 60) + $now.Minute
-    if ($minutes -ge (7 * 60) -and $minutes -lt (23 * 60)) {
+    # auto 模式的浅色起始时间。它与计划任务的 08:00 触发时间是两个独立设置。
+    $lightModeStartHour = 7
+    # auto 模式的深色起始时间。修改夜间任务时间时，请同步修改这里。
+    $darkModeStartHour = 23
+    if ($minutes -ge ($lightModeStartHour * 60) -and $minutes -lt ($darkModeStartHour * 60)) {
         $effectiveMode = 'light'
     } else {
         $effectiveMode = 'dark'
